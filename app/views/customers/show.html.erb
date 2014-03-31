@@ -1,0 +1,12 @@
+<div class="container">
+
+  Name: <%= @customer.name %> <br/>
+  Address: <%= @customer.address %> <br/>
+  EMail: <%= @customer.email %> <br/>
+  Phone: <%= @customer.phone %> <br/>
+  Notes: <%= @customer.notes %> <br/>
+
+
+  <%= link_to "Edit Customer", edit_dealership_customer_path(@dealership, @customer) %>
+
+</div>

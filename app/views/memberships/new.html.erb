@@ -1,0 +1,11 @@
+<div class="container">
+<%= form_for [@dealership, @membership] do |f| %>
+    <div class="form-group">
+      <%= label_tag :access_code %><br/>
+      <%= text_field_tag :access_code %>
+    </div>
+    <%= f.hidden_field :user_id, :value => @user.id %>
+    <%= f.hidden_field :dealership_id, :value => @dealership_id %>
+    <%= f.submit "Enter Code", :class => 'btn btn-success' %>
+  <% end %>
+</div>

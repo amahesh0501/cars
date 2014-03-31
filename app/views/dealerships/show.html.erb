@@ -1,0 +1,105 @@
+<div class="container">
+<br/>
+  <ul class="nav nav-tabs">
+    <li class="active" ><a href="#dashboard" data-toggle="tab">Dashboard</a></li>
+    <li><a href="#cars" data-toggle="tab">Inventory</a></li>
+    <li><a href="#customers" data-toggle="tab">Customers</a></li>
+    <li><a href="#employees" data-toggle="tab">Employees</a></li>
+    <li><a href="#rev" data-toggle="tab">Revenue / Expenses</a></li>
+    <li><a href="#financing" data-toggle="tab">Financing</a></li>
+    <li><a href="#forms" data-toggle="tab">Forms</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane active" id="dashboard">
+      x
+    </div>
+    <div class="tab-pane" id="cars">
+      <br/>
+      <%= link_to "Create Car", new_dealership_car_path(@dealership) %>
+      <br/>
+      <br/>
+      <table class="table table-striped">
+
+        <% @cars.each do |car| %>
+          <tr>
+            <td><%= link_to "#{car.year} #{car.make} #{car.model}", dealership_car_path(@dealership, car)  %></td>
+            <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="tab-pane" id="customers">
+      <br/>
+      <%= link_to "Create Customer", new_dealership_customer_path(@dealership) %>
+      <br/>
+      <br/>
+      <table class="table table-striped">
+        <% @customers.each do |customer| %>
+          <tr>
+            <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
+            <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
+
+          </tr>
+        <% end %>
+      </table>
+      <br/>
+    </div>
+    <div class="tab-pane" id="employees">
+      <br/>
+      <%= link_to "Create Employee", new_user_registration_path %>
+      <br/>
+      <br/>
+      <table class="table table-striped">
+
+        <% @memberships.each do |membership| %>
+          <% user = User.find(membership.user_id) %>
+          <% p user %>
+          <% p "*" * 100 %>
+          <tr>
+            <td><%= link_to user.name, user_path(user)  %></td>
+            <td><%= link_to 'Delete Employee', user_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="tab-pane" id="rev">
+      <br/>
+      <%= link_to "Create Expense", new_dealership_expense_path(@dealership) %>
+      <br/>
+      <br/>
+      <table class="table table-striped">
+
+        <% @expenses.each do |expense| %>
+          <tr>
+            <td><%= link_to expense.name, dealership_expense_path(@dealership, expense)  %></td>
+            <td><%= expense.amount  %></td>
+            <td><%= link_to 'Delete Expense', dealership_expense_path(@dealership, expense), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="tab-pane" id="financing">
+      <br/>
+      <%= link_to "Create Deal", new_dealership_deal_path(@dealership) %>
+      <br/>
+      <br/>
+      <table class="table table-striped">
+
+        <% @deals.each do |deal| %>
+          <tr>
+            <% car = Car.find(deal.car_id) %>
+            <td><%= link_to car.make, dealership_deal_path(@dealership, deal)  %></td>
+            <td><%= link_to 'Delete Deal', dealership_deal_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="tab-pane" id="forms">
+      x
+    </div>
+  </div>
+  <br/>
+
+</div>

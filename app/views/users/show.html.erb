@@ -1,0 +1,13 @@
+<div class="container">
+  <%= @user.name %>
+  <%= @user.ssn %>
+  <%= @user.email %>
+  <%= @user.phone %>
+
+  <% if @expenses.length > 0 %>
+    <h2>Pay History</h2>
+    <% @expenses.each do |expense|  %>
+    <p><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></p>
+    <% end %>
+  <% end %>
+</div>

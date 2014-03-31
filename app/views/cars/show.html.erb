@@ -1,0 +1,22 @@
+<div class="container">
+
+  Year: <%= @car.year %> <br/>
+  Make: <%= @car.make %> <br/>
+  Model: <%= @car.model %> <br/>
+  Vin: <%= @car.vin %> <br/>
+  Miles: <%= @car.miles %> <br/>
+  Puchase Price: <%= @car.purchase_price %> <br/>
+  Sale Price: <%= @car.sale_price %> <br/>
+  Description: <%= @car.description %> <br/>
+
+
+  <% if @expenses.length > 0 %>
+    <h2>Expenses</h2>
+    <% @expenses.each do |expense|  %>
+    <p><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></p>
+    <% end %>
+  <% end %>
+
+  <%= link_to "Edit Car", edit_dealership_car_path(@dealership, @car) %>
+
+</div>

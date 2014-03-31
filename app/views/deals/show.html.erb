@@ -1,0 +1,10 @@
+<div class="container">
+
+  Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> <br/>
+  Employee: <%= link_to @user.name, user_path(@user) %> <br/>
+  Car: <%= link_to @car.make, dealership_car_path(@dealership, @car) %> <br/>
+
+
+  <%= link_to "Edit Deal", edit_dealership_deal_path(@dealership, @deal) %>
+
+</div>
