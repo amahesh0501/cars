@@ -10,6 +10,9 @@ class CreateExpenses < ActiveRecord::Migration
       t.text :description
       t.date :date
 
+      t.belongs_to :vendor
+
+
       t.timestamps
 
     end

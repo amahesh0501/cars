@@ -21,18 +21,82 @@
   <%= f.label :miles %><br/>
   <%= f.text_field :miles %>
 </div>
+
 <div class="form-group">
-  <%= f.label :purchase_price %><br/>
-  <%= f.text_field :purchase_price %>
+  <%= f.label :transmission %><br/>
+  <%= f.text_field :transmission %>
 </div>
 <div class="form-group">
-  <%= f.label :sale_price %><br/>
-  <%= f.text_field :sale_price %>
+  <%= f.label :body_style %><br/>
+  <%= f.text_field :body_style %>
 </div>
 <div class="form-group">
-  <%= f.label :description %><br/>
-  <%= f.text_area :description %>
+  <%= f.label :exterior_color %><br/>
+  <%= f.text_field :exterior_color %>
 </div>
+<div class="form-group">
+  <%= f.label :interior_color %><br/>
+  <%= f.text_field :interior_color %>
+</div>
+<div class="form-group">
+  <%= f.label :fuel %><br/>
+  <%= f.text_field :fuel %>
+</div>
+<div class="form-group">
+  <%= f.label :engine %><br/>
+  <%= f.text_field :engine %>
+</div>
+<div class="form-group">
+  <%= f.label :doors %><br/>
+  <%= f.text_field :doors %>
+</div>
+<div class="form-group">
+  <%= f.label :wheel_base %><br/>
+  <%= f.text_field :wheel_base %>
+</div>
+<div class="form-group">
+  <%= f.label :license_plate %><br/>
+  <%= f.text_field :license_plate %>
+</div>
+
+<h2> Purchase Infromation </h2>
+<div class="form-group">
+  <%= f.label :acquire_date %><br/>
+  <%= f.text_field :acquire_date %>
+</div>
+<div class="form-group">
+  <%= f.label :acquire_price %><br/>
+  <%= f.text_field :acquire_price %>
+</div>
+<div class="form-group">
+  <%= f.label :acquire_location %><br/>
+  <%= f.text_field :acquire_location %>
+</div>
+<div class="form-group">
+  <%= f.label :smog_status %><br/>
+  <%= f.check_box :smog_status %>
+</div>
+<div class="form-group">
+  <%= f.label :smog_date %><br/>
+  <%= f.date_field :smog_date %>
+</div>
+<div class="form-group">
+  <%= f.label :smogged_by %><br/>
+  <%= f.text_field :smogged_by %>
+</div>
+<div class="form-group">
+  <%= f.label :flooring %><br/>
+  <%= f.check_box :flooring %>
+</div>
+<div class="form-group">
+  <%= f.label :flooring_company %><br/>
+  <%= f.text_field :flooring_company %>
+</div>
+<div class="form-group">
+  <%= f.label :flooring_date %><br/>
+  <%= f.date_field :flooring_date %>
+</div>
+
 <%= f.submit "Edit Car", :class => 'btn btn-success'  %>
 <% end %>
 </div>

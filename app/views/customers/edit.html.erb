@@ -9,6 +9,10 @@
   <%= f.text_field :address %>
 </div>
 <div class="form-group">
+  <%= f.label :time_at_residence %><br/>
+  <%= f.text_field :time_at_residence %>
+</div>
+<div class="form-group">
   <%= f.label :email %><br/>
   <%= f.text_field :email %>
 </div>
@@ -16,6 +20,48 @@
   <%= f.label :phone %><br/>
   <%= f.text_field :phone %>
 </div>
+<div class="form-group">
+  <%= f.label :dob %><br/>
+  <%= f.date_field :dob %>
+</div>
+<div class="form-group">
+  <%= f.label :ssn %><br/>
+  <%= f.text_field :ssn %>
+</div>
+<div class="form-group">
+  <%= f.label :driver_license_number %><br/>
+  <%= f.text_field :driver_license_number %>
+</div>
+<h2> Employer Information </h2>
+<div class="form-group">
+  <%= f.label :employer %><br/>
+  <%= f.text_field :employer %>
+</div>
+<div class="form-group">
+  <%= f.label :employer_contact %><br/>
+  <%= f.text_field :employer_contact %>
+</div>
+<div class="form-group">
+  <%= f.label :employer_title %><br/>
+  <%= f.text_field :employer_title %>
+</div>
+<div class="form-group">
+  <%= f.label :employer_address %><br/>
+  <%= f.text_field :employer_address %>
+</div>
+<div class="form-group">
+  <%= f.label :employer_phone %><br/>
+  <%= f.text_field :employer_phone %>
+</div>
+<div class="form-group">
+  <%= f.label :monthly_gross_salary %><br/>
+  <%= f.text_field :monthly_gross_salary %>
+</div>
+<div class="form-group">
+  <%= f.label :time_at_employer %><br/>
+  <%= f.text_field :time_at_employer %>
+</div>
+<h2>Additional Notes</h2>
 <div class="form-group">
   <%= f.label :notes %><br/>
   <%= f.text_area :notes %>

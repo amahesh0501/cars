@@ -1,10 +1,42 @@
 <div class="container">
 
+  <h2>Basic Customer Information</h2>
   Name: <%= @customer.name %> <br/>
-  Address: <%= @customer.address %> <br/>
   EMail: <%= @customer.email %> <br/>
   Phone: <%= @customer.phone %> <br/>
-  Notes: <%= @customer.notes %> <br/>
+  Address: <%= @customer.address %> <br/>
+  Time at Residence: <%= @customer.time_at_residence %> <br/>
+  Date of Birth: <%= @customer.dob %> <br/>
+  Social Security Number: <%= @customer.ssn %> <br/>
+  Driver License Number: <%= @customer.driver_license_number %> <br/>
+
+  <h2>Employer Information</h2>
+  Company Name: <%= @customer.employer %> <br/>
+  Company Address: <%= @customer.employer_address %> <br/>
+  Manager Name: <%= @customer.employer_contact %> <br/>
+  Manager Title: <%= @customer.employer_title %> <br/>
+  Manager Phone: <%= @customer.employer_phone %> <br/>
+  Monthly Gross Salary: <%= @customer.monthly_gross_salary %> <br/>
+  Time at Employer: <%= @customer.time_at_employer %> <br/>
+
+  <h2>Notes</h2>
+  <%= @customer.notes %> <br/>
+
+  <h2>Conversations</h2>
+  <table class="table table-striped">
+
+
+
+
+    <% @conversations.each do |conversation| %>
+      <tr>
+        <td><%= conversation.description %></td>
+        <td><%= conversation.date %></td>
+        <td><%= conversation.medium %></td>
+      </tr>
+    <% end %>
+  </table>
+
 
 
   <%= link_to "Edit Customer", edit_dealership_customer_path(@dealership, @customer) %>

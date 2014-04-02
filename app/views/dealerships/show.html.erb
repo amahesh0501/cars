@@ -74,7 +74,9 @@
         <% @expenses.each do |expense| %>
           <tr>
             <td><%= link_to expense.name, dealership_expense_path(@dealership, expense)  %></td>
+            <td><%= expense.description  %></td>
             <td><%= expense.amount  %></td>
+
             <td><%= link_to 'Delete Expense', dealership_expense_path(@dealership, expense), :confirm => 'Are you sure?', :method => :delete %></td>
           </tr>
         <% end %>

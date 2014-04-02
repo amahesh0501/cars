@@ -1,5 +1,6 @@
 class DealsController < ApplicationController
 
+
   def show
     authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
@@ -26,9 +27,9 @@ class DealsController < ApplicationController
     authenticate_user!
     @deal = Deal.new(params[:deal])
     if @deal.save
-      dealership = Dealership.find(params[:dealership_id])
-      dealership.deals << @deal
-      redirect_to dealership_deal_path(dealership, @deal)
+      @dealership = Dealership.find(params[:dealership_id])
+      @dealership.deals << @deal
+      redirect_to dealership_deal_path(@dealership, @deal)
     else
       flash.now[:errors] = @deal.errors.full_messages
       render :new

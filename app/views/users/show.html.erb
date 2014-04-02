@@ -1,13 +1,22 @@
 <div class="container">
-  <%= @user.name %>
-  <%= @user.ssn %>
-  <%= @user.email %>
-  <%= @user.phone %>
+
+  <h2> Basic Information </h2>
+  Name: <%= @user.name %><br/>
+  Social Security Number: <%= @user.ssn %><br/>
+  E-Mail Address: <%= @user.email %><br/>
+  Phone: <%= @user.phone %><br/>
+
+  <% if @cars.length > 0 %>
+    <h2>Cars</h2>
+    <% @cars.each do |car|  %>
+    <p><%= link_to car.make, dealership_car_path(@dealership, car) %></p>
+    <% end %>
+  <% end %>
 
   <% if @expenses.length > 0 %>
     <h2>Pay History</h2>
     <% @expenses.each do |expense|  %>
-    <p><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></p>
+    <p><%= "#{expense.name} ($#{expense.amount}) on #{expense.date}" %></p>
     <% end %>
   <% end %>
 </div>

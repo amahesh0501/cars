@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :deals
   has_many :expenses
+  has_many :conversations
 
 end
 

@@ -1,9 +1,14 @@
 class CustomersController < ApplicationController
 
+  def index
+    redirect_to root_path
+  end
+
   def show
     authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @customer = Customer.find(params[:id])
+    @conversations = @customer.conversations
   end
 
   def new

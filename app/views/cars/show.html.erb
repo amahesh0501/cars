@@ -1,22 +1,51 @@
 <div class="container">
 
+  <h2>Basics</h2>
+  Vin: <%= @car.vin %> <br/>
   Year: <%= @car.year %> <br/>
   Make: <%= @car.make %> <br/>
   Model: <%= @car.model %> <br/>
-  Vin: <%= @car.vin %> <br/>
   Miles: <%= @car.miles %> <br/>
-  Puchase Price: <%= @car.purchase_price %> <br/>
-  Sale Price: <%= @car.sale_price %> <br/>
-  Description: <%= @car.description %> <br/>
+  Transmission: <%= @car.transmission %> <br/>
+  Body Style: <%= @car.body_style %> <br/>
+  Exterior Color: <%= @car.exterior_color %> <br/>
+  Interior Color: <%= @car.interior_color %> <br/>
+  Fuel Type: <%= @car.fuel %> <br/>
+  Engine: <%= @car.engine %> <br/>
+  Doors: <%= @car.doors %> <br/>
+  Wheel Base: <%= @car.wheel_base %> <br/>
+  License Plate: <%= @car.license_plate %> <br/>
 
+  <h2>Description</h2>
+  <%= @car.description %> <br/>
+
+  <h2>Acqusition Information</h2>
+  Acqusition Date: <%= @car.acquire_date %> <br/>
+  Acqusition Cost: <%= @car.acquire_price %> <br/>
+  Acqusition Location: <%= @car.acquire_location %> <br/>
+  Smog Status: <%= @car.smog_status %> <br/>
+  Smog Date: <%= @car.smog_date %> <br/>
+  Smogged By: <%= @car.smogged_by %> <br/>
+  Flooring Status: <%= @car.flooring %> <br/>
+  Flooring Company: <%= @car.flooring_company %> <br/>
+  Flooring Date: <%= @car.flooring_date %> <br/>
 
   <% if @expenses.length > 0 %>
     <h2>Expenses</h2>
     <% @expenses.each do |expense|  %>
-    <p><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></p>
+    <p><%= link_to expense.name, dealership_expense_path(@dealership, expense) %> ($<%= expense.amount%>)</p>
     <% end %>
   <% end %>
 
+  <h2> Profit </h2>
+  Acqusition Cost: <%= @car.acquire_price %> <br/>
+  Expenses: <%= @car_expenses %><br/>
+  Total Expenses: <%= @total_price %><br/>
+  <%= @purchase_price != 0 ? "Purchase Price: #{@purchase_price}" : "Purchase Price: Not Yet Sold" %><br/>
+  Profit: <%= @profit %>
+
+
+  <h2>Edit Car</h2>
   <%= link_to "Edit Car", edit_dealership_car_path(@dealership, @car) %>
 
 </div>

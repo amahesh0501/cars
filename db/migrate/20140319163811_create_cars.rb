@@ -3,13 +3,14 @@ class CreateCars < ActiveRecord::Migration
     create_table :cars do |t|
       t.belongs_to :dealership
 
+      t.string :status, default: "frontline"
+
       #vehicle_details
       t.string :make
       t.string :model
       t.string :vin
       t.integer :year
       t.string :miles
-      t.string :status
       t.string :transmission
       t.string :body_style
       t.string :exterior_color
@@ -18,6 +19,8 @@ class CreateCars < ActiveRecord::Migration
       t.string :engine
       t.integer :doors
       t.string :wheel_base
+      t.string :license_plate
+
 
       #purchase_information
       t.date :acquire_date
@@ -29,7 +32,6 @@ class CreateCars < ActiveRecord::Migration
       t.boolean :flooring, default: false
       t.string :flooring_company
       t.date :flooring_date
-      t.string :license_plate
 
 
 

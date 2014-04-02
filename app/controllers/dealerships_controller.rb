@@ -1,5 +1,9 @@
 class DealershipsController < ApplicationController
 
+  def index
+    redirect_to root_path
+  end
+
   def show
     authenticate_user!
 

@@ -1,5 +1,9 @@
 class MembershipsController < ApplicationController
 
+  def index
+    redirect_to root_path
+  end
+
   def new
     @membership = Membership.new
     @user = current_user

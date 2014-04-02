@@ -3,4 +3,5 @@ class Customer < ActiveRecord::Base
   validates :name, :address, :phone, :email, presence: true
   belongs_to :dealership
   has_many :deals
+  has_many :conversations
 end

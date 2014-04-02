@@ -11,9 +11,12 @@ Cars::Application.routes.draw do
   resources :dealerships do
     resources :memberships
     resources :deals
-    resources :customers
     resources :cars
     resources :expenses
+    resources :vendors
+    resources :customers do
+      resources :conversations
+    end
   end
 
 

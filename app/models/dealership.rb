@@ -7,6 +7,8 @@ class Dealership < ActiveRecord::Base
   has_many :deals
   has_many :memberships
   has_many :expenses
+  has_many :vendors
+  has_many :conversations
 
   def grant_access(code)
       code == self.access_code ? true : false
