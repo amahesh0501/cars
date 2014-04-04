@@ -4,6 +4,7 @@
   Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> <br/>
   Employee: <%= link_to @user.name, user_path(@user) %> <br/>
   Car: <%= link_to @car.make, dealership_car_path(@dealership, @car) %> <br/>
+  Date: <%= @deal.date %><br/>
 
   <h2>Financials</h2>
   Purchase Price: <%= @deal.purchase_price %><br/>

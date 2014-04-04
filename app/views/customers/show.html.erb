@@ -1,6 +1,7 @@
 <div class="container">
 
   <h2>Basic Customer Information</h2>
+  <%= image_tag @customer.image(:medium) %><br/>
   Name: <%= @customer.name %> <br/>
   EMail: <%= @customer.email %> <br/>
   Phone: <%= @customer.phone %> <br/>
@@ -23,20 +24,17 @@
   <%= @customer.notes %> <br/>
 
   <h2>Conversations</h2>
+  <%= link_to "Create new Conversation", new_dealership_customer_conversation_path(@dealership, @customer) %>
   <table class="table table-striped">
-
-
-
-
     <% @conversations.each do |conversation| %>
       <tr>
         <td><%= conversation.description %></td>
         <td><%= conversation.date %></td>
         <td><%= conversation.medium %></td>
+        <td><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, @customer, conversation) %></td>
       </tr>
     <% end %>
   </table>
-
 
 
   <%= link_to "Edit Customer", edit_dealership_customer_path(@dealership, @customer) %>

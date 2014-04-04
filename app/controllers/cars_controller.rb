@@ -8,10 +8,10 @@ class CarsController < ApplicationController
     authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @car = Car.find(params[:id])
-    @expenses = Expense.where(car_id: @car.id)
-    @car_expenses = 0
-    @expenses.each {|expense| @car_expenses += expense.amount}
-    @total_price = @car.acquire_price + @car_expenses if @car.acquire_price
+    @repairs = Repair.where(car_id: @car.id)
+    @car_repair_expenses = 0
+    @repairs.each {|repair| @car_repair_expenses += repair.amount}
+    @total_price = @car.acquire_price + @car_repair_expenses if @car.acquire_price
     @purchase_price = 0
     @deal = Deal.find_by_car_id(@car.id)
     @purchase_price = @deal.purchase_price if @deal
@@ -27,6 +27,7 @@ class CarsController < ApplicationController
   def create
     authenticate_user!
     @car = Car.new(params[:car])
+    @car.make_model_year = "#{@car.year} #{@car.make} #{@car.model}"
     dealership = Dealership.find(params[:dealership_id])
     if @car.save
       dealership.cars << @car
@@ -47,6 +48,7 @@ class CarsController < ApplicationController
     authenticate_user!
     car = Car.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
+    car.make_model_year = "#{car.year} #{car.make} #{car.model}"
     if car.update_attributes(params[:car])
       redirect_to dealership_car_path(dealership, car)
     else

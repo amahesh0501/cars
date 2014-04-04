@@ -51,7 +51,7 @@ class ConversationsController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     customer = Customer.find(params[:customer_id])
     if conversation.update_attributes(params[:conversation])
-      redirect_to dealership_customer_conversation_path(dealership, customer, conversation)
+      redirect_to dealership_customer_path(dealership, customer)
     else
       flash.now[:errors] = conversation.errors.full_messages
       erb :edit

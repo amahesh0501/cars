@@ -1,0 +1,25 @@
+<div class="container">
+<%= form_for [@dealership, @paycheck] do |f| %>
+
+<div class="form-group">
+  <%= f.label :user_id %><br/>
+  <%= f.collection_select :user_id, @users.each, :id, :name, prompt: true, :selected => params[:user_id] %>
+</div>
+<div class="form-group">
+  <%= f.label :amount %><br/>
+  <%= f.text_field :amount %>
+</div>
+<div class="form-group">
+  <%= f.label :date %><br/>
+  <%= f.date_field :date %>
+</div>
+<div class="form-group">
+  <%= f.label :description%><br/>
+  <%= f.text_area :description %>
+</div>
+
+
+
+<%= f.submit "Edit Payroll Expense", :class => 'btn btn-success'  %>
+<% end %>
+</div>

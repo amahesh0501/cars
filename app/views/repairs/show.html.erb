@@ -1,0 +1,13 @@
+<div class="container">
+
+  <h2> Basic Information</h2>
+  <p><%= @repair.name %></p>
+  <p><%= @repair.amount %></p>
+  <p><%= @repair.description %></p>
+  <p><%= @repair.date %></p>
+  <p><%= link_to @car.make, dealership_car_path(@dealership, @car) if @car %></p>
+  <p><%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) if @vendor %></p>
+
+  <%= link_to "Edit repair", edit_dealership_repair_path(@dealership, @repair) %>
+
+</div>

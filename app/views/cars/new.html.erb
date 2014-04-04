@@ -20,11 +20,17 @@
   <%= f.label :miles %><br/>
   <%= f.text_field :miles %>
 </div>
-
-
+<div class="form-group">
+  <%= f.label "Upload an image" %><br/>
+  <%= f.file_field :image %>
+</div>
 <div class="form-group">
   <%= f.label :description %><br/>
   <%= f.text_area :description %>
+</div>
+<div class="form-group">
+  <%= f.label :status%><br/>
+  <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
 </div>
 <%= f.submit "Create Car", :class => 'btn btn-success'  %>
 <% end %>

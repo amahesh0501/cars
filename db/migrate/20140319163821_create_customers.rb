@@ -19,6 +19,8 @@ class CreateCustomers < ActiveRecord::Migration
       t.integer :monthly_gross_salary
       t.integer :time_at_employer
 
+      t.string :status
+
 
       t.timestamps
     end

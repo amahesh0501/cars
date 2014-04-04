@@ -5,8 +5,7 @@
   <p><%= @expense.amount %></p>
   <p><%= @expense.description %></p>
   <p><%= @expense.date %></p>
-  <p><%= link_to @car.make, dealership_car_path(@dealership, @car) if @car %></p>
-  <p><%= link_to @user.name, user_path(@user) if @user %></p>
+  <p><%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) if @vendor %></p>
 
   <%= link_to "Edit Expense", edit_dealership_expense_path(@dealership, @expense) %>
 

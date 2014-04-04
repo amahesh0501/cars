@@ -11,6 +11,11 @@
   <div><%= f.label :name %><br />
   <%= f.text_field :name %></div>
 
+  <div class="form-group">
+    <%= f.label "Upload an image" %><br/>
+    <%= f.file_field :image %>
+  </div>
+
   <div><%= f.label :password %><br />
   <%= f.password_field :password %></div>
 

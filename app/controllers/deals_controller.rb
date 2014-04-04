@@ -26,13 +26,19 @@ class DealsController < ApplicationController
   def create
     authenticate_user!
     @deal = Deal.new(params[:deal])
+    @dealership = Dealership.find(params[:dealership_id])
     if @deal.save
-      @dealership = Dealership.find(params[:dealership_id])
       @dealership.deals << @deal
+      @car = Car.find(@deal.car_id)
+      @car.status = "Sold"
+      @car.save
+      @customer = Customer.find(@deal.customer_id)
+      @customer.status = "Existing Customer"
+      @customer.save
       redirect_to dealership_deal_path(@dealership, @deal)
     else
       flash.now[:errors] = @deal.errors.full_messages
-      render :new
+      redirect_to new_dealership_deal_path(@dealership)
     end
   end
 
@@ -65,6 +71,9 @@ class DealsController < ApplicationController
   def destroy
     authenticate_user!
     deal = Deal.find(params[:id])
+    car = Car.find(deal.car_id)
+    car.status = "Frontline"
+    car.save
     deal.destroy
     redirect_to root_path
   end

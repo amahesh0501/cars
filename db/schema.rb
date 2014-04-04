@@ -11,19 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140401023443) do
+ActiveRecord::Schema.define(version: 20140403033221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cars", force: true do |t|
     t.integer  "dealership_id"
+    t.string   "status"
     t.string   "make"
     t.string   "model"
     t.string   "vin"
     t.integer  "year"
+    t.string   "make_model_year"
     t.string   "miles"
-    t.string   "status"
     t.string   "transmission"
     t.string   "body_style"
     t.string   "exterior_color"
@@ -32,19 +33,23 @@ ActiveRecord::Schema.define(version: 20140401023443) do
     t.string   "engine"
     t.integer  "doors"
     t.string   "wheel_base"
+    t.string   "license_plate"
     t.date     "acquire_date"
     t.integer  "acquire_price"
     t.string   "acquire_location"
-    t.boolean  "smog_status",      default: false
+    t.boolean  "smog_status",        default: false
     t.date     "smog_date"
     t.string   "smogged_by"
-    t.boolean  "flooring",         default: false
+    t.boolean  "flooring",           default: false
     t.string   "flooring_company"
     t.date     "flooring_date"
-    t.string   "license_plate"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "conversations", force: true do |t|
@@ -76,8 +81,13 @@ ActiveRecord::Schema.define(version: 20140401023443) do
     t.string   "employer_phone"
     t.integer  "monthly_gross_salary"
     t.integer  "time_at_employer"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "dealerships", force: true do |t|
@@ -93,6 +103,7 @@ ActiveRecord::Schema.define(version: 20140401023443) do
     t.integer  "customer_id"
     t.integer  "user_id"
     t.integer  "dealership_id"
+    t.date     "date"
     t.integer  "purchase_price"
     t.integer  "sales_tax_amount"
     t.integer  "down_payment"
@@ -106,14 +117,12 @@ ActiveRecord::Schema.define(version: 20140401023443) do
   end
 
   create_table "expenses", force: true do |t|
-    t.integer  "car_id"
-    t.integer  "user_id"
     t.integer  "dealership_id"
+    t.integer  "vendor_id"
     t.string   "name"
     t.integer  "amount"
     t.text     "description"
     t.date     "date"
-    t.integer  "vendor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -122,6 +131,28 @@ ActiveRecord::Schema.define(version: 20140401023443) do
     t.integer  "user_id"
     t.integer  "dealership_id"
     t.boolean  "revoked",       default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "paychecks", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "dealership_id"
+    t.integer  "amount"
+    t.text     "description"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "repairs", force: true do |t|
+    t.integer  "car_id"
+    t.integer  "dealership_id"
+    t.integer  "vendor_id"
+    t.string   "name"
+    t.integer  "amount"
+    t.text     "description"
+    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -144,6 +175,10 @@ ActiveRecord::Schema.define(version: 20140401023443) do
     t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

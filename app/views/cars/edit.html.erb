@@ -1,5 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @car] do |f| %>
+
 <div class="form-group">
   <%= f.label :year %><br/>
   <%= f.text_field :year %>
@@ -20,6 +21,11 @@
 <div class="form-group">
   <%= f.label :miles %><br/>
   <%= f.text_field :miles %>
+</div>
+
+<div class="form-group">
+  <%= f.label "Upload an image" %><br/>
+  <%= f.file_field :image %>
 </div>
 
 <div class="form-group">
@@ -96,6 +102,11 @@
   <%= f.label :flooring_date %><br/>
   <%= f.date_field :flooring_date %>
 </div>
+<div class="form-group">
+  <%= f.label :status%><br/>
+  <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
+</div>
+
 
 <%= f.submit "Edit Car", :class => 'btn btn-success'  %>
 <% end %>

@@ -1,22 +1,26 @@
 <div class="container">
 
   <h2> Basic Information </h2>
+  <%= image_tag @user.image(:medium) %><br/>
   Name: <%= @user.name %><br/>
   Social Security Number: <%= @user.ssn %><br/>
   E-Mail Address: <%= @user.email %><br/>
   Phone: <%= @user.phone %><br/>
 
-  <% if @cars.length > 0 %>
-    <h2>Cars</h2>
-    <% @cars.each do |car|  %>
-    <p><%= link_to car.make, dealership_car_path(@dealership, car) %></p>
+  <% if @deals.length > 0 %>
+    <h2>Deals</h2>
+    <% @deals.each do |deal|  %>
+    <% car = Car.find(deal.car_id) %>
+     <p> Sold <%= link_to car.make_model_year, dealership_car_path(@dealership, car) %> for <%= deal.purchase_price %> on <%= deal.date %> </p>
     <% end %>
   <% end %>
 
-  <% if @expenses.length > 0 %>
-    <h2>Pay History</h2>
-    <% @expenses.each do |expense|  %>
-    <p><%= "#{expense.name} ($#{expense.amount}) on #{expense.date}" %></p>
+  <h2>Pay History</h2>
+  <% if @paychecks.length > 0 %>
+    <% @paychecks.each do |paycheck|  %>
+    <p><%= "$#{paycheck.amount} on #{paycheck.date}" %> (<%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)%>)</p>
     <% end %>
   <% end %>
+  <%= link_to "Create new Payroll Expense for #{@user.name}", new_dealership_paycheck_path(@dealership, :user_id => @user.id) %>
+
 </div>

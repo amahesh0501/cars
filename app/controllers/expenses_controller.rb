@@ -8,19 +8,13 @@ class ExpensesController < ApplicationController
     authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.find(params[:id])
-    @car = Car.find(@expense.car_id) if @expense.car_id != nil
-    @user = User.find(@expense.user_id) if @expense.user_id != nil
   end
 
   def new
     authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.new
-    @users = []
-    @memberships = Membership.where(dealership_id: @dealership.id)
-    @memberships.each {|membership| @users << User.find(membership.user_id)}
     @vendors = @dealership.vendors
-    @cars = @dealership.cars
   end
 
   def create
@@ -40,11 +34,7 @@ class ExpensesController < ApplicationController
     authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.find(params[:id])
-    @users = []
-    @memberships = Membership.where(dealership_id: @dealership.id)
-    @memberships.each {|membership| @users << User.find(membership.user_id)}
-
-    @cars = @dealership.cars
+    @vendors = @dealership.vendors
   end
 
   def update

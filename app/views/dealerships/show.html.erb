@@ -7,6 +7,7 @@
     <li><a href="#employees" data-toggle="tab">Employees</a></li>
     <li><a href="#rev" data-toggle="tab">Revenue / Expenses</a></li>
     <li><a href="#financing" data-toggle="tab">Financing</a></li>
+    <li><a href="#vendors" data-toggle="tab">Vendors</a></li>
     <li><a href="#forms" data-toggle="tab">Forms</a></li>
   </ul>
 
@@ -20,11 +21,30 @@
       <%= link_to "Create Car", new_dealership_car_path(@dealership) %>
       <br/>
       <br/>
-      <table class="table table-striped">
 
-        <% @cars.each do |car| %>
+      <h2>Frontine</h2>
+      <table class="table table-striped">
+        <% @frontline_cars.each do |car| %>
           <tr>
-            <td><%= link_to "#{car.year} #{car.make} #{car.model}", dealership_car_path(@dealership, car)  %></td>
+            <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+            <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+      <h2>Need Repairs</h2>
+      <table class="table table-striped">
+        <% @repair_cars.each do |car| %>
+          <tr>
+            <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+            <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+      <h2>Sold Cars</h2>
+      <table class="table table-striped">
+        <% @sold_cars.each do |car| %>
+          <tr>
+            <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
             <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
           </tr>
         <% end %>
@@ -35,8 +55,20 @@
       <%= link_to "Create Customer", new_dealership_customer_path(@dealership) %>
       <br/>
       <br/>
+      <h2> Potential Customers</h2>
       <table class="table table-striped">
-        <% @customers.each do |customer| %>
+        <% @potential_customers.each do |customer| %>
+          <tr>
+            <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
+            <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
+
+          </tr>
+        <% end %>
+      </table>
+      <br/>
+      <h2> Existing Customers</h2>
+      <table class="table table-striped">
+        <% @existing_customers.each do |customer| %>
           <tr>
             <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
             <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
@@ -92,8 +124,23 @@
         <% @deals.each do |deal| %>
           <tr>
             <% car = Car.find(deal.car_id) %>
-            <td><%= link_to car.make, dealership_deal_path(@dealership, deal)  %></td>
+            <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
             <td><%= link_to 'Delete Deal', dealership_deal_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="tab-pane" id="vendors">
+      <br/>
+      <%= link_to "Create Vendor", new_dealership_vendor_path(@dealership) %>
+      <br/>
+      <br/>
+      <table class="table table-striped">
+
+        <% @vendors.each do |vendor| %>
+          <tr>
+            <td><%= link_to vendor.name , dealership_vendor_path(@dealership, vendor)  %></td>
+            <td><%= link_to 'Delete Vendor', dealership_vendor_path(@dealership, vendor), :confirm => 'Are you sure?', :method => :delete %></td>
           </tr>
         <% end %>
       </table>

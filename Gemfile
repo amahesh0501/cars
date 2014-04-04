@@ -9,7 +9,7 @@ gem 'rails', '4.0.0'
 #My Gems
 gem 'devise'
 
-
+gem "paperclip", "~> 3.0"
 
 gem 'pg'
 

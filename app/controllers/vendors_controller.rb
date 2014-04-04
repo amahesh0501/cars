@@ -9,6 +9,8 @@ class VendorsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @vendor = Vendor.find(params[:id])
     @expenses = Expense.where(vendor_id: @vendor.id)
+    @repairs = Repair.where(vendor_id: @vendor.id)
+    @vendor_transactions = @expenses + @repairs
   end
 
   def new

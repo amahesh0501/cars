@@ -5,6 +5,7 @@ class CreateDeals < ActiveRecord::Migration
       t.belongs_to :customer
       t.belongs_to :user
       t.belongs_to :dealership
+      t.date :date
       t.integer :purchase_price
       t.integer :sales_tax_amount
       t.integer :down_payment

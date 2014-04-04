@@ -1,6 +1,9 @@
 <div class="container">
 
+  <%= @car.status %>
+
   <h2>Basics</h2>
+  <%= image_tag @car.image(:medium) %><br/>
   Vin: <%= @car.vin %> <br/>
   Year: <%= @car.year %> <br/>
   Make: <%= @car.make %> <br/>
@@ -30,16 +33,17 @@
   Flooring Company: <%= @car.flooring_company %> <br/>
   Flooring Date: <%= @car.flooring_date %> <br/>
 
-  <% if @expenses.length > 0 %>
-    <h2>Expenses</h2>
-    <% @expenses.each do |expense|  %>
-    <p><%= link_to expense.name, dealership_expense_path(@dealership, expense) %> ($<%= expense.amount%>)</p>
+  <% if @repairs.length > 0 %>
+    <h2>Repair Expenses</h2>
+    <% @repairs.each do |repair|  %>
+    <p><%= link_to repair.name, dealership_repair_path(@dealership, repair) %> ($<%= repair.amount%>)</p>
     <% end %>
   <% end %>
+  <%= link_to "Create new Repair Expense", new_dealership_repair_path(@dealership, :car_id => @car.id) %>
 
   <h2> Profit </h2>
   Acqusition Cost: <%= @car.acquire_price %> <br/>
-  Expenses: <%= @car_expenses %><br/>
+  Repair Expenses: <%= @car_repair_expenses %><br/>
   Total Expenses: <%= @total_price %><br/>
   <%= @purchase_price != 0 ? "Purchase Price: #{@purchase_price}" : "Purchase Price: Not Yet Sold" %><br/>
   Profit: <%= @profit %>
