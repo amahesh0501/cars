@@ -16,9 +16,7 @@ class ConversationsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @customer = Customer.find(params[:customer_id])
     @conversation = Conversation.new
-    @users = []
-    @memberships = Membership.where(dealership_id: @dealership.id)
-    @memberships.each {|membership| @users << User.find(membership.user_id)}
+     @employees = @dealership.employees
   end
 
   def create
@@ -40,9 +38,7 @@ class ConversationsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @customer = Customer.find(params[:customer_id])
     @conversation = Conversation.find(params[:id])
-    @users = []
-    @memberships = Membership.where(dealership_id: @dealership.id)
-    @memberships.each {|membership| @users << User.find(membership.user_id)}
+     @employees = @dealership.employees
   end
 
   def update

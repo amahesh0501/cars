@@ -13,8 +13,8 @@
   <%= f.select :medium, ['In Person', 'Phone', 'E-Mail', 'Online Chat', 'Video Conference', 'Other']%>
 </div>
 <div class="form-group">
-  <%= f.label "Employee" %><br/>
-  <%= f.collection_select :user_id, @users.each, :id, :name, prompt: true %>
+  <%= f.label :employee_id %><br/>
+  <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, :selected => params[:employee_id] %>
 </div>
 
 <%= f.submit "Edit Conversation Details", :class => 'btn btn-success'  %>

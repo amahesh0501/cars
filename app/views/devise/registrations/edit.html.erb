@@ -7,19 +7,7 @@
   <div><%= f.label :email %><br />
   <%= f.email_field :email, :autofocus => true %></div>
 
-  <div><%= f.label :name %><br />
-  <%= f.text_field :name %></div>
 
-  <div><%= f.label :ssn %><br />
-  <%= f.text_field :ssn %></div>
-
-  <div><%= f.label :phone %><br />
-  <%= f.text_field :phone %></div>
-
-  <div class="form-group">
-    <%= f.label "Upload an image" %><br/>
-    <%= f.file_field :image %>
-  </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>

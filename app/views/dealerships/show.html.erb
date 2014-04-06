@@ -80,18 +80,14 @@
     </div>
     <div class="tab-pane" id="employees">
       <br/>
-      <%= link_to "Create Employee", new_user_registration_path %>
+      <%= link_to "Create Employee", new_dealership_employee_path(@dealership) %>
       <br/>
       <br/>
       <table class="table table-striped">
-
-        <% @memberships.each do |membership| %>
-          <% user = User.find(membership.user_id) %>
-          <% p user %>
-          <% p "*" * 100 %>
+        <% @employees.each do |employee| %>
           <tr>
-            <td><%= link_to user.name, user_path(user)  %></td>
-            <td><%= link_to 'Delete Employee', user_path(user), :confirm => 'Are you sure?', :method => :delete %></td>
+            <td><%= link_to employee.name, dealership_employee_path(@dealership, employee) %></td>
+            <td><%= link_to 'Delete Employee', dealership_employee_path(@dealership, employee), :confirm => 'Are you sure?', :method => :delete %></td>
           </tr>
         <% end %>
       </table>

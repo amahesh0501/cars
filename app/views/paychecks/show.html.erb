@@ -1,11 +1,10 @@
 <div class="container">
 
   <h2> Basic Information</h2>
-  <p><%= @paycheck.name %></p>
   <p><%= @paycheck.amount %></p>
   <p><%= @paycheck.description %></p>
   <p><%= @paycheck.date %></p>
-  <p><%= link_to @user.name, user_path(@user) if @user %></p>
+  <p><%= link_to @employee.name, dealership_employee_path(@dealership, @employee) if @employee %></p>
 
   <%= link_to "Edit Paycheck", edit_dealership_paycheck_path(@dealership, @paycheck) %>
 

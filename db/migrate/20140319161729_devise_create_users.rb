@@ -24,11 +24,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       #user_type
       t.string :user_type, default: "employee"
 
-      #employee_fields
-      t.string :name
-      t.string :ssn
-      t.string :address
-      t.string :phone
+
 
 
 

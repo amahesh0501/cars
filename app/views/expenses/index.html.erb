@@ -1,0 +1,62 @@
+<div class="container">
+
+  <%= form_tag(controller: "expenses", action: "get_dates", remote: true, class: "date_form") do %>
+    <%= label_tag("Enter date range:") %><br/>
+    <%= date_field_tag(:start_date) %><br/>
+    <%= date_field_tag(:end_date) %><br/>
+    <%= hidden_field_tag(:dealership_id, @dealership.id) %>
+    <%= submit_tag("See Expenses") %>
+  <% end %>
+
+  <br/><br/>
+
+  <h2> Profit: <%= @profit %></h2>
+  <h2> Revenue: <%= @revenue_total %></h2>
+  <h2> Expenses: <%= @expense_total %></h2>
+
+  <hr/>
+
+  <h3>Revenue</h3>
+
+  <table class="table table-striped">
+    <% if @deals %>
+    <% @deals.each do |deal| %>
+      <tr>
+          <% car = Car.find(deal.car_id) %>
+          <td><%= link_to "Sold #{car.make_model_year}", dealership_deal_path(@dealership, deal)  %></td>
+          <td><%= deal.purchase_price  %></td>
+          <td><%= deal.date  %></td>
+          <td><%= link_to 'Delete', dealership_expense_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+    <% end %>
+  </table>
+
+  <h3>Expenses</h3>
+
+  <table class="table table-striped">
+    <% if @transactions %>
+    <% @transactions.each do |transaction| %>
+      <tr>
+        <% if transaction.class.table_name == "expenses" %>
+          <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
+          <td><%= transaction.amount  %></td>
+          <td><%= transaction.date  %></td>
+          <td><%= link_to 'Delete', dealership_expense_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
+        <% elsif  transaction.class.table_name == "repairs" %>
+          <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
+          <td><%= transaction.amount  %></td>
+          <td><%= transaction.date  %></td>
+          <td><%= link_to 'Delete', dealership_repair_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
+        <% elsif  transaction.class.table_name == "paychecks" %>
+          <% employee = Employee.find(transaction.employee_id) %>
+          <td><%= link_to "Paycheck for #{employee.name}", dealership_paycheck_path(@dealership, transaction)  %></td>
+          <td><%= transaction.amount  %></td>
+          <td><%= transaction.date  %></td>
+          <td><%= link_to 'Delete', dealership_repair_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+    <% end %>
+  </table>
+</div>

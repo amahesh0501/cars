@@ -2,7 +2,7 @@
 
   <h2>Basic Information</h2>
   Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> <br/>
-  Employee: <%= link_to @user.name, user_path(@user) %> <br/>
+  Employee: <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) if @employee %> <br/>
   Car: <%= link_to @car.make, dealership_car_path(@dealership, @car) %> <br/>
   Date: <%= @deal.date %><br/>
 

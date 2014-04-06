@@ -2,7 +2,7 @@
 <%= form_for [@dealership, @customer] do |f| %>
 <div class="form-group">
   <%= f.label :status%><br/>
-  <%= f.select :status, ['Potential Lead', 'Existing Customer']%>
+  <%= f.select :status, ['Potential Customer', 'Existing Customer']%>
 </div>
 <div class="form-group">
   <%= f.label :name %><br/>

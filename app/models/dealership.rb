@@ -6,6 +6,7 @@ class Dealership < ActiveRecord::Base
   has_many :cars
   has_many :deals
   has_many :memberships
+  has_many :employees
   has_many :expenses
   has_many :repairs
   has_many :paychecks

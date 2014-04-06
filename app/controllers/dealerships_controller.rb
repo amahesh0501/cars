@@ -12,12 +12,13 @@ class DealershipsController < ApplicationController
     @sold_cars = Car.where(dealership_id: @dealership.id, status: "Sold")
     @frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs")
-    @potential_customers = Customer.where(dealership_id: @dealership.id, status: "Potential Lead")
+    @potential_customers = Customer.where(dealership_id: @dealership.id, status: "Potential Customer")
     @existing_customers = Customer.where(dealership_id: @dealership.id, status: "Existing Customer")
     @memberships = Membership.where(dealership_id: @dealership.id)
     @deals = @dealership.deals
     @expenses = @dealership.expenses
     @vendors = @dealership.vendors
+    @employees = @dealership.employees
     @membership = Membership.find_by_user_id_and_dealership_id(current_user.id, @dealership.id)
     if @membership
       if @membership.revoked?(@membership)

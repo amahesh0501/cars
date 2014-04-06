@@ -1,6 +1,6 @@
 class Paycheck < ActiveRecord::Base
-  attr_accessible :amount, :description, :date, :dealership_id, :user_id
+  attr_accessible :amount, :description, :date, :dealership_id, :employee_id
 
   belongs_to :dealership
-  belongs_to :user
+  belongs_to :employee
 end

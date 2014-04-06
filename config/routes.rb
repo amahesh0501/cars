@@ -1,6 +1,6 @@
 Cars::Application.routes.draw do
 
-  devise_for :users, :controllers => { registrations: 'registrations' }
+  devise_for :users
 
   root :to => 'pages#index'
 
@@ -16,6 +16,7 @@ Cars::Application.routes.draw do
     resources :repairs
     resources :paychecks
     resources :vendors
+    resources :employees
     resources :customers do
       resources :conversations
     end
@@ -23,6 +24,8 @@ Cars::Application.routes.draw do
 
 
   match 'users/:id' => 'users#show', via: :get, as: 'user'
+  match 'get_dates', :to => 'expenses#get_dates', via: :post
+  match 'show_dates', :to => 'expenses#get_dates', via: :post
 
 
 

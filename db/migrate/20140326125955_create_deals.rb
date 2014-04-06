@@ -3,7 +3,7 @@ class CreateDeals < ActiveRecord::Migration
     create_table :deals do |t|
       t.belongs_to :car
       t.belongs_to :customer
-      t.belongs_to :user
+      t.belongs_to :employee
       t.belongs_to :dealership
       t.date :date
       t.integer :purchase_price

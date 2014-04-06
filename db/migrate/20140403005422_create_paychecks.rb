@@ -1,7 +1,7 @@
 class CreatePaychecks < ActiveRecord::Migration
   def change
     create_table :paychecks do |t|
-      t.belongs_to :user
+      t.belongs_to :employee
       t.belongs_to :dealership
 
       t.integer :amount

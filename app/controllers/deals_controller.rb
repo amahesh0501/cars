@@ -6,7 +6,9 @@ class DealsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @deal = Deal.find(params[:id])
     @customer = Customer.find(@deal.customer_id)
-    @user = User.find(@deal.user_id)
+    unless @deal.employee_id != nil
+      @employee = Employee.find(@deal.employee_id)
+    end
     @car = Car.find(@deal.car_id)
   end
 
@@ -15,9 +17,7 @@ class DealsController < ApplicationController
     @deal = Deal.new
     @dealership = Dealership.find(params[:dealership_id])
 
-    @users = []
-    @memberships = Membership.where(dealership_id: @dealership.id)
-    @memberships.each {|membership| @users << User.find(membership.user_id)}
+    @employees = @dealership.employees
 
     @cars = @dealership.cars
     @customers = @dealership.customers
@@ -27,8 +27,8 @@ class DealsController < ApplicationController
     authenticate_user!
     @deal = Deal.new(params[:deal])
     @dealership = Dealership.find(params[:dealership_id])
+    @deal.dealership_id = @dealership.id
     if @deal.save
-      @dealership.deals << @deal
       @car = Car.find(@deal.car_id)
       @car.status = "Sold"
       @car.save
@@ -47,9 +47,7 @@ class DealsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @deal = Deal.find(params[:id])
 
-    @users = []
-    @memberships = Membership.where(dealership_id: @dealership.id)
-    @memberships.each {|membership| @users << User.find(membership.user_id)}
+    @employees = @dealership.employees
 
     @cars = @dealership.cars
     @customers = @dealership.customers
@@ -58,13 +56,14 @@ class DealsController < ApplicationController
 
   def update
     authenticate_user!
-    deal = Deal.find(params[:id])
-    if deal.update_attributes(params[:deal])
-      dealership = Dealership.find(params[:dealership_id])
+    @deal = Deal.find(params[:id])
+    @dealership = Dealership.find(params[:dealership_id])
+
+    if @deal.update_attributes(params[:deal])
       redirect_to dealership_deal_path(dealership, deal)
     else
-      flash.now[:errors] = deal.errors.full_messages
-      erb :edit
+      flash.now[:errors] = @deal.errors.full_messages
+      redirect_to edit_dealership_deal_path(@dealership, @deal)
     end
   end
 
@@ -74,6 +73,11 @@ class DealsController < ApplicationController
     car = Car.find(deal.car_id)
     car.status = "Frontline"
     car.save
+    customer = Customer.find(deal.customer_id)
+    if customer.deals.length == 1
+      customer.status = "Potential Customer"
+      customer.save
+    end
     deal.destroy
     redirect_to root_path
   end

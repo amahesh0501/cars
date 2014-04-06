@@ -51,6 +51,13 @@ class CustomersController < ApplicationController
   def destroy
     authenticate_user!
     customer = Customer.find(params[:id])
+    deal = Deal.find_by_customer_id(customer.id)
+    if deal
+      car = Car.find(deal.car_id)
+      car.status = "Frontline"
+      car.save
+      deal.destroy
+    end
     customer.destroy
     redirect_to root_path
   end
