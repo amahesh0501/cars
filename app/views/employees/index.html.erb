@@ -1,0 +1,13 @@
+<div class="container">
+  <%= link_to "Create Employee", new_dealership_employee_path(@dealership) %>
+  <br/>
+  <br/>
+  <table class="table table-striped">
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= link_to employee.name, dealership_employee_path(@dealership, employee) %></td>
+        <td><%= link_to 'Delete Employee', dealership_employee_path(@dealership, employee), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

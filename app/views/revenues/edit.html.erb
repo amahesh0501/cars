@@ -1,0 +1,28 @@
+<div class="container">
+<%= form_for [@dealership, @revenue] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
+
+<div class="form-group">
+  <%= f.label :name %><br/>
+  <%= f.text_field :name %>
+</div>
+<div class="form-group">
+  <%= f.label :amount %><br/>
+  <%= f.text_field :amount %>
+</div>
+<div class="form-group">
+  <%= f.label :description %><br/>
+  <% if @fields %>
+    <%= f.text_area :description, value: @fields["description"] %>
+  <% else %>
+    <%= f.text_area :description %>
+  <% end %>
+</div>
+<div class="form-group">
+  <%= f.label :date %><br/>
+  <%= f.date_field :date %>
+</div>
+
+<%= f.submit "Create Revenue Entry", :class => 'btn btn-success'  %>
+<% end %>
+</div>

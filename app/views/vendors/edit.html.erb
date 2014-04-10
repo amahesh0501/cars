@@ -1,24 +1,42 @@
 <div class="container">
 <%= form_for [@dealership, @vendor] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
+
 <div class="form-group">
   <%= f.label :name %><br/>
   <%= f.text_field :name %>
 </div>
 <div class="form-group">
   <%= f.label :address %><br/>
-  <%= f.text_field :address %>
+  <% if @fields %>
+    <%= f.text_field :address, value: @fields["address"] %>
+  <% else %>
+    <%= f.text_field :address %>
+  <% end %>
 </div>
 <div class="form-group">
-  <%= f.label :contact_name%><br/>
-  <%= f.text_field :contact_name %>
+  <%= f.label :contact_name %><br/>
+  <% if @fields %>
+    <%= f.text_field :contact_name, value: @fields["contact_name"] %>
+  <% else %>
+    <%= f.text_field :contact_name %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :contact_phone %><br/>
-  <%= f.text_field :contact_phone %>
+  <% if @fields %>
+    <%= f.text_field :contact_phone, value: @fields["contact_phone"] %>
+  <% else %>
+    <%= f.text_field :contact_phone %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :contact_email %><br/>
-  <%= f.text_field :contact_email %>
+  <% if @fields %>
+    <%= f.text_field :contact_email, value: @fields["contact_email"] %>
+  <% else %>
+    <%= f.text_field :contact_email %>
+  <% end %>
 </div>
 
 <%= f.submit "Edit Vendor", :class => 'btn btn-success'  %>

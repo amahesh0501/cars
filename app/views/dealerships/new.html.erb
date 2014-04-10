@@ -1,13 +1,30 @@
 <div class="container">
-<%= form_for @dealership do |f| %>
-<div class="form-group">
-  <%= f.label :dealership_name %><br/>
-  <%= f.text_field :dealership_name %>
-</div>
-<div class="form-group">
-  <%= f.label :dealership_address%><br/>
-  <%= f.text_field :dealership_address %>
-</div>
-<%= f.submit "Create Dealership", :class => 'btn btn-success'  %>
+
+<% if @errors %>
+  <% @errors.each do |error| %>
+  <p><%=error%></p>
+  <% end %>
 <% end %>
+
+<%= form_tag(controller: "dealerships", action: "create", method: "put") do %>
+  <div class="form-group">
+    <%= label_tag("Dealership Name") %><br/>
+    <%= text_field_tag(:dealership_name) %>
+  </div>
+  <div class="form-group">
+    <%= label_tag("Dealership Address") %><br/>
+    <%= text_field_tag(:dealership_address) %>
+  </div>
+  <div class="form-group">
+    <%= label_tag("User E-Mail") %><br/>
+    <%= text_field_tag(:email) %>
+  </div>
+  <div class="form-group">
+    <%= label_tag("User Password") %><br/>
+    <%= text_field_tag(:password) %>
+  </div>
+  <%= submit_tag("Submit") %>
+<% end %>
+
+
 </div>

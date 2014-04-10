@@ -1,5 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @paycheck] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
 
 <div class="form-group">
   <%= f.label :employee_id %><br/>
@@ -14,8 +15,12 @@
   <%= f.date_field :date %>
 </div>
 <div class="form-group">
-  <%= f.label :description%><br/>
-  <%= f.text_area :description %>
+  <%= f.label :description %><br/>
+  <% if @fields %>
+    <%= f.text_area :description, value: @fields["description"] %>
+  <% else %>
+    <%= f.text_area :description %>
+  <% end %>
 </div>
 
 

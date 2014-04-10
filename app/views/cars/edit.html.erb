@@ -1,6 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @car] do |f| %>
-
+<%= render 'layouts/error_messages', object: f.object %>
 <div class="form-group">
   <%= f.label :year %><br/>
   <%= f.text_field :year %>
@@ -16,11 +16,19 @@
 
 <div class="form-group">
   <%= f.label :vin %><br/>
-  <%= f.text_field :vin %>
+  <% if @fields %>
+    <%= f.text_field :vin, value: @fields["vin"] %>
+  <% else %>
+    <%= f.text_field :vin %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :miles %><br/>
-  <%= f.text_field :miles %>
+  <% if @fields %>
+    <%= f.text_field :miles, value: @fields["miles"] %>
+  <% else %>
+    <%= f.text_field :miles %>
+  <% end %>
 </div>
 
 <div class="form-group">
@@ -30,45 +38,81 @@
 
 <div class="form-group">
   <%= f.label :transmission %><br/>
-  <%= f.text_field :transmission %>
+  <% if @fields %>
+    <%= f.text_field :transmission, value: @fields["transmission"] %>
+  <% else %>
+    <%= f.text_field :transmission %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :body_style %><br/>
-  <%= f.text_field :body_style %>
+  <% if @fields %>
+    <%= f.text_field :body_style, value: @fields["body_style"] %>
+  <% else %>
+    <%= f.text_field :body_style %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :exterior_color %><br/>
-  <%= f.text_field :exterior_color %>
+  <% if @fields %>
+    <%= f.text_field :exterior_color, value: @fields["exterior_color"] %>
+  <% else %>
+    <%= f.text_field :exterior_color %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :interior_color %><br/>
-  <%= f.text_field :interior_color %>
+  <% if @fields %>
+    <%= f.text_field :interior_color, value: @fields["interior_color"] %>
+  <% else %>
+    <%= f.text_field :interior_color %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :fuel %><br/>
-  <%= f.text_field :fuel %>
+  <% if @fields %>
+    <%= f.text_field :fuel, value: @fields["fuel"] %>
+  <% else %>
+    <%= f.text_field :fuel %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :engine %><br/>
-  <%= f.text_field :engine %>
+  <% if @fields %>
+    <%= f.text_field :engine, value: @fields["engine"] %>
+  <% else %>
+    <%= f.text_field :engine %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :doors %><br/>
-  <%= f.text_field :doors %>
+  <% if @fields %>
+    <%= f.text_field :doors, value: @fields["doors"] %>
+  <% else %>
+    <%= f.text_field :doors %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :wheel_base %><br/>
-  <%= f.text_field :wheel_base %>
+  <% if @fields %>
+    <%= f.text_field :wheel_base, value: @fields["wheel_base"] %>
+  <% else %>
+    <%= f.text_field :wheel_base %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :license_plate %><br/>
-  <%= f.text_field :license_plate %>
+  <% if @fields %>
+    <%= f.text_field :license_plate, value: @fields["license_plate"] %>
+  <% else %>
+    <%= f.text_field :license_plate %>
+  <% end %>
 </div>
 
 <h2> Purchase Infromation </h2>
 <div class="form-group">
   <%= f.label :acquire_date %><br/>
-  <%= f.text_field :acquire_date %>
+  <%= f.date_field :acquire_date %>
 </div>
 <div class="form-group">
   <%= f.label :acquire_price %><br/>
@@ -76,31 +120,59 @@
 </div>
 <div class="form-group">
   <%= f.label :acquire_location %><br/>
-  <%= f.text_field :acquire_location %>
+ <% if @fields %>
+   <%= f.text_field :acquire_location, value: @fields["acquire_location"] %>
+ <% else %>
+   <%= f.text_field :acquire_location %>
+ <% end %>
 </div>
 <div class="form-group">
   <%= f.label :smog_status %><br/>
-  <%= f.check_box :smog_status %>
+  <% if @fields %>
+    <%= f.text_field :smog_status, value: @fields["smog_status"] %>
+  <% else %>
+    <%= f.text_field :smog_status %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :smog_date %><br/>
-  <%= f.date_field :smog_date %>
+  <% if @fields %>
+    <%= f.date_field :smog_date, value: @fields["smog_date"] %>
+  <% else %>
+    <%= f.date_field :smog_date %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :smogged_by %><br/>
-  <%= f.text_field :smogged_by %>
+  <% if @fields %>
+    <%= f.text_field :smogged_by, value: @fields["smogged_by"] %>
+  <% else %>
+    <%= f.text_field :smogged_by %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :flooring %><br/>
-  <%= f.check_box :flooring %>
+  <% if @fields %>
+    <%= f.check_box :flooring, value: @fields["flooring"] %>
+  <% else %>
+    <%= f.check_box :flooring %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :flooring_company %><br/>
-  <%= f.text_field :flooring_company %>
+  <% if @fields %>
+    <%= f.text_field :flooring_company, value: @fields["flooring_company"] %>
+  <% else %>
+    <%= f.text_field :flooring_company %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :flooring_date %><br/>
-  <%= f.date_field :flooring_date %>
+  <% if @fields %>
+    <%= f.date_field :vin, value: @fields["flooring_date"] %>
+  <% else %>
+    <%= f.date_field :vin %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :status%><br/>

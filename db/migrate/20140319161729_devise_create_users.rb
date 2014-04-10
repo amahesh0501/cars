@@ -22,7 +22,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string   :last_sign_in_ip
 
       #user_type
-      t.string :user_type, default: "employee"
+      t.boolean :site_admin, default: "false"
 
 
 

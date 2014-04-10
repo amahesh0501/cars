@@ -1,11 +1,12 @@
 class PaychecksController < ApplicationController
 
+  before_filter :authenticate_user!, :dealership_active?, :is_member?
+
   def index
     redirect_to root_path
   end
 
   def show
-    authenticate_user!
     paycheck = Paycheck.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     employee = Employee.find(paycheck.employee_id)
@@ -13,48 +14,49 @@ class PaychecksController < ApplicationController
   end
 
   def new
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
-    @paycheck = Paycheck.new
+    flash[:paycheck] ? @paycheck = Paycheck.new(flash[:paycheck]) : @paycheck = Paycheck.new
     @employees = @dealership.employees
   end
 
   def create
-    authenticate_user!
     @paycheck = Paycheck.new(params[:paycheck])
     dealership = Dealership.find(params[:dealership_id])
-    employee = Employee.find(@paycheck.employee_id)
+    if @paycheck.employee_id
+      employee = Employee.find(@paycheck.employee_id)
+      @paycheck.name = employee.name
+    end
+    @paycheck.dealership_id = dealership.id
     if @paycheck.save
-      dealership.paychecks << @paycheck
       redirect_to dealership_employee_path(dealership, employee)
     else
-      flash.now[:errors] = @paycheck.errors.full_messages
-      render :new
+      flash[:errors] = @paycheck.errors.full_messages
+      flash[:paycheck] = params[:paycheck]
+      redirect_to new_dealership_paycheck_path(dealership)
     end
   end
 
   def edit
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @paycheck = Paycheck.find(params[:id])
     @employees = @dealership.employees
+    @fields = flash[:paycheck] if flash[:paycheck]
   end
 
   def update
-    authenticate_user!
     paycheck = Paycheck.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     employee = Employee.find(paycheck.employee_id)
     if paycheck.update_attributes(params[:paycheck])
       redirect_to dealership_employee_path(dealership, employee)
     else
-      flash.now[:errors] = paycheck.errors.full_messages
-      erb :edit
+      flash[:errors] = paycheck.errors.full_messages
+      flash[:paycheck] = params[:paycheck]
+      redirect_to edit_dealership_paycheck_path(dealership, paycheck)
     end
   end
 
   def destroy
-    authenticate_user!
     paycheck = Paycheck.find(params[:id])
     paycheck.destroy
     redirect_to root_path

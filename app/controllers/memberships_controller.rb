@@ -1,7 +1,11 @@
 class MembershipsController < ApplicationController
 
+  before_filter :authenticate_user!, :dealership_active?, :is_member?
+
   def index
-    redirect_to root_path
+    @dealership = Dealership.find(params[:dealership_id])
+    @has_access = Membership.where(dealership_id: @dealership.id, has_access: true)
+    @no_access = Membership.where(dealership_id: @dealership.id, has_access: false)
   end
 
   def new
@@ -13,38 +17,9 @@ class MembershipsController < ApplicationController
 
   def create
     dealership = Dealership.find(params[:dealership_id])
-    Membership.create(user_id: current_user.id, dealership_id: dealership.id) if dealership.grant_access(params[:access_code])
-    redirect_to dealership_path(dealership)
+    membership = Membership.new(user_id: current_user.id, dealership_id: dealership.id, email_address: current_user.email)
+    redirect_to dealership_path(dealership) if membership.save
   end
 
-  def revoke
-    @membership = Membership.where(user_id: params[:user_id], dealership_id: params[:dealership_id]).first
-    if !@membership
-      id = nil
-    else
-      id = @membership.user_id
-      @membership.revoked = true
-      @membership.save
-    end
-    render json: {user_id: id}.to_json
-  end
-
-  # def reinstate
-  #   @membership = Membership.where(user_id: params[:user_id], dealership_id: params[:dealership_id]).first
-  #   if !@membership
-  #     id = nil
-  #   else
-  #     id = @membership.user_id
-  #     @membership.revoked = false
-  #     @membership.save
-  #   end
-  #   render json: {user_id: id}.to_json
-  # end
-
-  # def destroy
-  #   membership = Membership.find(params[:id])
-  #   membership.destroy
-  #   render json: {dealership_id: params[:dealership_id], user_id: current_user.id}.to_json
-  # end
 
 end

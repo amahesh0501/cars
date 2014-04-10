@@ -1,0 +1,11 @@
+<div class="container">
+
+  <h2> Basic Information</h2>
+  <p><%= @revenue.name %></p>
+  <p><%= @revenue.amount %></p>
+  <p><%= @revenue.description %></p>
+  <p><%= @revenue.date %></p>
+
+  <%= link_to "Edit Revenue Entry", edit_dealership_revenue_path(@dealership, @revenue) %>
+
+</div>

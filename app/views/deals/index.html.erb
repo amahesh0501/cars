@@ -1,0 +1,18 @@
+<div class="container">
+
+  <%= link_to "Create Deal", new_dealership_deal_path(@dealership) %>
+  <br/>
+  <br/>
+  <table class="table table-striped">
+
+    <% @deals.each do |deal| %>
+      <tr>
+        <% car = Car.find(deal.car_id) %>
+        <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
+        <td><%= link_to 'Delete Deal', dealership_deal_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+
+</div>

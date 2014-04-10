@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404231925) do
+ActiveRecord::Schema.define(version: 20140407054109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20140404231925) do
     t.string   "dealership_name"
     t.string   "dealership_address"
     t.string   "access_code",        default: "12345"
+    t.boolean  "active",             default: true
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -104,7 +105,7 @@ ActiveRecord::Schema.define(version: 20140404231925) do
     t.integer  "employee_id"
     t.integer  "dealership_id"
     t.date     "date"
-    t.integer  "purchase_price"
+    t.integer  "amount"
     t.integer  "sales_tax_amount"
     t.integer  "down_payment"
     t.integer  "term"
@@ -145,7 +146,9 @@ ActiveRecord::Schema.define(version: 20140404231925) do
   create_table "memberships", force: true do |t|
     t.integer  "user_id"
     t.integer  "dealership_id"
-    t.boolean  "revoked",       default: false
+    t.string   "email_address"
+    t.boolean  "has_access",          default: false
+    t.boolean  "is_dealership_admin", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -153,9 +156,21 @@ ActiveRecord::Schema.define(version: 20140404231925) do
   create_table "paychecks", force: true do |t|
     t.integer  "employee_id"
     t.integer  "dealership_id"
+    t.string   "name"
     t.integer  "amount"
     t.text     "description"
     t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "purchases", force: true do |t|
+    t.integer  "car_id"
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.integer  "amount"
+    t.date     "date"
+    t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -172,18 +187,28 @@ ActiveRecord::Schema.define(version: 20140404231925) do
     t.datetime "updated_at"
   end
 
+  create_table "revenues", force: true do |t|
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.integer  "amount"
+    t.text     "description"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "",         null: false
-    t.string   "encrypted_password",     default: "",         null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,          null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "user_type",              default: "employee"
+    t.boolean  "site_admin",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

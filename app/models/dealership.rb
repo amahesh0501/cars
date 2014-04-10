@@ -1,6 +1,6 @@
 class Dealership < ActiveRecord::Base
 
-  attr_accessible :dealership_name, :dealership_address, :access_code
+  attr_accessible :dealership_name, :dealership_address, :access_code, :active
 
   has_many :customers
   has_many :cars
@@ -12,6 +12,10 @@ class Dealership < ActiveRecord::Base
   has_many :paychecks
   has_many :vendors
   has_many :conversations
+  has_many :purchases
+  has_many :revenues
+
+  validates_presence_of :dealership_name
 
   def grant_access(code)
       code == self.access_code ? true : false

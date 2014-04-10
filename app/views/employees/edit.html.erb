@@ -1,19 +1,45 @@
 <div class="container">
 <%= form_for [@dealership, @employee] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
+
   <div><%= f.label :name %><br />
   <%= f.text_field :name %></div>
 
-  <div><%= f.label :ssn %><br />
-  <%= f.text_field :ssn %></div>
+  <div class="form-group">
+    <%= f.label :ssn %><br/>
+    <% if @fields %>
+      <%= f.text_field :ssn, value: @fields["ssn"] %>
+    <% else %>
+      <%= f.text_field :ssn %>
+    <% end %>
+  </div>
 
-  <div><%= f.label :email %><br />
-  <%= f.text_field :email %></div>
+  <div class="form-group">
+    <%= f.label :email %><br/>
+    <% if @fields %>
+      <%= f.text_field :email, value: @fields["email"] %>
+    <% else %>
+      <%= f.text_field :email %>
+    <% end %>
+  </div>
 
-  <div><%= f.label :phone %><br />
-  <%= f.text_field :phone %></div>
+  <div class="form-group">
+    <%= f.label :phone %><br/>
+    <% if @fields %>
+      <%= f.text_field :phone, value: @fields["phone"] %>
+    <% else %>
+      <%= f.text_field :phone %>
+    <% end %>
+  </div>
 
-  <div><%= f.label :address %><br />
-  <%= f.text_field :address %></div>
+  <div class="form-group">
+    <%= f.label :address %><br/>
+    <% if @fields %>
+      <%= f.text_field :address, value: @fields["address"] %>
+    <% else %>
+      <%= f.text_field :address %>
+    <% end %>
+  </div>
 
 
   <div class="form-group">

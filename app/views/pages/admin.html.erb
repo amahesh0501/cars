@@ -1,0 +1,18 @@
+<div class="container">
+  <%= link_to "Create Dealership", new_dealership_path %>
+
+  <table class="table table-striped">
+
+    <% @dealerships.each do |dealership| %>
+      <% membership = Membership.where(dealership_id: dealership.id, is_dealership_admin: true) %>
+      <% admin = User.find(membership.first.user_id) %>
+      <tr>
+        <td><%= link_to dealership.dealership_name , dealership_path(dealership)  %></td>
+        <td><%= link_to admin.email, user_path(admin) %>
+        <td><%= link_to 'Mark as Inactive', mark_inactive_path(dealership_id: dealership.id) if dealership.active == true %></td>
+        <td><%= link_to 'Mark as Active', mark_active_path(dealership_id: dealership.id) if dealership.active == false %></td>
+
+      </tr>
+    <% end %>
+  </table>
+</div>

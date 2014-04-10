@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>Current Users</h2>
+  <table class="table table-striped">
+    <% @has_access.each do |membership| %>
+      <tr>
+        <td><%= membership.email_address %></td>
+        <td><%= link_to 'Revoke Membership', revoke_member_path(membership_id: membership.id) unless membership.is_dealership_admin == true %></td>
+
+      </tr>
+    <% end %>
+  </table>
+
+  <h2>Users who have Requested Access</h2>
+  <table class="table table-striped">
+    <% @no_access.each do |membership| %>
+      <tr>
+        <td><%= membership.email_address %></td>
+        <td><%= link_to 'Approve Membership', approve_member_path(membership_id: membership.id) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

@@ -4,4 +4,7 @@ class Conversation < ActiveRecord::Base
   belongs_to :dealership
   belongs_to :employee
   belongs_to :customer
+
+  validates_presence_of :date, :dealership_id, :customer_id, :description
+
 end

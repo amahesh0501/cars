@@ -1,5 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @employee] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
   <div><%= f.label :name %><br />
   <%= f.text_field :name %></div>
 

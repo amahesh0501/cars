@@ -10,5 +10,19 @@ class PagesController < ApplicationController
       end
     end
   end
+
+  def admin
+    authenticate_user!
+    is_admin?
+    @dealerships = Dealership.all
+  end
+
+  def inactive
+  end
+
+  def blocked
+  end
+
+
 end
 

@@ -11,7 +11,7 @@
     <h2>Deals</h2>
     <% @deals.each do |deal|  %>
     <% car = Car.find(deal.car_id) %>
-     <p> Sold <%= link_to car.make_model_year, dealership_car_path(@dealership, car) %> for <%= deal.purchase_price %> on <%= deal.date %> </p>
+     <p> Sold <%= link_to car.make_model_year, dealership_car_path(@dealership, car) %> for <%= deal.amount %> on <%= deal.date %> </p>
     <% end %>
   <% end %>
 

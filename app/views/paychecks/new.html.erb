@@ -1,5 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @paycheck] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
 
 <div class="form-group">
   <%= f.label :employee_id %><br/>

@@ -1,5 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @deal] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
 <div class="form-group">
   <%= f.label :car_id %><br/>
   <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true %>
@@ -19,28 +20,48 @@
 
 <h2>Financials</h2>
 <div class="form-group">
-  <%= f.label :purchase_price %><br/>
-  <%= f.text_field :purchase_price %>
+  <%= f.label :amount %><br/>
+  <%= f.text_field :amount %>
 </div>
 <div class="form-group">
   <%= f.label :sales_tax_amount %><br/>
-  <%= f.text_field :sales_tax_amount %>
+  <% if @fields %>
+    <%= f.text_field :sales_tax_amount, value: @fields["sales_tax_amount"] %>
+  <% else %>
+    <%= f.text_field :sales_tax_amount %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :down_payment %><br/>
-  <%= f.text_field :down_payment %>
+  <% if @fields %>
+    <%= f.text_field :down_payment, value: @fields["down_payment"] %>
+  <% else %>
+    <%= f.text_field :down_payment %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :term %><br/>
-  <%= f.text_field :term %>
+  <% if @fields %>
+    <%= f.text_field :term, value: @fields["term"] %>
+  <% else %>
+    <%= f.text_field :term %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :apr %><br/>
-  <%= f.text_field :apr %>
+  <% if @fields %>
+    <%= f.text_field :apr, value: @fields["apr"] %>
+  <% else %>
+    <%= f.text_field :apr %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :trade_in_value %><br/>
-  <%= f.text_field :trade_in_value %>
+  <% if @fields %>
+    <%= f.text_field :trade_in_value, value: @fields["trade_in_value"] %>
+  <% else %>
+    <%= f.text_field :trade_in_value %>
+  <% end %>
 </div>
 
 <h2>GAP Insurance</h2>
@@ -50,7 +71,11 @@
 </div>
 <div class="form-group">
   <%= f.label :gap_name %><br/>
-  <%= f.text_field :gap_name %>
+  <% if @fields %>
+    <%= f.text_field :gap_name, value: @fields["gap_name"] %>
+  <% else %>
+    <%= f.text_field :gap_name %>
+  <% end %>
 </div>
 <%= f.submit "Edit Deal", :class => 'btn btn-success'  %>
 <% end %>

@@ -1,0 +1,28 @@
+<div class="container">
+
+  <%= link_to "Create Customer", new_dealership_customer_path(@dealership) %>
+  <br/>
+  <br/>
+  <h2> Potential Customers</h2>
+  <table class="table table-striped">
+    <% @potential_customers.each do |customer| %>
+      <tr>
+        <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
+        <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
+
+      </tr>
+    <% end %>
+  </table>
+  <br/>
+  <h2> Existing Customers</h2>
+  <table class="table table-striped">
+    <% @existing_customers.each do |customer| %>
+      <tr>
+        <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
+        <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
+
+      </tr>
+    <% end %>
+  </table>
+
+</div>

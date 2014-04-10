@@ -19,14 +19,20 @@
   <h3>Revenue</h3>
 
   <table class="table table-striped">
-    <% if @deals %>
-    <% @deals.each do |deal| %>
+    <% if @gains %>
+    <% @gains.each do |gain| %>
       <tr>
-          <% car = Car.find(deal.car_id) %>
-          <td><%= link_to "Sold #{car.make_model_year}", dealership_deal_path(@dealership, deal)  %></td>
-          <td><%= deal.purchase_price  %></td>
-          <td><%= deal.date  %></td>
-          <td><%= link_to 'Delete', dealership_expense_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+        <% if gain.class.table_name == "deals" %>
+          <% car = Car.find(gain.car_id) %>
+          <td><%= link_to "Sold #{car.make_model_year}", dealership_deal_path(@dealership, gain)  %></td>
+          <td><%= gain.amount  %></td>
+          <td><%= gain.date  %></td>
+        <% elsif gain.class.table_name == "revenues" %>
+        <td><%= link_to gain.name, dealership_revenue_path(@dealership, gain)  %></td>
+        <td><%= gain.amount  %></td>
+        <td><%= gain.date  %></td>
+        <% end %>
+
       </tr>
     <% end %>
     <% end %>
@@ -49,11 +55,15 @@
           <td><%= transaction.date  %></td>
           <td><%= link_to 'Delete', dealership_repair_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
         <% elsif  transaction.class.table_name == "paychecks" %>
-          <% employee = Employee.find(transaction.employee_id) %>
-          <td><%= link_to "Paycheck for #{employee.name}", dealership_paycheck_path(@dealership, transaction)  %></td>
+          <td><%= link_to "Paycheck for #{transaction.name}", dealership_paycheck_path(@dealership, transaction)  %></td>
           <td><%= transaction.amount  %></td>
           <td><%= transaction.date  %></td>
           <td><%= link_to 'Delete', dealership_repair_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
+        <% elsif transaction.class.table_name == "purchases" %>
+          <% car = Car.find_by_make_model_year(transaction.name) %>
+          <td><%= link_to "Purchased for #{transaction.name}", dealership_car_path(@dealership, car)  %></td>
+          <td><%= transaction.amount  %></td>
+          <td><%= transaction.date  %></td>
         <% end %>
       </tr>
     <% end %>

@@ -1,11 +1,16 @@
 class CarsController < ApplicationController
 
+   before_filter :authenticate_user!, :dealership_active?, :is_member?
+
   def index
-    redirect_to root_path
+    @dealership = Dealership.find(params[:dealership_id])
+    @cars = @dealership.cars
+    @sold_cars = Car.where(dealership_id: @dealership.id, status: "Sold")
+    @frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
+    @repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs")
   end
 
   def show
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @car = Car.find(params[:id])
     @repairs = Repair.where(car_id: @car.id)
@@ -14,51 +19,67 @@ class CarsController < ApplicationController
     @total_price = @car.acquire_price + @car_repair_expenses if @car.acquire_price
     @purchase_price = 0
     @deal = Deal.find_by_car_id(@car.id)
-    @purchase_price = @deal.purchase_price if @deal
+    @purchase_price = @deal.amount if @deal
     @profit = @purchase_price - @total_price if @purchase_price && @total_price
   end
 
   def new
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
-    @car = Car.new
+    flash[:car] ? @car = Car.new(flash[:car]) : @car = Car.new
   end
 
   def create
-    authenticate_user!
     @car = Car.new(params[:car])
-    @car.make_model_year = "#{@car.year} #{@car.make} #{@car.model}"
     dealership = Dealership.find(params[:dealership_id])
+
+    @car.make_model_year = "#{@car.year} #{@car.make} #{@car.model}"
     if @car.save
+      purchase = Purchase.new
+      purchase.name = @car.make_model_year
+      purchase.amount = params[:car][:acquire_price]
+      purchase.date = params[:car][:acquire_date]
+      purchase.location = params[:car][:acquire_location]
+      purchase.car_id = @car.id
+      purchase.dealership_id = dealership.id
+      purchase.save
       dealership.cars << @car
       redirect_to dealership_car_path(dealership, @car)
     else
-      flash.now[:errors] = @car.errors.full_messages
-      render :new
+      flash[:errors] = @car.errors.full_messages
+      flash[:car] = params[:car]
+      redirect_to new_dealership_car_path(dealership)
     end
   end
 
   def edit
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @car = Car.find(params[:id])
+    @fields = flash[:car] if flash[:car]
+
   end
 
   def update
-    authenticate_user!
     car = Car.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     car.make_model_year = "#{car.year} #{car.make} #{car.model}"
     if car.update_attributes(params[:car])
+      purchase = Purchase.find_by_car_id(car.id)
+      purchase.name = car.make_model_year
+      purchase.amount = params[:car][:acquire_price]
+      purchase.date = params[:car][:acquire_date]
+      purchase.location = params[:car][:acquire_location]
+      purchase.car_id = car.id
+      purchase.dealership_id = dealership.id
+      purchase.save
       redirect_to dealership_car_path(dealership, car)
     else
-      flash.now[:errors] = car.errors.full_messages
-      erb :edit
+      flash[:errors] = car.errors.full_messages
+      flash[:car] = params[:car]
+      redirect_to edit_dealership_car_path(dealership, car)
     end
   end
 
   def destroy
-    authenticate_user!
     car = Car.find(params[:id])
     deal = Deal.find_by_car_id(car.id)
     if deal

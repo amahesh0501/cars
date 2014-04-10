@@ -1,5 +1,7 @@
 <div class="container">
+
 <%= form_for [@dealership, @car] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
 <div class="form-group">
   <%= f.label :year %><br/>
   <%= f.text_field :year %>
@@ -31,6 +33,20 @@
 <div class="form-group">
   <%= f.label :status%><br/>
   <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
+</div>
+
+<h2> Purchase Infromation </h2>
+<div class="form-group">
+  <%= f.label :acquire_date %><br/>
+  <%= f.date_field :acquire_date %>
+</div>
+<div class="form-group">
+  <%= f.label :acquire_price %><br/>
+  <%= f.text_field :acquire_price %>
+</div>
+<div class="form-group">
+  <%= f.label :acquire_location %><br/>
+  <%= f.text_field :acquire_location %>
 </div>
 <%= f.submit "Create Car", :class => 'btn btn-success'  %>
 <% end %>

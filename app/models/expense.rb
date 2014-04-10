@@ -3,4 +3,7 @@ class Expense < ActiveRecord::Base
 
   belongs_to :dealership
   belongs_to :vendor
+
+  validates_presence_of :name, :dealership_id, :amount, :date
+
 end

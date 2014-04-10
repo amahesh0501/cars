@@ -1,5 +1,6 @@
 <div class="container">
 <%= form_for [@dealership, @customer] do |f| %>
+<%= render 'layouts/error_messages', object: f.object %>
 <div class="form-group">
   <%= f.label :status%><br/>
   <%= f.select :status, ['Potential Customer', 'Existing Customer']%>
@@ -9,32 +10,60 @@
   <%= f.text_field :name %>
 </div>
 <div class="form-group">
-  <%= f.label :address%><br/>
-  <%= f.text_field :address %>
+  <%= f.label :address %><br/>
+  <% if @fields %>
+    <%= f.text_field :address, value: @fields["address"] %>
+  <% else %>
+    <%= f.text_field :address %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :time_at_residence %><br/>
-  <%= f.text_field :time_at_residence %>
+  <% if @fields %>
+    <%= f.text_field :time_at_residence, value: @fields["time_at_residence"] %>
+  <% else %>
+    <%= f.text_field :time_at_residence %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :email %><br/>
-  <%= f.text_field :email %>
+  <% if @fields %>
+    <%= f.text_field :email, value: @fields["email"] %>
+  <% else %>
+    <%= f.text_field :email %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :phone %><br/>
-  <%= f.text_field :phone %>
+  <% if @fields %>
+    <%= f.text_field :phone, value: @fields["phone"] %>
+  <% else %>
+    <%= f.text_field :phone %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :dob %><br/>
-  <%= f.date_field :dob %>
+  <% if @fields %>
+    <%= f.text_field :dob, value: @fields["dob"] %>
+  <% else %>
+    <%= f.text_field :dob %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :ssn %><br/>
-  <%= f.text_field :ssn %>
+  <% if @fields %>
+    <%= f.text_field :ssn, value: @fields["ssn"] %>
+  <% else %>
+    <%= f.text_field :ssn %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :driver_license_number %><br/>
-  <%= f.text_field :driver_license_number %>
+  <% if @fields %>
+    <%= f.text_field :driver_license_number, value: @fields["driver_license_number"] %>
+  <% else %>
+    <%= f.text_field :driver_license_number %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label "Upload an image" %><br/>
@@ -43,37 +72,69 @@
 <h2> Employer Information </h2>
 <div class="form-group">
   <%= f.label :employer %><br/>
-  <%= f.text_field :employer %>
+  <% if @fields %>
+    <%= f.text_field :employer, value: @fields["employer"] %>
+  <% else %>
+    <%= f.text_field :employer %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :employer_contact %><br/>
-  <%= f.text_field :employer_contact %>
+  <% if @fields %>
+    <%= f.text_field :employer_contact, value: @fields["employer_contact"] %>
+  <% else %>
+    <%= f.text_field :employer_contact %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :employer_title %><br/>
-  <%= f.text_field :employer_title %>
+  <% if @fields %>
+    <%= f.text_field :employer_title, value: @fields["employer_title"] %>
+  <% else %>
+    <%= f.text_field :employer_title %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :employer_address %><br/>
-  <%= f.text_field :employer_address %>
+  <% if @fields %>
+    <%= f.text_field :employer_address, value: @fields["employer_address"] %>
+  <% else %>
+    <%= f.text_field :employer_address %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :employer_phone %><br/>
-  <%= f.text_field :employer_phone %>
+  <% if @fields %>
+    <%= f.text_field :employer_phone, value: @fields["employer_phone"] %>
+  <% else %>
+    <%= f.text_field :employer_phone %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :monthly_gross_salary %><br/>
-  <%= f.text_field :monthly_gross_salary %>
+  <% if @fields %>
+    <%= f.text_field :monthly_gross_salary, value: @fields["monthly_gross_salary"] %>
+  <% else %>
+    <%= f.text_field :monthly_gross_salary %>
+  <% end %>
 </div>
 <div class="form-group">
   <%= f.label :time_at_employer %><br/>
-  <%= f.text_field :time_at_employer %>
+  <% if @fields %>
+    <%= f.text_field :time_at_employer, value: @fields["time_at_employer"] %>
+  <% else %>
+    <%= f.text_field :time_at_employer %>
+  <% end %>
 </div>
 
 <h2>Additional Notes</h2>
 <div class="form-group">
   <%= f.label :notes %><br/>
-  <%= f.text_area :notes %>
+  <% if @fields %>
+    <%= f.text_area :notes, value: @fields["notes"] %>
+  <% else %>
+    <%= f.text_area :notes %>
+  <% end %>
 </div>
 
 <%= f.submit "Edit Customer", :class => 'btn btn-success'  %>

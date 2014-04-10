@@ -3,4 +3,6 @@ class Vendor < ActiveRecord::Base
 
   has_many :expenses
   belongs_to :dealership
+
+  validates_presence_of :dealership_id, :name
 end

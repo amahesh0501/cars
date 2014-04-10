@@ -1,0 +1,35 @@
+<div class="container">
+
+  <%= link_to "Create Car", new_dealership_car_path(@dealership) %>
+  <br/>
+  <br/>
+
+  <h2>Frontine</h2>
+  <table class="table table-striped">
+    <% @frontline_cars.each do |car| %>
+      <tr>
+        <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+        <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+  <h2>Need Repairs</h2>
+  <table class="table table-striped">
+    <% @repair_cars.each do |car| %>
+      <tr>
+        <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+        <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+  <h2>Sold Cars</h2>
+  <table class="table table-striped">
+    <% @sold_cars.each do |car| %>
+      <tr>
+        <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+        <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

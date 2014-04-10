@@ -17,6 +17,7 @@ Cars::Application.routes.draw do
     resources :paychecks
     resources :vendors
     resources :employees
+    resources :revenues
     resources :customers do
       resources :conversations
     end
@@ -26,6 +27,13 @@ Cars::Application.routes.draw do
   match 'users/:id' => 'users#show', via: :get, as: 'user'
   match 'get_dates', :to => 'expenses#get_dates', via: :post
   match 'show_dates', :to => 'expenses#get_dates', via: :post
+  match 'approve_member', :to => 'dealerships#approve_member', via: :get
+  match 'revoke_member', :to => 'dealerships#revoke_member', via: :get
+  match 'admin', :to => 'pages#admin', via: :get
+  match 'inactive', :to => 'pages#inactive', via: :get
+  match 'mark_inactive', :to => 'dealerships#mark_inactive', via: :get
+  match 'mark_active', :to => 'dealerships#mark_active', via: :get
+  match 'blocked', :to => 'pages#blocked', via: :get
 
 
 

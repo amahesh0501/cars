@@ -1,0 +1,10 @@
+<% if flash[:errors] %>
+<h2> Errors </h2>
+  <div id="error_explanation">
+    <ul>
+    <% flash[:errors].each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

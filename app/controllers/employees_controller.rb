@@ -1,11 +1,13 @@
 class EmployeesController < ApplicationController
 
+  before_filter :authenticate_user!, :dealership_active?, :is_member?
+
   def index
-    redirect_to root_path
+    @dealership = Dealership.find(params[:dealership_id])
+    @employees = @dealership.employees
   end
 
   def show
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @employee = Employee.find(params[:id])
     @paychecks = Paycheck.where(employee_id: @employee.id)
@@ -15,49 +17,54 @@ class EmployeesController < ApplicationController
   end
 
   def new
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
-    @employee = Employee.new
+    flash[:employee] ? @employee = Employee.new(flash[:employee]) : @employee = Employee.new
+
   end
 
   def create
-    authenticate_user!
     @employee = Employee.new(params[:employee])
     @dealership = Dealership.find(params[:dealership_id])
+    @employee.dealership_id = @dealership.id
     if @employee.save
-      @dealership.employees << @employee
       redirect_to dealership_employee_path(@dealership, @employee)
     else
-      flash.now[:errors] = @employee.errors.full_messages
-      render :new
+      flash[:errors] = @employee.errors.full_messages
+      flash[:employee] = params[:employee]
+      redirect_to new_dealership_employee_path(@dealership)
     end
   end
 
   def edit
-    authenticate_user!
     @dealership = Dealership.find(params[:dealership_id])
     @employee = Employee.find(params[:id])
+    @fields = flash[:employee] if flash[:employee]
   end
 
   def update
-    authenticate_user!
     employee = Employee.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     if employee.update_attributes(params[:employee])
       redirect_to dealership_employee_path(dealership, employee)
     else
-      flash.now[:errors] = employee.errors.full_messages
-      erb :edit
+      flash[:errors] = employee.errors.full_messages
+      flash[:employee] = params[:employee]
+      redirect_to edit_dealership_employee_path(dealership, employee)
     end
   end
 
   def destroy
-    authenticate_user!
     employee = Employee.find(params[:id])
     deals = Deal.find_all_by_employee_id(employee.id)
     deals.each do |deal|
       deal.employee_id = nil
       deal.save
+    end
+
+    paychecks = Paycheck.find_all_by_employee_id(employee.id)
+    paychecks.each do |paycheck|
+      paycheck.employee_id = nil
+      paycheck.save
     end
 
     employee.destroy

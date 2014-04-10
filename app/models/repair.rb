@@ -4,4 +4,7 @@ class Repair < ActiveRecord::Base
   belongs_to :dealership
   belongs_to :car
   belongs_to :vendor
+
+  validates_presence_of :dealership_id, :car_id, :name, :amount, :date
+
 end
