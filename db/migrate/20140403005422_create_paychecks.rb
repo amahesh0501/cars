@@ -5,7 +5,7 @@ class CreatePaychecks < ActiveRecord::Migration
       t.belongs_to :dealership
 
       t.string :name
-      t.integer :amount
+      t.float :amount
       t.text :description
       t.date :date
 

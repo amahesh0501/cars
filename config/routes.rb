@@ -11,7 +11,7 @@ Cars::Application.routes.draw do
   resources :dealerships do
     resources :memberships
     resources :deals
-    resources :cars
+    resources :cars, path:"vehicles"
     resources :expenses
     resources :repairs
     resources :paychecks
@@ -34,6 +34,7 @@ Cars::Application.routes.draw do
   match 'mark_inactive', :to => 'dealerships#mark_inactive', via: :get
   match 'mark_active', :to => 'dealerships#mark_active', via: :get
   match 'blocked', :to => 'pages#blocked', via: :get
+  match 'test', :to => 'pages#test', via: :get
 
 
 

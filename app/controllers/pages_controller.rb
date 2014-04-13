@@ -23,6 +23,9 @@ class PagesController < ApplicationController
   def blocked
   end
 
+  def test
+  end
+
 
 end
 

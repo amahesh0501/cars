@@ -57,7 +57,7 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
     @dealership = Dealership.find(params[:dealership_id])
     if @deal.update_attributes(params[:deal])
-      redirect_to dealership_deal_path(dealership, deal)
+      redirect_to dealership_deal_path(@dealership, @deal)
     else
       flash[:errors] = @deal.errors.full_messages
       flash[:deal] = params[:deal]

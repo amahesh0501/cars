@@ -1,81 +1,145 @@
-<div class="container">
-<%= form_for [@dealership, @customer] do |f| %>
-<%= render 'layouts/error_messages', object: f.object %>
-<div class="form-group">
-  <%= f.label :status%><br/>
-  <%= f.select :status, ['Potential Customer', 'Existing Customer']%>
-</div>
-<div class="form-group">
-  <%= f.label :name %><br/>
-  <%= f.text_field :name %>
-</div>
-<div class="form-group">
-  <%= f.label :address%><br/>
-  <%= f.text_field :address %>
-</div>
-<div class="form-group">
-  <%= f.label :time_at_residence %><br/>
-  <%= f.text_field :time_at_residence %>
-</div>
-<div class="form-group">
-  <%= f.label :email %><br/>
-  <%= f.text_field :email %>
-</div>
-<div class="form-group">
-  <%= f.label :phone %><br/>
-  <%= f.text_field :phone %>
-</div>
-<div class="form-group">
-  <%= f.label :dob %><br/>
-  <%= f.date_field :dob %>
-</div>
-<div class="form-group">
-  <%= f.label :ssn %><br/>
-  <%= f.text_field :ssn %>
-</div>
-<div class="form-group">
-  <%= f.label :driver_license_number %><br/>
-  <%= f.text_field :driver_license_number %>
-</div>
-<div class="form-group">
-  <%= f.label "Upload an image" %><br/>
-  <%= f.file_field :image %>
-</div>
-<h2> Employer Information </h2>
-<div class="form-group">
-  <%= f.label :employer %><br/>
-  <%= f.text_field :employer %>
-</div>
-<div class="form-group">
-  <%= f.label :employer_contact %><br/>
-  <%= f.text_field :employer_contact %>
-</div>
-<div class="form-group">
-  <%= f.label :employer_title %><br/>
-  <%= f.text_field :employer_title %>
-</div>
-<div class="form-group">
-  <%= f.label :employer_address %><br/>
-  <%= f.text_field :employer_address %>
-</div>
-<div class="form-group">
-  <%= f.label :employer_phone %><br/>
-  <%= f.text_field :employer_phone %>
-</div>
-<div class="form-group">
-  <%= f.label :monthly_gross_salary %><br/>
-  <%= f.text_field :monthly_gross_salary %>
-</div>
-<div class="form-group">
-  <%= f.label :time_at_employer %><br/>
-  <%= f.text_field :time_at_employer %>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <div class="panel-body">
+
+      <h2>Add a Customer</h2>
+
+      <%= form_for [@dealership, @customer], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+      <%= render 'layouts/error_messages', object: f.object %>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Name</label>
+        <div class="col-sm-5">
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Address</label>
+        <div class="col-sm-5">
+          <%= f.text_field :address, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Time at Resience</label>
+        <div class="col-sm-5">
+          <%= f.text_field :time_at_residence, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">E-Mail</label>
+        <div class="col-sm-5">
+          <%= f.text_field :email, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Phone</label>
+        <div class="col-sm-5">
+          <%= f.text_field :phone, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Date of Birth</label>
+        <div class="col-sm-5">
+          <%= f.date_field :dob, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Social Security Number</label>
+        <div class="col-sm-5">
+          <%= f.text_field :ssn, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Driver License Number</label>
+        <div class="col-sm-5">
+          <%= f.text_field :driver_license_number, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Upload an Image</label>
+        <div class="col-sm-5">
+          <%= f.file_field :image, class: "form-control" %>
+        </div>
+      </div>
+      <br>
+      <b> Employer Information </b>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Employer Company Name</label>
+        <div class="col-sm-5">
+          <%= f.text_field :employer, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Employer Address</label>
+        <div class="col-sm-5">
+          <%= f.text_field :employer_address, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Employer Contact Name</label>
+        <div class="col-sm-5">
+          <%= f.text_field :employer_contact, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Employer Contact Title</label>
+        <div class="col-sm-5">
+          <%= f.text_field :employer_title, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Employer Contact Phone</label>
+        <div class="col-sm-5">
+          <%= f.text_field :employer_phone, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Acquire Price</label>
+        <div class="col-sm-5">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :monthly_gross_salary, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Time at Employer</label>
+        <div class="col-sm-5">
+          <%= f.text_field :time_at_employer, class: "form-control" %>
+        </div>
+      </div>
+      <br/>
+      <b>Additional Notes</b>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Notes</label>
+        <div class="col-sm-5">
+          <%= f.text_area :notes, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-5">
+              <%= f.submit "Create Customer", :class => 'btn btn-success'  %>
+
+        </div>
+      </div>
+
+
+
+
+
+      <% end %>
+    </div>
+
+
+
+
+  </div>
 </div>
 
-<h2>Additional Notes</h2>
-<div class="form-group">
-  <%= f.label :notes %><br/>
-  <%= f.text_area :notes %>
-</div>
-<%= f.submit "Create Customer", :class => 'btn btn-success'  %>
-<% end %>
-</div>

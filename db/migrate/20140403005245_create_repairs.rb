@@ -6,7 +6,7 @@ class CreateRepairs < ActiveRecord::Migration
       t.belongs_to :vendor
 
       t.string :name
-      t.integer :amount
+      t.float :amount
       t.text :description
       t.date :date
 

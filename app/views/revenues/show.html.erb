@@ -1,11 +1,25 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <h2> Basic Information</h2>
-  <p><%= @revenue.name %></p>
-  <p><%= @revenue.amount %></p>
-  <p><%= @revenue.description %></p>
-  <p><%= @revenue.date %></p>
+  <%= render 'layouts/sidebar' %>
 
-  <%= link_to "Edit Revenue Entry", edit_dealership_revenue_path(@dealership, @revenue) %>
 
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <h2> Basic Information</h2>
+    <p><%= @revenue.name %></p>
+    <p><%= @revenue.amount %></p>
+    <p><%= @revenue.description %></p>
+    <p><%= @revenue.date %></p>
+
+    <%= link_to "Edit Revenue Entry", edit_dealership_revenue_path(@dealership, @revenue) %>
+
+
+
+
+  </div>
 </div>
+
+
+
+

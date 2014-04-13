@@ -25,7 +25,7 @@ class CreateCars < ActiveRecord::Migration
 
       #purchase_information
       t.date :acquire_date
-      t.integer :acquire_price
+      t.float :acquire_price
       t.string :acquire_location
       t.boolean :smog_status, default: false
       t.date :smog_date

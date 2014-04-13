@@ -16,10 +16,10 @@ class CreateCustomers < ActiveRecord::Migration
       t.string :employer_title
       t.string :employer_address
       t.string :employer_phone
-      t.integer :monthly_gross_salary
+      t.float :monthly_gross_salary
       t.integer :time_at_employer
 
-      t.string :status
+      t.string :status, default: "Potential Customer"
 
 
       t.timestamps

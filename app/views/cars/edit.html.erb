@@ -1,185 +1,110 @@
-<div class="container">
-<%= form_for [@dealership, @car] do |f| %>
-<%= render 'layouts/error_messages', object: f.object %>
-<div class="form-group">
-  <%= f.label :year %><br/>
-  <%= f.text_field :year %>
-</div>
-<div class="form-group">
-  <%= f.label :make %><br/>
-  <%= f.text_field :make %>
-</div>
-<div class="form-group">
-  <%= f.label :model%><br/>
-  <%= f.text_field :model %>
-</div>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-<div class="form-group">
-  <%= f.label :vin %><br/>
-  <% if @fields %>
-    <%= f.text_field :vin, value: @fields["vin"] %>
-  <% else %>
-    <%= f.text_field :vin %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :miles %><br/>
-  <% if @fields %>
-    <%= f.text_field :miles, value: @fields["miles"] %>
-  <% else %>
-    <%= f.text_field :miles %>
-  <% end %>
-</div>
+  <%= render 'layouts/sidebar' %>
 
-<div class="form-group">
-  <%= f.label "Upload an image" %><br/>
-  <%= f.file_field :image %>
-</div>
 
-<div class="form-group">
-  <%= f.label :transmission %><br/>
-  <% if @fields %>
-    <%= f.text_field :transmission, value: @fields["transmission"] %>
-  <% else %>
-    <%= f.text_field :transmission %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :body_style %><br/>
-  <% if @fields %>
-    <%= f.text_field :body_style, value: @fields["body_style"] %>
-  <% else %>
-    <%= f.text_field :body_style %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :exterior_color %><br/>
-  <% if @fields %>
-    <%= f.text_field :exterior_color, value: @fields["exterior_color"] %>
-  <% else %>
-    <%= f.text_field :exterior_color %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :interior_color %><br/>
-  <% if @fields %>
-    <%= f.text_field :interior_color, value: @fields["interior_color"] %>
-  <% else %>
-    <%= f.text_field :interior_color %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :fuel %><br/>
-  <% if @fields %>
-    <%= f.text_field :fuel, value: @fields["fuel"] %>
-  <% else %>
-    <%= f.text_field :fuel %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :engine %><br/>
-  <% if @fields %>
-    <%= f.text_field :engine, value: @fields["engine"] %>
-  <% else %>
-    <%= f.text_field :engine %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :doors %><br/>
-  <% if @fields %>
-    <%= f.text_field :doors, value: @fields["doors"] %>
-  <% else %>
-    <%= f.text_field :doors %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :wheel_base %><br/>
-  <% if @fields %>
-    <%= f.text_field :wheel_base, value: @fields["wheel_base"] %>
-  <% else %>
-    <%= f.text_field :wheel_base %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :license_plate %><br/>
-  <% if @fields %>
-    <%= f.text_field :license_plate, value: @fields["license_plate"] %>
-  <% else %>
-    <%= f.text_field :license_plate %>
-  <% end %>
-</div>
 
-<h2> Purchase Infromation </h2>
-<div class="form-group">
-  <%= f.label :acquire_date %><br/>
-  <%= f.date_field :acquire_date %>
-</div>
-<div class="form-group">
-  <%= f.label :acquire_price %><br/>
-  <%= f.text_field :acquire_price %>
-</div>
-<div class="form-group">
-  <%= f.label :acquire_location %><br/>
- <% if @fields %>
-   <%= f.text_field :acquire_location, value: @fields["acquire_location"] %>
- <% else %>
-   <%= f.text_field :acquire_location %>
- <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :smog_status %><br/>
-  <% if @fields %>
-    <%= f.text_field :smog_status, value: @fields["smog_status"] %>
-  <% else %>
-    <%= f.text_field :smog_status %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :smog_date %><br/>
-  <% if @fields %>
-    <%= f.date_field :smog_date, value: @fields["smog_date"] %>
-  <% else %>
-    <%= f.date_field :smog_date %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :smogged_by %><br/>
-  <% if @fields %>
-    <%= f.text_field :smogged_by, value: @fields["smogged_by"] %>
-  <% else %>
-    <%= f.text_field :smogged_by %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :flooring %><br/>
-  <% if @fields %>
-    <%= f.check_box :flooring, value: @fields["flooring"] %>
-  <% else %>
-    <%= f.check_box :flooring %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :flooring_company %><br/>
-  <% if @fields %>
-    <%= f.text_field :flooring_company, value: @fields["flooring_company"] %>
-  <% else %>
-    <%= f.text_field :flooring_company %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :flooring_date %><br/>
-  <% if @fields %>
-    <%= f.date_field :vin, value: @fields["flooring_date"] %>
-  <% else %>
-    <%= f.date_field :vin %>
-  <% end %>
-</div>
-<div class="form-group">
-  <%= f.label :status%><br/>
-  <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Edit <%= @car.make_model_year %> </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Year</label>
+      <div class="col-sm-5">
+        <%= f.text_field :year, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Make</label>
+      <div class="col-sm-5">
+        <%= f.text_field :make, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Model</label>
+      <div class="col-sm-5">
+        <%= f.text_field :model, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Vin</label>
+      <div class="col-sm-5">
+        <%= f.text_field :vin, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Miles</label>
+      <div class="col-sm-5">
+        <%= f.text_field :miles, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Upload an Image</label>
+      <div class="col-sm-5">
+        <%= f.file_field :image, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Description</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_area :description,  class: "form-control" , value: @fields["description"] %>
+        <% else %>
+          <%= f.text_area :description,  class: "form-control"  %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Status</label>
+      <div class="col-sm-5">
+        <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Date</label>
+      <div class="col-sm-5">
+        <%= f.text_field :acquire_date, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :acquire_price, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Location</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :acquire_location,  class: "form-control" , value: @fields["acquire_location"] %>
+        <% else %>
+          <%= f.text_field :acquire_location,  class: "form-control"  %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Edit Vehicle", :class => 'btn btn-success'  %>
+
+      </div>
+    </div>
+
+
+    <% end %>
+    </div>
+  </div>
 </div>
 
 
-<%= f.submit "Edit Car", :class => 'btn btn-success'  %>
-<% end %>
-</div>
+
+
+

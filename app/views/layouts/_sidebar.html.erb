@@ -1,0 +1,99 @@
+<div class="sidebar-menu">
+
+    <header class="logo-env">
+      <% membership = Membership.find_by_user_id(current_user.id) %>
+
+      <!-- logo -->
+      <div class="logo">
+        <a href="/">
+          <img src="http://demo.neontheme.com/assets/images/logo@2x.png" width="120" alt="" />
+        </a>
+      </div>
+
+            <!-- logo collapse icon -->
+
+      <div class="sidebar-collapse">
+        <a href="#" class="sidebar-collapse-icon with-animation"><!-- add class "with-animation" if you want sidebar to have animation during expanding/collapsing transition -->
+          <i class="entypo-menu"></i>
+        </a>
+      </div>
+
+
+
+      <!-- open/close menu icon (do not remove if you want to enable menu on mobile devices) -->
+      <div class="sidebar-mobile-menu visible-xs">
+        <a href="#" class="with-animation"><!-- add class "with-animation" to support animation -->
+          <i class="entypo-menu"></i>
+        </a>
+      </div>
+
+    </header>
+
+
+
+
+
+
+    <ul id="main-menu" class="">
+      <!-- add class "multiple-expanded" to allow multiple submenus to open -->
+      <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
+      <!-- Search Bar -->
+      <li id="search">
+        <form method="get" action="">
+          <input type="text" name="q" class="search-input" placeholder="Search something..."/>
+          <button type="submit">
+            <i class="entypo-search"></i>
+          </button>
+        </form>
+      </li>
+      <li >
+        <a href="/dealerships/<%= membership.dealership_id %>">
+          <i class="entypo-gauge"></i>
+          <span>Dashboard</span>
+        </a>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/vehicles">
+          <i class="entypo-shareable"></i>
+          <span>Vehicles</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/customers">
+          <i class="entypo-users"></i>
+          <span>Customers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/employees">
+          <i class="entypo-user"></i>
+          <span>Employees</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/deals">
+          <i class="entypo-briefcase"></i>
+          <span>Deals</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/expenses">
+          <i class="entypo-tag"></i>
+          <span>Expenses</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/vendors">
+          <i class="entypo-network"></i>
+          <span>Vendors</span>
+        </a>
+      </li>
+      <li>
+        <a href="/dealerships/<%= membership.dealership_id %>/">
+          <i class="entypo-clipboard"></i>
+          <span>Forms</span>
+        </a>
+      </li>
+
+    </ul>
+
+  </div>

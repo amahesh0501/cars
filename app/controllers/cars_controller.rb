@@ -31,8 +31,8 @@ class CarsController < ApplicationController
   def create
     @car = Car.new(params[:car])
     dealership = Dealership.find(params[:dealership_id])
-
     @car.make_model_year = "#{@car.year} #{@car.make} #{@car.model}"
+    @car.dealership_id = dealership.id
     if @car.save
       purchase = Purchase.new
       purchase.name = @car.make_model_year
@@ -42,7 +42,6 @@ class CarsController < ApplicationController
       purchase.car_id = @car.id
       purchase.dealership_id = dealership.id
       purchase.save
-      dealership.cars << @car
       redirect_to dealership_car_path(dealership, @car)
     else
       flash[:errors] = @car.errors.full_messages

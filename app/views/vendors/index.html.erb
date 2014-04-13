@@ -1,14 +1,28 @@
-<div class="container">
-  <%= link_to "Create Vendor", new_dealership_vendor_path(@dealership) %>
-  <br/>
-  <br/>
-  <table class="table table-striped">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-    <% @vendors.each do |vendor| %>
-      <tr>
-        <td><%= link_to vendor.name , dealership_vendor_path(@dealership, vendor)  %></td>
-        <td><%= link_to 'Delete Vendor', dealership_vendor_path(@dealership, vendor), :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <%= link_to "Create Vendor", new_dealership_vendor_path(@dealership) %>
+    <br/>
+    <br/>
+    <table class="table table-striped">
+
+      <% @vendors.each do |vendor| %>
+        <tr>
+          <td><%= link_to vendor.name , dealership_vendor_path(@dealership, vendor)  %></td>
+          <td><%= link_to 'Delete Vendor', dealership_vendor_path(@dealership, vendor), :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+
+
+
+
+  </div>
 </div>
+
+

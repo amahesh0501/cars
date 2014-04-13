@@ -5,7 +5,7 @@ class CreatePurchases < ActiveRecord::Migration
       t.belongs_to :dealership
 
       t.string :name
-      t.integer :amount
+      t.integer :float
       t.date :date
       t.string :location
 

@@ -1,13 +1,69 @@
-<div class="container">
-  <%= link_to "Create Employee", new_dealership_employee_path(@dealership) %>
-  <br/>
-  <br/>
-  <table class="table table-striped">
-    <% @employees.each do |employee| %>
-      <tr>
-        <td><%= link_to employee.name, dealership_employee_path(@dealership, employee) %></td>
-        <td><%= link_to 'Delete Employee', dealership_employee_path(@dealership, employee), :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= link_to "<i class='entypo-plus'></i> Add Employee".html_safe, new_dealership_employee_path(@dealership), class: "btn btn-success", role: "button" %>
+
+    <br/>
+
+        <% @employees.each do |employee| %>
+
+    <div class="member-entry">
+
+      <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+        <img src="<%= employee.image%>" class="img-rounded" />
+        <i class="entypo-forward"></i>
+      </a>
+    <div class="member-details">
+
+
+      <h4><%= link_to employee.name, dealership_employee_path(@dealership, employee) %></h4>
+
+      <div class="row info-list">
+
+        <div class="col-sm-4">
+          <i class="entypo-forward"></i>
+          E-Mail: <%= employee.email.length > 0 ? employee.email : "Not Entered" %>
+        </div>
+
+        <div class="col-sm-4">
+          <i class="entypo-forward"></i>
+          Phone Number: <%= employee.phone.length > 0  ? employee.phone : "Not Entered" %>
+        </div>
+
+        <div class="col-sm-4">
+          <i class="entypo-forward"></i>
+          Address: <%= employee.address.length > 0  ? employee.address : "Not Entered" %>
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="col-sm-4">
+          <i class="entypo-forward"></i>
+          SSN: <%= employee.ssn.length > 0  ? employee.ssn : "Not Entered" %>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
     <% end %>
-  </table>
+
+
+
+
+
+
+
+
+  </div>
 </div>
+
+
+

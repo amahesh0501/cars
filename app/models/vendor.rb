@@ -5,4 +5,5 @@ class Vendor < ActiveRecord::Base
   belongs_to :dealership
 
   validates_presence_of :dealership_id, :name
+
 end

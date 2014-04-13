@@ -1,18 +1,30 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <%= link_to "Create Deal", new_dealership_deal_path(@dealership) %>
-  <br/>
-  <br/>
-  <table class="table table-striped">
-
-    <% @deals.each do |deal| %>
-      <tr>
-        <% car = Car.find(deal.car_id) %>
-        <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
-        <td><%= link_to 'Delete Deal', dealership_deal_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render 'layouts/sidebar' %>
 
 
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <%= link_to "Create Deal", new_dealership_deal_path(@dealership) %>
+    <br/>
+    <br/>
+    <table class="table table-striped">
+
+      <% @deals.each do |deal| %>
+        <tr>
+          <% car = Car.find(deal.car_id) %>
+          <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
+          <td><%= link_to 'Delete Deal', dealership_deal_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+
+
+
+
+  </div>
 </div>
+
+
+

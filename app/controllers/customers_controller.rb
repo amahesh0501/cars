@@ -11,7 +11,8 @@ class CustomersController < ApplicationController
   def show
     @dealership = Dealership.find(params[:dealership_id])
     @customer = Customer.find(params[:id])
-    @conversations = @customer.conversations
+    @conversations = @customer.conversations.order(:date).reverse
+    @deals = Deal.find_all_by_customer_id(@customer.id)
   end
 
   def new
@@ -23,6 +24,7 @@ class CustomersController < ApplicationController
     @customer = Customer.new(params[:customer])
     dealership = Dealership.find(params[:dealership_id])
     @customer.dealership_id = dealership.id
+    @customer.status = "Potential Customer"
     if @customer.save
       redirect_to dealership_customer_path(dealership, @customer)
     else

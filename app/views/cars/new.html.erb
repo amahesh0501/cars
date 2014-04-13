@@ -1,53 +1,99 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-<%= form_for [@dealership, @car] do |f| %>
-<%= render 'layouts/error_messages', object: f.object %>
-<div class="form-group">
-  <%= f.label :year %><br/>
-  <%= f.text_field :year %>
-</div>
-<div class="form-group">
-  <%= f.label :make %><br/>
-  <%= f.text_field :make %>
-</div>
-<div class="form-group">
-  <%= f.label :model%><br/>
-  <%= f.text_field :model %>
-</div>
-<div class="form-group">
-  <%= f.label :vin %><br/>
-  <%= f.text_field :vin %>
-</div>
-<div class="form-group">
-  <%= f.label :miles %><br/>
-  <%= f.text_field :miles %>
-</div>
-<div class="form-group">
-  <%= f.label "Upload an image" %><br/>
-  <%= f.file_field :image %>
-</div>
-<div class="form-group">
-  <%= f.label :description %><br/>
-  <%= f.text_area :description %>
-</div>
-<div class="form-group">
-  <%= f.label :status%><br/>
-  <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Add a Vehicle </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Year</label>
+      <div class="col-sm-5">
+        <%= f.text_field :year, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Make</label>
+      <div class="col-sm-5">
+        <%= f.text_field :make, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Model</label>
+      <div class="col-sm-5">
+        <%= f.text_field :model, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Vin</label>
+      <div class="col-sm-5">
+        <%= f.text_field :vin, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Miles</label>
+      <div class="col-sm-5">
+        <%= f.text_field :miles, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Upload an Image</label>
+      <div class="col-sm-5">
+        <%= f.file_field :image, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Description</label>
+      <div class="col-sm-5">
+        <%= f.text_area :description, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Status</label>
+      <div class="col-sm-5">
+        <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Date</label>
+      <div class="col-sm-5">
+        <%= f.date_field :acquire_date, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :acquire_price, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Location</label>
+      <div class="col-sm-5">
+        <%= f.text_field :acquire_location, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Create Vehicle", :class => 'btn btn-success'  %>
+
+      </div>
+    </div>
+
+
+    <% end %>
+    </div>
+  </div>
 </div>
 
-<h2> Purchase Infromation </h2>
-<div class="form-group">
-  <%= f.label :acquire_date %><br/>
-  <%= f.date_field :acquire_date %>
-</div>
-<div class="form-group">
-  <%= f.label :acquire_price %><br/>
-  <%= f.text_field :acquire_price %>
-</div>
-<div class="form-group">
-  <%= f.label :acquire_location %><br/>
-  <%= f.text_field :acquire_location %>
-</div>
-<%= f.submit "Create Car", :class => 'btn btn-success'  %>
-<% end %>
-</div>
+

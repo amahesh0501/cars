@@ -1,26 +1,41 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <h2> Basic Information </h2>
-  <%= image_tag @employee.image(:medium) %><br/>
-  Name: <%= @employee.name %><br/>
-  Social Security Number: <%= @employee.ssn %><br/>
-  E-Mail Address: <%= @employee.email %><br/>
-  Phone: <%= @employee.phone %><br/>
+  <%= render 'layouts/sidebar' %>
 
-  <% if @deals.length > 0 %>
-    <h2>Deals</h2>
-    <% @deals.each do |deal|  %>
-    <% car = Car.find(deal.car_id) %>
-     <p> Sold <%= link_to car.make_model_year, dealership_car_path(@dealership, car) %> for <%= deal.amount %> on <%= deal.date %> </p>
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2> Basic Information </h2>
+    <%= image_tag @employee.image(:medium) %><br/>
+    Name: <%= @employee.name %><br/>
+    Social Security Number: <%= @employee.ssn %><br/>
+    E-Mail Address: <%= @employee.email %><br/>
+    Phone: <%= @employee.phone %><br/>
+
+    <% if @deals.length > 0 %>
+      <h2>Deals</h2>
+      <% @deals.each do |deal|  %>
+      <% car = Car.find(deal.car_id) %>
+       <p> Sold <%= link_to car.make_model_year, dealership_car_path(@dealership, car) %> for <%= deal.amount %> on <%= deal.date %> </p>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <h2>Pay History</h2>
-  <% if @paychecks.length > 0 %>
-    <% @paychecks.each do |paycheck|  %>
-    <p><%= "$#{paycheck.amount} on #{paycheck.date}" %> (<%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)%>)</p>
+    <h2>Pay History</h2>
+    <% if @paychecks.length > 0 %>
+      <% @paychecks.each do |paycheck|  %>
+      <p><%= "$#{paycheck.amount} on #{paycheck.date}" %> (<%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)%>)</p>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= link_to "Create new Payroll Expense for #{@employee.name}", new_dealership_paycheck_path(@dealership, :employee_id => @employee.id) %>
+    <%= link_to "Create new Payroll Expense for #{@employee.name}", new_dealership_paycheck_path(@dealership, :employee_id => @employee.id) %>
 
+
+
+
+
+  </div>
 </div>
+
+
+

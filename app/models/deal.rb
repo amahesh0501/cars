@@ -5,12 +5,21 @@ class Deal < ActiveRecord::Base
   belongs_to :customer
   belongs_to :employee
   belongs_to :car
-  before_save :check_car
 
   validates_presence_of :dealership_id, :car_id, :customer_id, :date, :amount
+  validates_uniqueness_of :car_id, message: "already has a deal associated with it. Please delete that deal to create a new one"
 
-  def check_car
-    return false if Deal.find_by_car_id(self.car_id)
+  def amount=(num)
+    self[:amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+  def sales_tax_amount=(num)
+    self[:sales_tax_amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+  def down_payment=(num)
+    self[:down_payment] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+  def trade_in_value=(num)
+    self[:trade_in_value] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
 
 end

@@ -1,26 +1,41 @@
-<div class="container">
-<%= form_for [@dealership, @paycheck] do |f| %>
-<%= render 'layouts/error_messages', object: f.object %>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-<div class="form-group">
-  <%= f.label :employee_id %><br/>
-  <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, :selected => params[:employee_id] %>
-</div>
-<div class="form-group">
-  <%= f.label :amount %><br/>
-  <%= f.text_field :amount %>
-</div>
-<div class="form-group">
-  <%= f.label :date %><br/>
-  <%= f.date_field :date %>
-</div>
-<div class="form-group">
-  <%= f.label :description%><br/>
-  <%= f.text_area :description %>
-</div>
+  <%= render 'layouts/sidebar' %>
 
 
 
-<%= f.submit "New Payroll Expense", :class => 'btn btn-success'  %>
-<% end %>
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= form_for [@dealership, @paycheck] do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+    <div class="form-group">
+      <%= f.label :employee_id %><br/>
+      <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, :selected => params[:employee_id] %>
+    </div>
+    <div class="form-group">
+      <%= f.label :amount %><br/>
+      <%= f.text_field :amount %>
+    </div>
+    <div class="form-group">
+      <%= f.label :date %><br/>
+      <%= f.date_field :date %>
+    </div>
+    <div class="form-group">
+      <%= f.label :description%><br/>
+      <%= f.text_area :description %>
+    </div>
+
+
+
+    <%= f.submit "New Payroll Expense", :class => 'btn btn-success'  %>
+    <% end %>
+
+
+
+
+  </div>
 </div>
+
+

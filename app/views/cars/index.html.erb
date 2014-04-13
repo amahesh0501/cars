@@ -1,35 +1,111 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <%= link_to "Create Car", new_dealership_car_path(@dealership) %>
-  <br/>
-  <br/>
+  <%= render 'layouts/sidebar' %>
 
-  <h2>Frontine</h2>
-  <table class="table table-striped">
-    <% @frontline_cars.each do |car| %>
-      <tr>
-        <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
-        <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
-    <% end %>
-  </table>
-  <h2>Need Repairs</h2>
-  <table class="table table-striped">
-    <% @repair_cars.each do |car| %>
-      <tr>
-        <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
-        <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
-    <% end %>
-  </table>
-  <h2>Sold Cars</h2>
-  <table class="table table-striped">
-    <% @sold_cars.each do |car| %>
-      <tr>
-        <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
-        <td><%= link_to 'Delete Car', dealership_car_path(@dealership, car), :confirm => 'Are you sure?', :method => :delete %></td>
-      </tr>
-    <% end %>
-  </table>
 
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= link_to "<i class='entypo-plus'></i> Add Vehicle".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#frontline" data-toggle="tab">Frontline</a></li>
+      <li><a href="#repairs" data-toggle="tab">Needs Repairs</a></li>
+      <li><a href="#sold" data-toggle="tab">Sold</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="frontline">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Miles</th>
+              <th>Acquire Price</th>
+              <th>VIN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @frontline_cars.each do |car| %>
+            <tr class="gradeU">
+              <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to number_with_delimiter(car.miles, :delimiter => ','), dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to "$#{number_with_delimiter(car.acquire_price, :delimiter => ',')}", dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= "There are no frontline cars" if @frontline_cars.length ==0 %>
+      </div>
+      <div class="tab-pane" id="repairs">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Miles</th>
+              <th>Acquire Price</th>
+              <th>VIN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @repair_cars.each do |car| %>
+            <tr class="gradeU">
+              <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to number_with_delimiter(car.miles, :delimiter => ','), dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to "$#{number_with_delimiter(car.acquire_price, :delimiter => ',')}", dealership_car_path(@dealership, car)  %></td>
+
+              <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= "There are no cars which need repairs" if @repair_cars.length ==0 %>
+      </div>
+      <div class="tab-pane" id="sold">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Customer</th>
+              <th>Purchase Price</th>
+              <th>VIN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @sold_cars.each do |car| %>
+            <% deal = Deal.find_by_car_id(car.id) %>
+            <% customer = Customer.find(deal.customer_id) %>
+            <tr class="gradeU">
+              <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
+              <td><%= link_to "$#{number_with_delimiter(deal.amount, :delimiter => ',')}", dealership_deal_path(@dealership, deal)  %></td>
+              <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= "There are no sold cars" if @sold_cars.length ==0 %>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
 </div>
+
+
+
+
+
+

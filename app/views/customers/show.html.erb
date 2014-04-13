@@ -1,42 +1,272 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <h2>Basic Customer Information</h2>
-  <%= image_tag @customer.image(:medium) %><br/>
-  Name: <%= @customer.name %> <br/>
-  EMail: <%= @customer.email %> <br/>
-  Phone: <%= @customer.phone %> <br/>
-  Address: <%= @customer.address %> <br/>
-  Time at Residence: <%= @customer.time_at_residence %> <br/>
-  Date of Birth: <%= @customer.dob %> <br/>
-  Social Security Number: <%= @customer.ssn %> <br/>
-  Driver License Number: <%= @customer.driver_license_number %> <br/>
-
-  <h2>Employer Information</h2>
-  Company Name: <%= @customer.employer %> <br/>
-  Company Address: <%= @customer.employer_address %> <br/>
-  Manager Name: <%= @customer.employer_contact %> <br/>
-  Manager Title: <%= @customer.employer_title %> <br/>
-  Manager Phone: <%= @customer.employer_phone %> <br/>
-  Monthly Gross Salary: <%= @customer.monthly_gross_salary %> <br/>
-  Time at Employer: <%= @customer.time_at_employer %> <br/>
-
-  <h2>Notes</h2>
-  <%= @customer.notes %> <br/>
-
-  <h2>Conversations</h2>
-  <%= link_to "Create new Conversation", new_dealership_customer_conversation_path(@dealership, @customer) %>
-  <table class="table table-striped">
-    <% @conversations.each do |conversation| %>
-      <tr>
-        <td><%= conversation.description %></td>
-        <td><%= conversation.date %></td>
-        <td><%= conversation.medium %></td>
-        <td><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, @customer, conversation) %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render 'layouts/sidebar' %>
 
 
-  <%= link_to "Edit Customer", edit_dealership_customer_path(@dealership, @customer) %>
 
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <div class="profile-env">
+
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @customer.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @customer.name %></strong>
+                <span><%= @customer.email.length > 0 ? @customer.email : "E-Mail not entered" %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @customer.phone.length > 0 ? @customer.phone : "Not Entered" %></h3>
+                <span><a href="#">Phone Number</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/customers/<%=@customer.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Customer
+            </a>
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Customer Details</a></li>
+              <li><a href="#conversation" data-toggle="tab">Conversation History</a></li>
+              <% if @deals.length > 0 %>
+              <li><a href="#deal" data-toggle="tab">Deal Details</a></li>
+              <% end %>
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Email: <%= @customer.email.length > 0 ? "#{@customer.email}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Phone: <%= @customer.phone.length > 0 ? "#{@customer.phone}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Date of Birth: <%= @customer.dob  ? "#{@customer.dob}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Address: <%= @customer.address.length > 0  ? "#{@customer.address}" : "Not Entered" %></p>
+
+                  <p><i class="entypo-forward"></i>Time at Residence: <%= @customer.time_at_residence.length > 0 ? "#{@customer.time_at_residence}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>SSN: <%= @customer.ssn.length > 0  ? "#{@customer.ssn}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Drivers License Number: <%= @customer.driver_license_number.length > 0  ? "#{@customer.driver_license_number}" : "Not Entered" %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Employer Information</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Employer Name: <%= @customer.employer.length > 0 ? "#{@customer.employer}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Employer Address: <%= @customer.employer_address.length > 0 ? "#{@customer.employer_address}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Time at Employer: <%= @customer.time_at_employer ? "#{@customer.time_at_employer}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Manager Name: <%= @customer.employer_contact.length > 0  ? "#{@customer.employer_contact}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Manager Title: <%= @customer.employer_contact.length > 0 ? "#{@customer.employer_title}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Manager Phone: <%= @customer.employer_phone.length > 0  ? "#{@customer.employer_phone}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Monthly Gross Salary: <%= @customer.monthly_gross_salary  ? "$#{number_with_delimiter(@customer.monthly_gross_salary, :delimiter => ',')}" : "Not Entered" %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Notes</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <%= @customer.notes.length > 0 ? @customer.notes : "No notes entered" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+        <div class="tab-pane" id="conversation">
+          <%= link_to "<i class='entypo-plus'></i> Add Conversation".html_safe, new_dealership_customer_conversation_path(@dealership, @customer), class: "btn btn-success", role: "button" %>
+
+          <ul class="cbp_tmtimeline">
+
+            <% @conversations.each do |conversation| %>
+            <% employee = Employee.find(conversation.employee_id) if conversation.employee_id %>
+            <li>
+              <time class="cbp_tmtime" datetime="2014-04-12T03:45"><span><%= conversation.date %></span> <span></span></time>
+
+
+              <% if conversation.medium == "Phone" %>
+              <div class="cbp_tmicon bg-success"><i class="entypo-phone"></i></div>
+              <% elsif conversation.medium == "In Person" %>
+              <div class="cbp_tmicon bg-info"> <i class="entypo-users"></i></div>
+              <% elsif conversation.medium == "E-Mail" %>
+              <div class="cbp_tmicon bg-warning"> <i class="entypo-mail"></i></div>
+              <% elsif conversation.medium == "Online Chat" %>
+              <div class="cbp_tmicon bg-danger"> <i class="entypo-chat"></i></div>
+              <% elsif conversation.medium == "Video Conference" %>
+              <div class="cbp_tmicon bg-success"> <i class="entypo-video"></i></div>
+              <% else %>
+              <div class="cbp_tmicon bg-info"> <i class="entypo-quote"></i></div>
+              <%end%>
+
+
+              <div class="cbp_tmlabel">
+                <h2><%= employee ? employee.name : "Someone" %>  <span>spoke with <%=@customer.name%></span></h2>
+                <p><%= conversation.description %></p>
+                <p><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, @customer, conversation) %></p>
+              </div>
+
+            </li>
+            <% end %>
+
+
+
+
+
+
+          </ul>
+          <%= "No conversations have been added" if @conversations.length == 0 %>
+
+
+
+        </div>
+        <% if @deals.length > 0 %>
+        <div class="tab-pane" id="deal">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <% @deals.each do |deal| %>
+              <div class="member-entry">
+
+                <span class="member-img">
+                  <img src="/deal.png" class="img-rounded" />
+                </span>
+
+                <div class="member-details">
+
+
+                  <h4>
+                    <% customer = Customer.find(deal.customer_id) %>
+                    <% employee = Employee.find(deal.employee_id) %>
+                    <% car = Car.find(deal.car_id) %>
+                    <%= link_to "Purchased #{car.make_model_year} from #{employee.name} for #{deal.amount} ", dealership_deal_path(@dealership, deal) %>
+                  </h4>
+
+                  <div class="row info-list">
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Date: <%= deal.date %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Final Sales Price: <%= deal.amount ? "$#{number_with_delimiter(deal.amount, :delimiter => ',')}" : "Not Entered" %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Down Payment: <%= deal.down_payment ? "$#{number_with_delimiter(deal.down_payment, :delimiter => ',')}" : "Not Entered" %>
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Term: <%= deal.term ? deal.term : "Not Entered" %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      APR: <%= deal.apr ? deal.apr : "Not Entered" %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_delimiter(deal.trade_in_value, :delimiter => ',')}" : "Not Entered" %>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+              <% end %>
+            </div>
+          </section>
+        </div>
+        <% end %>
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </div>
 </div>
+
+
+

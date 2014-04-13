@@ -1,28 +1,85 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <%= link_to "Create Customer", new_dealership_customer_path(@dealership) %>
-  <br/>
-  <br/>
-  <h2> Potential Customers</h2>
-  <table class="table table-striped">
-    <% @potential_customers.each do |customer| %>
-      <tr>
-        <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
-        <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
+  <%= render 'layouts/sidebar' %>
 
-      </tr>
-    <% end %>
-  </table>
-  <br/>
-  <h2> Existing Customers</h2>
-  <table class="table table-striped">
-    <% @existing_customers.each do |customer| %>
-      <tr>
-        <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
-        <td><%= link_to 'Delete Customer', dealership_customer_path(@dealership, customer), :confirm => 'Are you sure?', :method => :delete %></td>
 
-      </tr>
-    <% end %>
-  </table>
 
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= link_to "<i class='entypo-plus'></i> Add Customer".html_safe, new_dealership_customer_path(@dealership), class: "btn btn-success", role: "button" %>
+    <br/>
+    <br/>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#potential" data-toggle="tab">Potential Customers</a></li>
+      <li><a href="#existing" data-toggle="tab">Existing Customers</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="potential">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>E-Mail</th>
+              <th>Phone Number</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @potential_customers.each do |customer| %>
+            <tr class="gradeU">
+              <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
+              <td><%= link_to "#{customer.email}", dealership_customer_path(@dealership, customer)  %></td>
+              <td><%= link_to "#{customer.phone}", dealership_customer_path(@dealership, customer)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= "There are no potential customers" if @potential_customers.length ==0 %>
+
+      </div>
+      <div class="tab-pane" id="existing">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Customer Name</th>
+              <th>Car</th>
+              <th>Purchase Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @existing_customers.each do |customer| %>
+            <% deal = Deal.find_by_customer_id(customer.id) %>
+            <% car = Car.find(deal.car_id) %>
+            <tr class="gradeU">
+              <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
+              <td><%= link_to "#{car.make_model_year}", dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to "$#{number_with_delimiter(deal.amount, :delimiter => ',')}", dealership_deal_path(@dealership, deal)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= "There are no existing customers" if @existing_customers.length ==0 %>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
 </div>
+
+
+

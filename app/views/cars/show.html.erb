@@ -1,55 +1,325 @@
-<div class="container">
 
-  <%= @car.status %>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <h2>Basics</h2>
-  <%= image_tag @car.image(:medium) %><br/>
-  Vin: <%= @car.vin %> <br/>
-  Year: <%= @car.year %> <br/>
-  Make: <%= @car.make %> <br/>
-  Model: <%= @car.model %> <br/>
-  Miles: <%= @car.miles %> <br/>
-  Transmission: <%= @car.transmission %> <br/>
-  Body Style: <%= @car.body_style %> <br/>
-  Exterior Color: <%= @car.exterior_color %> <br/>
-  Interior Color: <%= @car.interior_color %> <br/>
-  Fuel Type: <%= @car.fuel %> <br/>
-  Engine: <%= @car.engine %> <br/>
-  Doors: <%= @car.doors %> <br/>
-  Wheel Base: <%= @car.wheel_base %> <br/>
-  License Plate: <%= @car.license_plate %> <br/>
-
-  <h2>Description</h2>
-  <%= @car.description %> <br/>
-
-  <h2>Acqusition Information</h2>
-  Acqusition Date: <%= @car.acquire_date %> <br/>
-  Acqusition Cost: <%= @car.acquire_price %> <br/>
-  Acqusition Location: <%= @car.acquire_location %> <br/>
-  Smog Status: <%= @car.smog_status %> <br/>
-  Smog Date: <%= @car.smog_date %> <br/>
-  Smogged By: <%= @car.smogged_by %> <br/>
-  Flooring Status: <%= @car.flooring %> <br/>
-  Flooring Company: <%= @car.flooring_company %> <br/>
-  Flooring Date: <%= @car.flooring_date %> <br/>
-
-  <% if @repairs.length > 0 %>
-    <h2>Repair Expenses</h2>
-    <% @repairs.each do |repair|  %>
-    <p><%= link_to repair.name, dealership_repair_path(@dealership, repair) %> ($<%= repair.amount%>)</p>
-    <% end %>
-  <% end %>
-  <%= link_to "Create new Repair Expense", new_dealership_repair_path(@dealership, :car_id => @car.id) %>
-
-  <h2> Profit </h2>
-  Acqusition Cost: <%= @car.acquire_price %> <br/>
-  Repair Expenses: <%= @car_repair_expenses %><br/>
-  Total Expenses: <%= @total_price %><br/>
-  <%= @purchase_price != 0 ? "Purchase Price: #{@purchase_price}" : "Purchase Price: Not Yet Sold" %><br/>
-  Profit: <%= @profit %>
+  <%= render 'layouts/sidebar' %>
 
 
-  <h2>Edit Car</h2>
-  <%= link_to "Edit Car", edit_dealership_car_path(@dealership, @car) %>
 
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <div class="profile-env">
+
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @car.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @car.make_model_year %></strong>
+                <span>VIN: <%= @car.vin %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @car.acquire_date %></h3>
+                <span><a href="#">Acquire Date</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/vehicles/<%=@car.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Car
+            </a>
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= @deal? "$#{number_with_delimiter(@profit, :delimiter => ',')}" : "N/A" %></h4>
+                  <span><a href="#">Net Profit</a></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= @deal? "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" : "N/A" %></h4>
+                  <span><a href="#">Sale Price</a></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= "$#{number_with_delimiter(@total_price, :delimiter => ',')}"%></h4>
+                  <span><a href="#">Total Cost</a></span>
+                </div>
+              </div>
+
+
+            </div>
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#home" data-toggle="tab">Vehicle Details</a></li>
+              <li><a href="#profile" data-toggle="tab">Repairs</a></li>
+              <% if @deal %>
+              <li><a href="#deal" data-toggle="tab">Deal Details</a></li>
+              <% end %>
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+        <div class="tab-pane active" id="home">
+          <div class="panel panel-dark" data-collapsed="0">
+
+                      <!-- panel head -->
+                      <div class="panel-heading">
+                        <div class="panel-title">Basics</div>
+                      </div>
+
+                      <!-- panel body -->
+                      <div class="panel-body">
+
+                        <div class="row">
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Miles: <%= @car.miles.length > 0 ? number_with_delimiter(@car.miles, :delimiter => ',') : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Transmission: <%= @car.transmission ? @car.transmission : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Exterior Color: <%= @car.exterior_color ? "#{@car.exterior_color}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color ? "#{@car.interior_color}" : "Not Entered" %></p>
+
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Fuel Type: <%= @car.fuel ? "#{@car.fuel}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine ? "#{@car.engine}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style ? "#{@car.body_style}" : "Not Entered" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Door Count: <%= @car.doors ? "#{@car.doors}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Wheel Base: <%= @car.wheel_base ? "#{@car.wheel_base}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>License Plate: <%= @car.license_plate ? "#{@car.license_plate}" : "Not Entered" %></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-dark" data-collapsed="0">
+                      <div class="panel-heading">
+                        <div class="panel-title">Description</div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-8">
+                            <%= @car.description.length > 0 ? @car.description : "No description entered" %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-dark" data-collapsed="0">
+                      <div class="panel-heading">
+                        <div class="panel-title">Vehicle Acqusition</div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date}" : "Not Entered" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_delimiter(@car.acquire_price, :delimiter => ',')}" : "Not Entered" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Location: <%= @car.acquire_location.length > 0 ? "#{@car.acquire_location}" : "Not Entered" %></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-dark" data-collapsed="0">
+                      <div class="panel-heading">
+                        <div class="panel-title">Smog</div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i><%= @car.smog_status == true ? "This car has been smogged" : "This car has not been smogged" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Date: <%= @car.smog_date ? "#{@car.smog_date}" : "Not Entered" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Smog Location: <%= @car.smogged_by ? "#{@car.smogged_by}" : "Not Entered" %></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel panel-dark" data-collapsed="0">
+                      <div class="panel-heading">
+                        <div class="panel-title">Flooring</div>
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i><%= @car.flooring == true ? "This car has been floored" : "This car has not been floored" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Date: <%= @car.flooring_date ? "#{@car.flooring_date}" : "Not Entered" %></p>
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Company: <%= @car.flooring_company ? "#{@car.flooring_company}" : "Not Entered" %></p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+        </div>
+        <div class="tab-pane" id="profile">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership, :car_id => @car.id), class: "btn btn-success", role: "button" %>
+              <br/><br/>
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Repair</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @repairs.each do |repair| %>
+                  <tr class="gradeU">
+                    <td><%= repair.name  %></td>
+                    <td><%= repair.date  %></td>
+                    <td><%= "$#{number_with_delimiter(repair.amount, :delimiter => ',')}" %></td>
+                    <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= "There are no repairs" if @repairs.length ==0 %>
+
+
+
+            </div>
+          </section>
+        </div>
+
+      <% if @deal %>
+      <div class="tab-pane" id="deal">
+        <section class="profile-feed">
+          <div class="profile-stories">
+            <div class="member-entry">
+
+              <span class="member-img">
+                <img src="/deal.png" class="img-rounded" />
+              </span>
+
+              <div class="member-details">
+                <h4>
+                  <% customer = Customer.find(@deal.customer_id) %>
+                  <% employee = Employee.find(@deal.employee_id) %>
+                  <%= link_to "Sold by #{employee.name} to #{customer.name} for $#{number_with_delimiter(@deal.amount, :delimiter => ',')} ", dealership_deal_path(@dealership, @deal) %>
+                </h4>
+
+                    <div class="row info-list">
+
+                  <div class="col-sm-4">
+                    <i class="entypo-forward"></i>
+                    Date: <%= @deal.date %>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <i class="entypo-forward"></i>
+                    Final Sales Price: <%= @deal.amount ? "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" : "Not Entered" %>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <i class="entypo-forward"></i>
+                    Down Payment: <%= @deal.down_payment ? "$#{number_with_delimiter(@deal.down_payment, :delimiter => ',')}" : "Not Entered" %>
+                  </div>
+
+                  <div class="clear"></div>
+
+                  <div class="col-sm-4">
+                    <i class="entypo-forward"></i>
+                    Term: <%= @deal.term ? @deal.term : "Not Entered" %>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <i class="entypo-forward"></i>
+                    APR: <%= @deal.apr ? @deal.apr : "Not Entered" %>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <i class="entypo-forward"></i>
+                    Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_delimiter(@deal.trade_in_value, :delimiter => ',')}" : "Not Entered" %>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+      <% end %>
+
+
+      </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+  </div>
 </div>
+
+
+

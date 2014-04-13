@@ -1,54 +1,69 @@
-<div class="container">
-<%= form_for [@dealership, @employee] do |f| %>
-<%= render 'layouts/error_messages', object: f.object %>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <div><%= f.label :name %><br />
-  <%= f.text_field :name %></div>
+  <%= render 'layouts/sidebar' %>
 
-  <div class="form-group">
-    <%= f.label :ssn %><br/>
-    <% if @fields %>
-      <%= f.text_field :ssn, value: @fields["ssn"] %>
-    <% else %>
-      <%= f.text_field :ssn %>
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <%= form_for [@dealership, @employee] do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+      <div><%= f.label :name %><br />
+      <%= f.text_field :name %></div>
+
+      <div class="form-group">
+        <%= f.label :ssn %><br/>
+        <% if @fields %>
+          <%= f.text_field :ssn, value: @fields["ssn"] %>
+        <% else %>
+          <%= f.text_field :ssn %>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :email %><br/>
+        <% if @fields %>
+          <%= f.text_field :email, value: @fields["email"] %>
+        <% else %>
+          <%= f.text_field :email %>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :phone %><br/>
+        <% if @fields %>
+          <%= f.text_field :phone, value: @fields["phone"] %>
+        <% else %>
+          <%= f.text_field :phone %>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :address %><br/>
+        <% if @fields %>
+          <%= f.text_field :address, value: @fields["address"] %>
+        <% else %>
+          <%= f.text_field :address %>
+        <% end %>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.label "Upload an image" %><br/>
+        <%= f.file_field :image %>
+      </div>
+
+
+
+    <%= f.submit "Edit Employee", :class => 'btn btn-success'  %>
     <% end %>
+
+
+
+
   </div>
-
-  <div class="form-group">
-    <%= f.label :email %><br/>
-    <% if @fields %>
-      <%= f.text_field :email, value: @fields["email"] %>
-    <% else %>
-      <%= f.text_field :email %>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :phone %><br/>
-    <% if @fields %>
-      <%= f.text_field :phone, value: @fields["phone"] %>
-    <% else %>
-      <%= f.text_field :phone %>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :address %><br/>
-    <% if @fields %>
-      <%= f.text_field :address, value: @fields["address"] %>
-    <% else %>
-      <%= f.text_field :address %>
-    <% end %>
-  </div>
-
-
-  <div class="form-group">
-    <%= f.label "Upload an image" %><br/>
-    <%= f.file_field :image %>
-  </div>
-
-
-
-<%= f.submit "Edit Employee", :class => 'btn btn-success'  %>
-<% end %>
 </div>
+
+
+

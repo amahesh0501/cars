@@ -6,12 +6,12 @@ class CreateDeals < ActiveRecord::Migration
       t.belongs_to :employee
       t.belongs_to :dealership
       t.date :date
-      t.integer :amount
-      t.integer :sales_tax_amount
-      t.integer :down_payment
+      t.float :amount
+      t.float :sales_tax_amount
+      t.float :down_payment
       t.integer :term
       t.integer :apr
-      t.integer :trade_in_value
+      t.float :trade_in_value
       t.boolean :gap_insurance, default: false
       t.string :gap_name
 

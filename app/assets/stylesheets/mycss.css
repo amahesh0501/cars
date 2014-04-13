@@ -1,0 +1,24 @@
+.sidebar-menu{
+    min-height:650px !important;
+}
+
+.btn-login{
+  background-color: transparent;
+  color: lightgray;
+}
+
+.login-description{
+  color: white;
+}
+
+.alert {
+  color: white;
+}
+
+.alert-alert {
+  color:white;
+}
+
+.login-container{
+  height: 800px !important;
+}

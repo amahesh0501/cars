@@ -24,6 +24,7 @@ class ConversationsController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     customer = Customer.find(params[:customer_id])
     @conversation.dealership_id = dealership.id
+    @conversation.customer_id = customer.id
     if @conversation.save
       redirect_to dealership_customer_path(dealership, customer)
     else

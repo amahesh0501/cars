@@ -1,28 +1,43 @@
-<div class="container">
-<%= form_for [@dealership, @vendor] do |f| %>
-<%= render 'layouts/error_messages', object: f.object %>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-<div class="form-group">
-  <%= f.label :name %><br/>
-  <%= f.text_field :name %>
-</div>
-<div class="form-group">
-  <%= f.label :address %><br/>
-  <%= f.text_field :address %>
-</div>
-<div class="form-group">
-  <%= f.label :contact_name%><br/>
-  <%= f.text_field :contact_name %>
-</div>
-<div class="form-group">
-  <%= f.label :contact_phone %><br/>
-  <%= f.text_field :contact_phone %>
-</div>
-<div class="form-group">
-  <%= f.label :contact_email %><br/>
-  <%= f.text_field :contact_email %>
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <%= form_for [@dealership, @vendor] do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+    <div class="form-group">
+      <%= f.label :name %><br/>
+      <%= f.text_field :name %>
+    </div>
+    <div class="form-group">
+      <%= f.label :address %><br/>
+      <%= f.text_field :address %>
+    </div>
+    <div class="form-group">
+      <%= f.label :contact_name%><br/>
+      <%= f.text_field :contact_name %>
+    </div>
+    <div class="form-group">
+      <%= f.label :contact_phone %><br/>
+      <%= f.text_field :contact_phone %>
+    </div>
+    <div class="form-group">
+      <%= f.label :contact_email %><br/>
+      <%= f.text_field :contact_email %>
+    </div>
+
+    <%= f.submit "Create Vendor", :class => 'btn btn-success'  %>
+    <% end %>
+
+
+
+
+  </div>
 </div>
 
-<%= f.submit "Create Vendor", :class => 'btn btn-success'  %>
-<% end %>
-</div>
+
+

@@ -1,27 +1,41 @@
-<div class="container">
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
-  <h2>Basic Information</h2>
-  Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> <br/>
-  Employee: <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) if @employee %> <br/>
-  Car: <%= link_to @car.make, dealership_car_path(@dealership, @car) %> <br/>
-  Date: <%= @deal.date %><br/>
-
-  <h2>Financials</h2>
-  Purchase Price: <%= @deal.amount %><br/>
-  Sales Tax: <%= @deal.sales_tax_amount %><br/>
-  Down Payment: <%= @deal.down_payment %><br/>
-  Term(months): <%= @deal.term %><br/>
-  APR: <%= @deal.apr %><br/>
-  Trade in Value: <%= @deal.trade_in_value %><br/>
-
-  <h2>GAP Insurance</h2>
-  GAP Insurance: <%= @deal.gap_insurance %><br/>
-  GAP Company Name: <%= @deal.gap_name %><br/>
-
-  <h2>Calculations</h2>
-  Whatever we calculate goes here<br/>
+  <%= render 'layouts/sidebar' %>
 
 
-  <%= link_to "Edit Deal", edit_dealership_deal_path(@dealership, @deal) %>
 
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Basic Information</h2>
+    Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> <br/>
+    Employee: <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) if @employee %> <br/>
+    Car: <%= link_to @car.make, dealership_car_path(@dealership, @car) %> <br/>
+    Date: <%= @deal.date %><br/>
+
+    <h2>Financials</h2>
+    Purchase Price: <%= @deal.amount %><br/>
+    Sales Tax: <%= @deal.sales_tax_amount %><br/>
+    Down Payment: <%= @deal.down_payment %><br/>
+    Term(months): <%= @deal.term %><br/>
+    APR: <%= @deal.apr %><br/>
+    Trade in Value: <%= @deal.trade_in_value %><br/>
+
+    <h2>GAP Insurance</h2>
+    GAP Insurance: <%= @deal.gap_insurance %><br/>
+    GAP Company Name: <%= @deal.gap_name %><br/>
+
+    <h2>Calculations</h2>
+    Whatever we calculate goes here<br/>
+
+
+    <%= link_to "Edit Deal", edit_dealership_deal_path(@dealership, @deal) %>
+
+
+
+
+  </div>
 </div>
+
+
+

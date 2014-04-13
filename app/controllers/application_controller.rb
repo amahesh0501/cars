@@ -14,13 +14,7 @@ class ApplicationController < ActionController::Base
   def is_member?
     membership = Membership.find_by_user_id(current_user.id)
     dealership = Dealership.find(membership.dealership_id)
-    p membership
-    p "*"*100
-    p dealership
-    p "*"*100
-    p params[:dealership_id]
-    p "*"*100
-    redirect_to blocked_path unless dealership.id == params[:dealership_id]
+    redirect_to blocked_path unless dealership.id == params[:dealership_id].to_i
   end
 
   def is_dealership_admin?
