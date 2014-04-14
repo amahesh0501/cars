@@ -9,10 +9,6 @@
       <a href="http://demo.neontheme.com/dashboard/main/" class="logo">
         <img src="http://demo.neontheme.com/assets/images/logo@2x.png" width="120" alt="" />
       </a>
-      <br/><br/><br/>
-
-
-
 
   </div>
 
@@ -23,16 +19,14 @@
   <div class="login-form">
 
     <div class="login-content">
+      <% flash.each do |name, msg| %>
+                <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
+            <% end %>
 
 
 
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), id: "form_login") do |f| %>
 
-       <div class="form-login-error">
-      <% flash.each do |name, msg| %>
-                      <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
-                  <% end %>
-      </div>
 
         <div class="form-group">
 
@@ -59,7 +53,7 @@
         </div>
 
         <div class="form-group">
-          <%= f.submit "Sign in", class: "btn btn-block btn-login" %>
+          <%= f.submit "Sign In", class: "btn btn-block btn-login" %>
         </div>
 
 
@@ -68,6 +62,8 @@
 
 
       <% end %>
+
+      <a href="/users/sign_up">Don't have an account? Sign Up</a>
 
 
 

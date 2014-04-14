@@ -22,9 +22,9 @@
       <label class="col-sm-3 control-label">Social Security Number</label>
       <div class="col-sm-5">
         <% if @fields %>
-          <%= f.text_field :ssn, value: @fields["ssn"] %>
+          <%= f.text_field :ssn, value: @fields["ssn"], class: "form-control" %>
         <% else %>
-          <%= f.text_field :ssn %>
+          <%= f.text_field :ssn, class: "form-control" %>
         <% end %>
       </div>
     </div>
@@ -32,9 +32,9 @@
       <label class="col-sm-3 control-label">E-Mail</label>
       <div class="col-sm-5">
         <% if @fields %>
-          <%= f.text_field :email, value: @fields["email"] %>
+          <%= f.text_field :email, value: @fields["email"],class: "form-control" %>
         <% else %>
-          <%= f.text_field :email %>
+          <%= f.text_field :email, class: "form-control" %>
         <% end %>
       </div>
     </div>
@@ -42,9 +42,9 @@
       <label class="col-sm-3 control-label">Phone</label>
       <div class="col-sm-5">
         <% if @fields %>
-          <%= f.text_field :phone, value: @fields["phone"] %>
+          <%= f.text_field :phone, value: @fields["phone"], class: "form-control" %>
         <% else %>
-          <%= f.text_field :phone %>
+          <%= f.text_field :phone, class: "form-control" %>
         <% end %>
       </div>
     </div>
@@ -52,9 +52,9 @@
       <label class="col-sm-3 control-label">Address</label>
       <div class="col-sm-5">
         <% if @fields %>
-          <%= f.text_field :address, value: @fields["address"] %>
+          <%= f.text_field :address, value: @fields["address"], class: "form-control" %>
         <% else %>
-          <%= f.text_field :address %>
+          <%= f.text_field :address, class: "form-control" %>
         <% end %>
       </div>
     </div>

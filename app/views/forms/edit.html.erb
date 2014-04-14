@@ -7,26 +7,17 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <h2>Edit Expense </h2>
+    <h2>Edit <%= @form.name %> </h2>
 
     <div class="panel-body">
 
-    <%= form_for [@dealership, @expense], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= form_for [@dealership, @form], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
 
     <div class="form-group">
       <label class="col-sm-3 control-label">Name</label>
       <div class="col-sm-5">
         <%= f.text_field :name, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Amount</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :amount, class: "form-control" %>
-        </div>
       </div>
     </div>
     <div class="form-group">
@@ -40,21 +31,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Date</label>
+      <label class="col-sm-3 control-label">Upload Form PDF</label>
       <div class="col-sm-5">
-        <%= f.date_field :date, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Vendor</label>
-      <div class="col-sm-5">
-            <%= f.collection_select :vendor_id, @vendors.all, :id, :name, prompt: true %>
+        <%= f.file_field :form_pdf, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
-            <%= f.submit "Edit Expense", :class => 'btn btn-success'  %>
+            <%= f.submit "Edit Form", :class => 'btn btn-success'  %>
       </div>
     </div>
     <% end %>
@@ -64,6 +49,5 @@
 
   </div>
 </div>
-
 
 

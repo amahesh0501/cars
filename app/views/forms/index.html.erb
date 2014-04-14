@@ -1,0 +1,57 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= link_to "<i class='entypo-plus'></i> Add Form".html_safe, new_dealership_form_path(@dealership), class: "btn btn-success", role: "button" %>
+
+    <br/>
+
+    <% @forms.each do |form| %>
+    <% url = form.form_pdf.path.split("public")[1] %>
+
+
+    <div class="member-entry">
+
+      <a href="<%= url %>" class="member-img">
+        <img src="/pdf.png" class="img-rounded" />
+        <i class="entypo-forward"></i>
+      </a>
+      <div class="member-details">
+
+
+        <h4><%= link_to form.name, url %> </h4>
+
+
+        <div class="row info-list">
+
+
+          <div class="col-sm-12">
+
+            <p><%= form.description if form.description %></p>
+            <p><%= link_to "Edit", edit_dealership_form_path(@dealership, form) %> | <%= link_to "Delete", dealership_form_path(@dealership, form), method: "delete", confirm: "Are you sure" %> </p>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+

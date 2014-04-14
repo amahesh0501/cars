@@ -178,7 +178,7 @@
         <% if @fields %>
           <%= f.text_area :notes, value: @fields["notes"], class: "form-control"  %>
         <% else %>
-          <%= f.text_area :notes %>
+          <%= f.text_area :notes, class: "form-control" %>
         <% end %>
       </div>
     </div>

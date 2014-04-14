@@ -18,6 +18,7 @@ Cars::Application.routes.draw do
     resources :vendors
     resources :employees
     resources :revenues
+    resources :forms
     resources :customers do
       resources :conversations
     end

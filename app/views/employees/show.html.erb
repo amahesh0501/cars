@@ -142,7 +142,7 @@
                     <% customer = Customer.find(deal.customer_id) %>
                     <% employee = Employee.find(deal.employee_id) %>
                     <% car = Car.find(deal.car_id) %>
-                    <%= link_to "Sold #{car.make_model_year} to #{customer.name} for #{deal.amount} ", dealership_deal_path(@dealership, deal) %>
+                    <%= link_to "Sold #{car.make_model_year} to #{customer.name} for  $#{number_with_delimiter(deal.amount, :delimiter => ',')} ", dealership_deal_path(@dealership, deal) %>
                   </h4>
 
                   <div class="row info-list">

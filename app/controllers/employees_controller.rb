@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
-    @employees = @dealership.employees
+    @employees = @dealership.employees.order(:name)
   end
 
   def show

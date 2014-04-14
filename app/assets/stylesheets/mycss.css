@@ -22,3 +22,11 @@
 .login-container{
   height: 800px !important;
 }
+
+.login-content h2{
+  display: none;
+}
+
+.login-content ul{
+  list-style: none;
+}

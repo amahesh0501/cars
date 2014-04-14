@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407054109) do
+ActiveRecord::Schema.define(version: 20140414005333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,16 @@ ActiveRecord::Schema.define(version: 20140407054109) do
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "forms", force: true do |t|
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.text     "description"
+    t.string   "form_pdf_file_name"
+    t.string   "form_pdf_content_type"
+    t.integer  "form_pdf_file_size"
+    t.datetime "form_pdf_updated_at"
   end
 
   create_table "memberships", force: true do |t|

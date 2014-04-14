@@ -1,3 +1,4 @@
+
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
   <%= render 'layouts/sidebar' %>
@@ -7,80 +8,428 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
+    <div class="profile-env">
 
-    <%= form_tag(controller: "expenses", action: "get_dates", remote: true, class: "date_form") do %>
-      <%= label_tag("Enter date range:") %><br/>
-      <%= date_field_tag(:start_date) %><br/>
-      <%= date_field_tag(:end_date) %><br/>
-      <%= hidden_field_tag(:dealership_id, @dealership.id) %>
-      <%= submit_tag("See Expenses") %>
-    <% end %>
+      <header class="row">
 
-    <br/><br/>
+        <div class="col-sm-2">
 
-    <h2> Profit: <%= @profit %></h2>
-    <h2> Revenue: <%= @revenue_total %></h2>
-    <h2> Expenses: <%= @expense_total %></h2>
+          <span class="profile-picture">
+            <img src="/cash.png" height ="115" width="115" style="border-radius: 50%;" />
+          </span>
 
-    <hr/>
+        </div>
 
-    <h3>Revenue</h3>
+        <div class="col-sm-3">
 
-    <table class="table table-striped">
-      <% if @gains %>
-      <% @gains.each do |gain| %>
-        <tr>
-          <% if gain.class.table_name == "deals" %>
-            <% car = Car.find(gain.car_id) %>
-            <td><%= link_to "Sold #{car.make_model_year}", dealership_deal_path(@dealership, gain)  %></td>
-            <td><%= gain.amount  %></td>
-            <td><%= gain.date  %></td>
-          <% elsif gain.class.table_name == "revenues" %>
-          <td><%= link_to gain.name, dealership_revenue_path(@dealership, gain)  %></td>
-          <td><%= gain.amount  %></td>
-          <td><%= gain.date  %></td>
-          <% end %>
-
-        </tr>
-      <% end %>
-      <% end %>
-    </table>
-
-    <h3>Expenses</h3>
-
-    <table class="table table-striped">
-      <% if @transactions %>
-      <% @transactions.each do |transaction| %>
-        <tr>
-          <% if transaction.class.table_name == "expenses" %>
-            <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
-            <td><%= transaction.amount  %></td>
-            <td><%= transaction.date  %></td>
-            <td><%= link_to 'Delete', dealership_expense_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
-          <% elsif  transaction.class.table_name == "repairs" %>
-            <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
-            <td><%= transaction.amount  %></td>
-            <td><%= transaction.date  %></td>
-            <td><%= link_to 'Delete', dealership_repair_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
-          <% elsif  transaction.class.table_name == "paychecks" %>
-            <td><%= link_to "Paycheck for #{transaction.name}", dealership_paycheck_path(@dealership, transaction)  %></td>
-            <td><%= transaction.amount  %></td>
-            <td><%= transaction.date  %></td>
-            <td><%= link_to 'Delete', dealership_repair_path(@dealership, transaction), :confirm => 'Are you sure?', :method => :delete %></td>
-          <% elsif transaction.class.table_name == "purchases" %>
-            <% car = Car.find_by_make_model_year(transaction.name) %>
-            <td><%= link_to "Purchased for #{transaction.name}", dealership_car_path(@dealership, car)  %></td>
-            <td><%= transaction.amount  %></td>
-            <td><%= transaction.date  %></td>
-          <% end %>
-        </tr>
-      <% end %>
-      <% end %>
-    </table>
+          <ul class="profile-info-sections">
 
 
 
 
+          </ul>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <div class="profile-buttons">
+            <%= form_tag(controller: "expenses", action: "get_dates", remote: true, class: "form-horizontal form-groups-bordered") do %>
+            <div class="form-group">
+
+              <div class="col-sm-4">
+                <b>Start Date</b>
+                <div class="input-group">
+
+                  <%= date_field_tag(:start_date, value = params[:start_date]) %>
+
+
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+
+              <div class="col-sm-4">
+                <b>End Date</b>
+                <div class="input-group">
+                  <%= date_field_tag(:end_date, value = params[:end_date]) %>
+                  <br/>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <%= hidden_field_tag(:dealership_id, @dealership.id) %>
+                  <br/>
+                  <%= submit_tag("Filter Expenses", class: "btn btn-info") %>
+                </div>
+              </div>
+            </div>
+
+            <% end %>
+
+
+          </div>
+        </div>
+        <br/>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= "$#{number_with_delimiter(@profit, :delimiter => ',')}" %></h4>
+                  <span><a href="#">Net Profit</a></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= "$#{number_with_delimiter(@revenue_total, :delimiter => ',')}" %></h4>
+                  <span><a href="#">Revenue</a></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= "$#{number_with_delimiter(@expense_total, :delimiter => ',')}" %></h4>
+                  <span><a href="#">Expense</a></span>
+                </div>
+              </div>
+
+
+            </div>
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#revenue" data-toggle="tab">Revenues</a></li>
+              <li><a href="#expense" data-toggle="tab">Expenses</a></li>
+              <li><a href="#overview" data-toggle="tab">Overview</a></li>
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+        <div class="tab-pane active" id="revenue">
+          <section class="profile-feed">
+            <div class="profile-stories">
+
+              <%= link_to "<i class='entypo-plus'></i> Create Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %>&nbsp;<%= link_to "<i class='entypo-plus'></i> Add Misc Revenue".html_safe, new_dealership_revenue_path(@dealership), class: "btn btn-success", role: "button" %>
+              <br/>
+
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#deal" data-toggle="tab">Vehicle Sales</a></li>
+                <li><a href="#misc" data-toggle="tab">Misc Revenue</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="deal">
+                  <br/>
+                  <table class="table table-bordered datatable" id="table-1">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Manage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @deals.each do |deal| %>
+                      <tr class="gradeU">
+                        <% car = Car.find(deal.car_id) %>
+                        <td><%= link_to "Sold #{car.make_model_year}", dealership_deal_path(@dealership, deal)  %></td>
+                        <td><%= "$#{number_with_delimiter(deal.amount, :delimiter => ',')}"  %></td>
+                        <td><%= deal.date  %></td>
+                        <td><%= link_to "Edit", edit_dealership_deal_path(@dealership, deal)  %></td>
+                      </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <%= "There are no vehicle sales entries in this date range" if @deals.length ==0 %>
+                </div>
+                <div class="tab-pane" id="misc">
+                  <br/>
+                  <table class="table table-bordered datatable" id="table-1">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Manage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @revenues.each do |revenue| %>
+                      <tr class="gradeU">
+                        <td><%= revenue.name %></td>
+                        <td><%= "$#{number_with_delimiter(revenue.amount, :delimiter => ',')}"  %></td>
+                        <td><%= revenue.date  %></td>
+                        <td><%= link_to "Edit", edit_dealership_revenue_path(@dealership, revenue)  %></td>
+                      </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <%= "There are no misc revenue entries in this date range" if @revenues.length ==0 %>
+                </div>
+              </div>
+
+
+
+
+
+            </div>
+          </section>
+        </div>
+        <div class="tab-pane" id="expense">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Expense".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp; <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp; <%= link_to "<i class='entypo-plus'></i> Add Paycheck Expense".html_safe, new_dealership_paycheck_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp; <%= link_to "<i class='entypo-plus'></i> Add Misc Expense".html_safe, new_dealership_expense_path(@dealership), class: "btn btn-success", role: "button" %>
+              <br/>
+
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#purchase" data-toggle="tab">Vehicle Purchases</a></li>
+                <li><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <li><a href="#paycheck" data-toggle="tab">Employee Paychecks</a></li>
+                <li><a href="#misc-exp" data-toggle="tab">Misc Expenses</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="purchase">
+                  <table class="table table-bordered datatable" id="table-1">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Manage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @purchases.each do |purchase| %>
+                      <tr class="gradeU">
+                        <% car = Car.find_by_make_model_year(purchase.name) %>
+                        <td><%= link_to "Purchased for #{purchase.name}", dealership_car_path(@dealership, car)  %></td>
+                        <td><%= "$#{number_with_delimiter(purchase.amount, :delimiter => ',')}" %></td>
+                        <td><%= purchase.date  %></td>
+                        <td><%= link_to "Edit", edit_dealership_car_path(@dealership, car)  %>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                    <%= "There are no vehicle purchases in this date range" if @purchases.length ==0 %>
+                  </div>
+                  <div class="tab-pane" id="repair">
+                    <table class="table table-bordered datatable" id="table-1">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Vehicle</th>
+                          <th>Amount</th>
+                          <th>Date</th>
+                          <th>Manage</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @repairs.each do |repair| %>
+                        <tr class="gradeU">
+                          <% car = Car.find(repair.car_id) %>
+                          <td><%= repair.name  %></td>
+                          <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car) %></td>
+                          <td><%= "$#{number_with_delimiter(repair.amount, :delimiter => ',')}" %></td>
+                          <td><%= repair.date  %></td>
+                          <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
+                        </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                    <%= "There are no repair expenses in this date range" if @repairs.length ==0 %>
+                  </div>
+                  <div class="tab-pane" id="paycheck">
+                    <table class="table table-bordered datatable" id="table-1">
+                     <thead>
+                       <tr>
+                         <th>Employee</th>
+                         <th>Amount</th>
+                         <th>Date</th>
+                         <th>Manage</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <% @paychecks.each do |paycheck| %>
+                       <% employee = Employee.find(paycheck.employee_id) %>
+                       <tr class="gradeU">
+                         <td><%= link_to "#{paycheck.name}", dealership_employee_path(@dealership, employee)  %></td>
+                         <td><%= "$#{number_with_delimiter(paycheck.amount, :delimiter => ',')}" %></td>
+                         <td><%= paycheck.date  %></td>
+                         <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)  %> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure?"  %></td>
+
+                       </tr>
+                       <% end %>
+                     </tbody>
+                   </table>
+                   <%= "There are no payroll expenses in this date range" if @paychecks.length ==0 %>
+                 </div>
+                 <div class="tab-pane" id="misc-exp">
+                   <table class="table table-bordered datatable" id="table-1">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Manage</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% @expenses.each do |expense| %>
+                      <tr class="gradeU">
+                        <td><%= expense.name  %></td>
+                        <td><%= "$#{number_with_delimiter(expense.amount, :delimiter => ',')}" %></td>
+                        <td><%= expense.date  %></td>
+                        <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, expense)  %> | <%= link_to "Delete", dealership_expense_path(@dealership, expense), method: "delete", confirm: "Are you sure?"  %></td>
+                      </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <%= "There are no misc expenses in this date range" if @expenses.length ==0 %>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="tab-pane" id="overview">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <div class="invoice">
+
+
+                <div class="margin"></div>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="30%">Revenues</th>
+                      <th width="50%"></th>
+                      <th class="text-right">Total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>Vehicle Sales</td>
+                      <td></td>
+                      <td class="text-right"><%= @deal_total %></td>
+                    </tr>
+
+                    <tr>
+                      <td>Misc Revenue</td>
+                      <td></td>
+                      <td class="text-right"><%= @misc_revenue_total %></td>
+                    </tr>
+
+                    <tr>
+                      <td><b>Total</b></td>
+                      <td></td>
+                      <td class="text-right"><b>$<%= @revenue_total %></b></td>
+                    </tr>
+
+
+
+
+                  </tbody>
+                </table>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="30%">Expenses</th>
+                      <th width="50%"></th>
+                      <th class="text-right">Total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>Vehicle Purchases</td>
+                      <td></td>
+                      <td class="text-right"><%= @purchase_total %></td>
+                    </tr>
+
+                    <tr>
+                      <td>Repair Expenses</td>
+                      <td></td>
+                      <td class="text-right"><%= @repair_total %></td>
+                    </tr>
+
+                    <tr>
+                      <td>Payroll Expenses</td>
+                      <td></td>
+                      <td class="text-right"><%= @paycheck_total %></td>
+                    </tr>
+
+                    <tr>
+                      <td>Misc Expenses</td>
+                      <td></td>
+                      <td class="text-right"><%= @misc_expense_total %></td>
+                    </tr>
+
+                    <tr>
+                      <td><b>Total</b></td>
+                      <td></td>
+                      <td class="text-right"><b><%= @expense_total %></b></td>
+                    </tr>
+
+
+
+
+                  </tbody>
+                </table>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th width="30%">Net Profit</th>
+                      <th width="50%"></th>
+                      <th class="text-right">Total</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td>Net Profit</td>
+                      <td></td>
+                      <td class="text-right"><%= @profit %></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+                </div>
+
+              </div><!-- Footer -->
+
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
+
+
 
