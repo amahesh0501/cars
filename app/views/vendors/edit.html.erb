@@ -1,3 +1,4 @@
+
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
   <%= render 'layouts/sidebar' %>
@@ -6,54 +7,80 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <%= form_for [@dealership, @vendor] do |f| %>
+
+    <h2>Edit Vendor </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership, @vendor], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
 
+
+
     <div class="form-group">
-      <%= f.label :name %><br/>
-      <%= f.text_field :name %>
+      <label class="col-sm-3 control-label">Name</label>
+      <div class="col-sm-5">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :address %><br/>
-      <% if @fields %>
-        <%= f.text_field :address, value: @fields["address"] %>
-      <% else %>
-        <%= f.text_field :address %>
-      <% end %>
+      <label class="col-sm-3 control-label">Address</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :address, value: @fields["address"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :address, class: "form-control" %>
+        <% end %>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :contact_name %><br/>
-      <% if @fields %>
-        <%= f.text_field :contact_name, value: @fields["contact_name"] %>
-      <% else %>
-        <%= f.text_field :contact_name %>
-      <% end %>
+      <label class="col-sm-3 control-label">Contact Name</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :contact_name, value: @fields["contact_name"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :contact_name, class: "form-control" %>
+        <% end %>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :contact_phone %><br/>
-      <% if @fields %>
-        <%= f.text_field :contact_phone, value: @fields["contact_phone"] %>
-      <% else %>
-        <%= f.text_field :contact_phone %>
-      <% end %>
+      <label class="col-sm-3 control-label">Contact E-Mail</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :contact_email, value: @fields["contact_email"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :contact_email, class: "form-control" %>
+        <% end %>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :contact_email %><br/>
-      <% if @fields %>
-        <%= f.text_field :contact_email, value: @fields["contact_email"] %>
-      <% else %>
-        <%= f.text_field :contact_email %>
-      <% end %>
+      <label class="col-sm-3 control-label">Contact Phone</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :contact_phone, value: @fields["contact_phone"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :contact_phone, class: "form-control" %>
+        <% end %>
+      </div>
     </div>
 
-    <%= f.submit "Edit Vendor", :class => 'btn btn-success'  %>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Edit Vendor", :class => 'btn btn-success'  %>
+      </div>
+    </div>
+
     <% end %>
+    </div>
 
 
 
 
   </div>
 </div>
+
+
 
 
 

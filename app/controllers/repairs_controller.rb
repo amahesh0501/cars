@@ -55,8 +55,10 @@ class RepairsController < ApplicationController
 
   def destroy
     repair = Repair.find(params[:id])
+    car = Car.find(repair.car_id)
+    dealership = Dealership.find(params[:dealership_id])
     repair.destroy
-    redirect_to root_path
+    redirect_to dealership_car_path(dealership, car)
   end
 
 

@@ -7,32 +7,241 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <h2> Basic Information </h2>
-    <%= image_tag @employee.image(:medium) %><br/>
-    Name: <%= @employee.name %><br/>
-    Social Security Number: <%= @employee.ssn %><br/>
-    E-Mail Address: <%= @employee.email %><br/>
-    Phone: <%= @employee.phone %><br/>
+    <div class="profile-env">
 
-    <% if @deals.length > 0 %>
-      <h2>Deals</h2>
-      <% @deals.each do |deal|  %>
-      <% car = Car.find(deal.car_id) %>
-       <p> Sold <%= link_to car.make_model_year, dealership_car_path(@dealership, car) %> for <%= deal.amount %> on <%= deal.date %> </p>
-      <% end %>
-    <% end %>
+      <header class="row">
 
-    <h2>Pay History</h2>
-    <% if @paychecks.length > 0 %>
-      <% @paychecks.each do |paycheck|  %>
-      <p><%= "$#{paycheck.amount} on #{paycheck.date}" %> (<%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)%>)</p>
-      <% end %>
-    <% end %>
-    <%= link_to "Create new Payroll Expense for #{@employee.name}", new_dealership_paycheck_path(@dealership, :employee_id => @employee.id) %>
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @employee.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @employee.name %></strong>
+                <span><%= @employee.email.length > 0 ? @employee.email : "E-Mail not entered" %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @employee.phone.length > 0 ? @employee.phone : "Not Entered" %></h3>
+                <span><a href="#">Phone Number</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/employees/<%=@employee.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Employee
+            </a>
+
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
 
 
 
 
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Employee Details</a></li>
+              <li><a href="#deal" data-toggle="tab">Deals</a></li>
+              <li><a href="#paycheck" data-toggle="tab">Paychecks</a></li>
+
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Email: <%= @employee.email.length > 0 ? "#{@employee.email}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>SSN: <%= @employee.ssn  ? "#{@employee.ssn}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Phone: <%= @employee.phone.length > 0 ? "#{@employee.phone}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Address: <%= @employee.address.length > 0 ? "#{@employee.address}" : "Not Entered" %></p>
+
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Notes</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  No notes have been entered
+
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <%= link_to "<i class='entypo-cross'></i> Delete Employee".html_safe, dealership_employee_path(@dealership, @employee), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+
+      </div>
+        <div class="tab-pane" id="deal">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %><br/><br/>
+              <% @deals.each do |deal| %>
+              <div class="member-entry">
+
+                <span class="member-img">
+                  <img src="/deal.png" class="img-rounded" />
+                </span>
+
+                <div class="member-details">
+
+
+                  <h4>
+                    <% customer = Customer.find(deal.customer_id) %>
+                    <% employee = Employee.find(deal.employee_id) %>
+                    <% car = Car.find(deal.car_id) %>
+                    <%= link_to "Sold #{car.make_model_year} to #{customer.name} for #{deal.amount} ", dealership_deal_path(@dealership, deal) %>
+                  </h4>
+
+                  <div class="row info-list">
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Date: <%= deal.date %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Final Sales Price: <%= deal.amount ? "$#{number_with_delimiter(deal.amount, :delimiter => ',')}" : "Not Entered" %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Down Payment: <%= deal.down_payment ? "$#{number_with_delimiter(deal.down_payment, :delimiter => ',')}" : "Not Entered" %>
+                    </div>
+
+                    <div class="clear"></div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Term: <%= deal.term ? deal.term : "Not Entered" %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      APR: <%= deal.apr ? deal.apr : "Not Entered" %>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <i class="entypo-forward"></i>
+                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_delimiter(deal.trade_in_value, :delimiter => ',')}" : "Not Entered" %>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+              <% end %>
+            </div>
+
+            <% if @deals.length ==0 %>
+            <div class="member-entry">
+              <span class="member-img"><img src="/deal.png" class="img-rounded" /></span>
+              <div class="member-details">
+                <h4><%= "#{@employee.name} does not have any deals yet" %></h4>
+              </div>
+            </div>
+            <%end%>
+
+          </section>
+        </div>
+        <div class="tab-pane" id="paycheck">
+          <%= link_to "<i class='entypo-plus'></i> Add Paycheck".html_safe, new_dealership_paycheck_path(@dealership, :employee_id => @employee.id),  class: "btn btn-success", role: "button" %><br/><br/>
+
+          <% if @paychecks.length > 0 %>
+          <table class="table table-bordered datatable" id="table-1">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @paychecks.each do |paycheck|  %>
+              <tr class="gradeU">
+                <td><%= "$#{number_with_delimiter(paycheck.amount, :delimiter => ',')}" %></td>
+                <td><%= paycheck.date  %></td>
+                <td><%= paycheck.description  %></td>
+                <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck, employee_id: paycheck.employee_id)%></td>
+                <td><%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure" %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
+
+
+
+          <%= "<br/><br/>No paychecks have been added".html_safe if @paychecks.length == 0 %>
+
+
+
+        </div>
+
+
+
+
+      </div>
+
+
+
+
+    </div>
 
   </div>
 </div>

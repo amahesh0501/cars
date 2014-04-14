@@ -208,6 +208,12 @@
                     </div>
 
 
+                      <%= link_to "<i class='entypo-cross'></i> Delete Car".html_safe, dealership_car_path(@dealership, @car), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+
+
+
+
+
         </div>
         <div class="tab-pane" id="profile">
           <section class="profile-feed">
@@ -220,7 +226,8 @@
                     <th>Repair</th>
                     <th>Date</th>
                     <th>Price</th>
-                    <th>Edit</th>
+                    <th>Description</th>
+                    <th>Manage</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -229,7 +236,8 @@
                     <td><%= repair.name  %></td>
                     <td><%= repair.date  %></td>
                     <td><%= "$#{number_with_delimiter(repair.amount, :delimiter => ',')}" %></td>
-                    <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %></td>
+                    <td><%= repair.description  %></td>
+                    <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
                   </tr>
                   <% end %>
                 </tbody>

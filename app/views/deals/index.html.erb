@@ -6,19 +6,34 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <%= link_to "Create Deal", new_dealership_deal_path(@dealership) %>
-    <br/>
-    <br/>
-    <table class="table table-striped">
+    <%= link_to "<i class='entypo-plus'></i> Add Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %>
 
-      <% @deals.each do |deal| %>
+    <br/>
+    <br/>
+    <table class="table table-bordered datatable" id="table-1">
+      <thead>
         <tr>
-          <% car = Car.find(deal.car_id) %>
-          <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
-          <td><%= link_to 'Delete Deal', dealership_deal_path(@dealership, deal), :confirm => 'Are you sure?', :method => :delete %></td>
+          <th>Car</th>
+          <th>Employee</th>
+          <th>Amount</th>
+          <th>Date</th>
         </tr>
-      <% end %>
+      </thead>
+      <tbody>
+        <% @deals.each do |deal| %>
+        <% car = Car.find(deal.car_id) %>
+        <% employee = Employee.find(deal.employee_id) %>
+        <tr class="gradeU">
+          <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
+          <td><%= link_to employee.name, dealership_employee_path(@dealership, employee)  %></td>
+          <td><%= link_to "$#{number_with_delimiter(deal.amount, :delimiter => ',')}", dealership_deal_path(@dealership, deal)  %></td>
+          <td><%= link_to deal.date, dealership_deal_path(@dealership, deal)  %></td>
+        </tr>
+        <% end %>
+      </tbody>
     </table>
+    <%= "There are no deals" if @deals.length ==0 %>
+
 
 
 

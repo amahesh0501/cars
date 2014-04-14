@@ -58,8 +58,10 @@ class PaychecksController < ApplicationController
 
   def destroy
     paycheck = Paycheck.find(params[:id])
+    dealership = Dealership.find(params[:dealership_id])
+    employee = Employee.find(paycheck.employee_id)
     paycheck.destroy
-    redirect_to root_path
+    redirect_to dealership_employee_path(dealership, employee)
   end
 
 

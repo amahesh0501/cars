@@ -21,6 +21,8 @@ class CreateCustomers < ActiveRecord::Migration
 
       t.string :status, default: "Potential Customer"
 
+      t.attachment :image
+
 
       t.timestamps
     end

@@ -142,6 +142,8 @@
             </div>
           </div>
 
+          <%= link_to "<i class='entypo-cross'></i> Delete Customer".html_safe, dealership_customer_path(@dealership, @customer), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+
 
         </div>
         <div class="tab-pane" id="conversation">
@@ -173,7 +175,7 @@
               <div class="cbp_tmlabel">
                 <h2><%= employee ? employee.name : "Someone" %>  <span>spoke with <%=@customer.name%></span></h2>
                 <p><%= conversation.description %></p>
-                <p><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, @customer, conversation) %></p>
+                <p><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, @customer, conversation) %> | <%= link_to "Delete", dealership_customer_conversation_path(@dealership, @customer, conversation), method: "delete", confirm: "Are you sure?" %> </p>
               </div>
 
             </li>

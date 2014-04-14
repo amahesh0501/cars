@@ -6,26 +6,69 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <h2>Current Users</h2>
-    <table class="table table-striped">
-      <% @has_access.each do |membership| %>
-        <tr>
-          <td><%= membership.email_address %></td>
-          <td><%= link_to 'Revoke Membership', revoke_member_path(membership_id: membership.id) unless membership.is_dealership_admin == true %></td>
 
-        </tr>
-      <% end %>
-    </table>
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#have" data-toggle="tab">Have Access</a></li>
+      <li><a href="#request" data-toggle="tab">Requested Access</a></li>
+      <li><a href="#new" data-toggle="tab">How to Add New Members</a></li>
+    </ul>
 
-    <h2>Users who have Requested Access</h2>
-    <table class="table table-striped">
-      <% @no_access.each do |membership| %>
-        <tr>
-          <td><%= membership.email_address %></td>
-          <td><%= link_to 'Approve Membership', approve_member_path(membership_id: membership.id) %></td>
-        </tr>
-      <% end %>
-    </table>
+    <div class="tab-content">
+      <div class="tab-pane active" id="have">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>E-Mail</th>
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @has_access.each do |membership| %>
+            <tr class="gradeU">
+              <td><%= membership.email_address  %></td>
+              <td><%= link_to 'Revoke Membership', revoke_member_path(membership_id: membership.id) unless membership.is_dealership_admin == true %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="tab-pane" id="request">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>E-Mail</th>
+              <th>Manage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @no_access.each do |membership| %>
+            <tr class="gradeU">
+              <td><%= membership.email_address  %></td>
+              <td><%= link_to 'Approve Membership', approve_member_path(membership_id: membership.id) %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= "No user have requested access" if @no_access.length ==0 %>
+
+      </div>
+      <div class="tab-pane" id="new">
+        <br/>
+        <p>To grant your employees access to your account, ask them to <a href="/users/sign_up">create an account</a> and visit your <%= link_to "dealership page", dealership_path(@dealership) %>. They will be promoted to request access. Once they have requested access, you will see their e-mail in the "Requested Access" tab on this page.</p>
+        <p> Your employees will be allowed to create vehicles, repairs, customers, deals and vendors. However, they will not have access to dealership expenses or information about other employees. They will not be able to delete any records.</p>
+      </div>
+
+
+
+
+
+
+
+
 
 
 

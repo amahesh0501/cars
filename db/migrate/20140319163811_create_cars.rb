@@ -34,6 +34,8 @@ class CreateCars < ActiveRecord::Migration
       t.string :flooring_company
       t.date :flooring_date
 
+      t.attachment :image
+
 
 
 

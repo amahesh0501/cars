@@ -56,8 +56,10 @@ class ConversationsController < ApplicationController
 
   def destroy
     conversation = Conversation.find(params[:id])
+    @dealership = Dealership.find(params[:dealership_id])
+    @customer = Customer.find(params[:customer_id])
     conversation.destroy
-    redirect_to root_path
+    redirect_to dealership_customer_path(@dealership, @customer)
   end
 
 

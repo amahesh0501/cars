@@ -7,40 +7,58 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <%= form_for [@dealership, @paycheck] do |f| %>
+    <h2>Edit Paycheck </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership, @paycheck], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
 
     <div class="form-group">
-      <%= f.label :employee_id %><br/>
-      <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, :selected => params[:employee_id] %>
+      <label class="col-sm-3 control-label">Employee</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true %>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :amount %><br/>
-      <%= f.text_field :amount %>
+      <label class="col-sm-3 control-label">Date</label>
+      <div class="col-sm-5">
+        <%= f.date_field :date, class: "form-control" %>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :date %><br/>
-      <%= f.date_field :date %>
+      <label class="col-sm-3 control-label">Amount</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :amount, class: "form-control" %>
+        </div>
+      </div>
     </div>
     <div class="form-group">
-      <%= f.label :description %><br/>
-      <% if @fields %>
-        <%= f.text_area :description, value: @fields["description"] %>
-      <% else %>
-        <%= f.text_area :description %>
-      <% end %>
+      <label class="col-sm-3 control-label">Description</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_area :description, value: @fields["description"], class: "form-control" %>
+        <% else %>
+          <%= f.text_area :description, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Edit Paycheck", :class => 'btn btn-success'  %>
+      </div>
     </div>
 
-
-
-    <%= f.submit "Edit Payroll Expense", :class => 'btn btn-success'  %>
     <% end %>
+    </div>
 
 
 
 
   </div>
 </div>
-
 
 

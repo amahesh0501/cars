@@ -7,19 +7,19 @@ class ApplicationController < ActionController::Base
 
   def dealership_active?
     membership = Membership.find_by_user_id(current_user.id)
-    dealership = Dealership.find(membership.dealership_id)
-    redirect_to inactive_path if dealership.active == false
+    dealership = Dealership.find(membership.dealership_id) if membership
+    redirect_to inactive_path if dealership.active == false if membership
   end
 
   def is_member?
     membership = Membership.find_by_user_id(current_user.id)
-    dealership = Dealership.find(membership.dealership_id)
-    redirect_to blocked_path unless dealership.id == params[:dealership_id].to_i
+    dealership = Dealership.find(membership.dealership_id) if membership
+    redirect_to blocked_path unless dealership.id == params[:dealership_id].to_i if membership
   end
 
   def is_dealership_admin?
     membership = Membership.find_by_user_id(current_user.id)
-    dealership = Dealership.find(membership.dealership_id)
+    dealership = Dealership.find(membership.dealership_id) if membership
     redirect_to blocked_path unless dealership.id = params[:dealership_id] && membership.is_dealership_admin == true
   end
 

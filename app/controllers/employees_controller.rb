@@ -10,7 +10,7 @@ class EmployeesController < ApplicationController
   def show
     @dealership = Dealership.find(params[:dealership_id])
     @employee = Employee.find(params[:id])
-    @paychecks = Paycheck.where(employee_id: @employee.id)
+    @paychecks = Paycheck.where(employee_id: @employee.id).order(:date).reverse
     @deals = Deal.where(employee_id: @employee.id)
     @cars = []
     @deals.each {|deal| @cars << Car.find(deal.car_id)}
@@ -55,6 +55,7 @@ class EmployeesController < ApplicationController
 
   def destroy
     employee = Employee.find(params[:id])
+    dealership = Dealership.find(params[:dealership_id])
     deals = Deal.find_all_by_employee_id(employee.id)
     deals.each do |deal|
       deal.employee_id = nil
@@ -68,7 +69,7 @@ class EmployeesController < ApplicationController
     end
 
     employee.destroy
-    redirect_to root_path
+    redirect_to dealership_employees_path(dealership)
   end
 
 

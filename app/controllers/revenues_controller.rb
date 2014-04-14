@@ -22,7 +22,7 @@ class RevenuesController < ApplicationController
     @revenue.dealership_id = dealership.id
     if @revenue.save
       dealership.revenues << @revenue
-      redirect_to dealership_revenue_path(dealership, @revenue)
+      redirect_to dealership_expenses_path(dealership)
     else
       flash[:errors] = @revenue.errors.full_messages
       flash[:revenue] = params[:revenue]
@@ -40,7 +40,7 @@ class RevenuesController < ApplicationController
     revenue = Revenue.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     if revenue.update_attributes(params[:revenue])
-      redirect_to dealership_revenue_path(dealership, revenue)
+      redirect_to dealership_expenses_path(dealership)
     else
       flash[:errors] = revenue.errors.full_messages
       flash[:revenue] = params[:revenue]
@@ -50,8 +50,9 @@ class RevenuesController < ApplicationController
 
   def destroy
     revenue = Revenue.find(params[:id])
+    dealership = Dealership.find(params[:dealership_id])
     revenue.destroy
-    redirect_to root_path
+    redirect_to dealership_expenses_path(dealership)
   end
 
 

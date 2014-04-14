@@ -6,33 +6,175 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <h2>Basic Information</h2>
-    <p>Name: <%= @vendor.name %></p>
-    <p>Address: <%= @vendor.address %></p>
-    <p>Contact Name: <%= @vendor.contact_name %></p>
-    <p>Contact EMail: <%= @vendor.contact_email %></p>
-    <p>Contact Phone: <%= @vendor.contact_phone %></p>
 
-    <h2>Recent Transactions</h2>
-    <table class="table table-striped">
+    <div class="profile-env">
 
-      <% @vendor_transactions.each do |transaction| %>
-        <tr>
-          <td><%= transaction.name %></td>
-          <td><%= transaction.amount %></td>
-          <td><%= transaction.date %></td>
-          <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, transaction) if transaction.class.table_name == "repairs" %></td>
-        </tr>
-      <% end %>
-    </table>
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="/deal.png" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @vendor.name %></strong>
+                <span><%= @vendor.address.length > 0 ? @vendor.address : "Address not entered" %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @transaction_count %></h3>
+                <span><a href="#">Number of Transactions</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/vendors/<%=@vendor.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Vendor
+            </a>
+
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
 
 
 
 
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Vendor Details</a></li>
+              <li><a href="#transactions" data-toggle="tab">Transactions</a></li>
+
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Name: <%= @vendor.contact_name.length > 0 ? "#{@vendor.contact_name}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @vendor.address.length > 0  ? "#{@vendor.address}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact E-Mail: <%= @vendor.contact_email.length > 0 ? "#{@vendor.contact_email}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Phone: <%= @vendor.contact_phone.length > 0  ? "#{@vendor.contact_phone}" : "Not Entered" %></p>
+
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Notes</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  No notes have been entered
+
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <%= link_to "<i class='entypo-cross'></i> Delete Vendor".html_safe, dealership_vendor_path(@dealership, @vendor), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+
+      </div>
+        <div class="tab-pane" id="transactions">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add Vendor Expense".html_safe, new_dealership_expense_path(@dealership, :vendor_id => @vendor.id), class: "btn btn-success", role: "button" %>
+              <br/><br/>
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @vendor_transactions.each do |transaction| %>
+                  <tr class="gradeU">
+                    <td><%= transaction.name  %></td>
+                    <td><%= "$#{number_with_delimiter(transaction.amount, :delimiter => ',')}" %></td>
+                    <td><%= transaction.date  %></td>
+                    <td><%= transaction.description  %></td>
+                    <% if transaction.class.table_name == "repairs" %>
+                    <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, transaction) %> | <%= link_to "Delete", dealership_repair_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %></td>
+                    <% elsif transaction.class.table_name == "expenses" %>
+                    <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, transaction) %> | <%= link_to "Delete", dealership_expense_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %></td>
+                    <% end %>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= "There are no repairs" if @repairs.length ==0 %>
+
+
+
+            </div>
+          </section>
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+    </div>
 
   </div>
 </div>
-
 
 
 

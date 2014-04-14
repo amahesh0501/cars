@@ -55,6 +55,7 @@ class CustomersController < ApplicationController
   def destroy
     customer = Customer.find(params[:id])
     deal = Deal.find_by_customer_id(customer.id)
+    dealership = Dealership.find(params[:dealership_id])
     if deal
       car = Car.find(deal.car_id)
       car.status = "Frontline"
@@ -62,6 +63,6 @@ class CustomersController < ApplicationController
       deal.destroy
     end
     customer.destroy
-    redirect_to root_path
+    redirect_to dealership_customers_path(dealership)
   end
 end

@@ -7,6 +7,8 @@ class CreateVendors < ActiveRecord::Migration
       t.string :contact_name
       t.string :contact_phone
       t.string :contact_email
+      t.attachment :image
+      t.text :description
 
       t.timestamps
     end

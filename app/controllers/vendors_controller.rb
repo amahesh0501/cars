@@ -13,6 +13,7 @@ class VendorsController < ApplicationController
     @expenses = Expense.where(vendor_id: @vendor.id)
     @repairs = Repair.where(vendor_id: @vendor.id)
     @vendor_transactions = @expenses + @repairs
+    @transaction_count = @vendor_transactions.length
   end
 
   def new
@@ -54,8 +55,9 @@ class VendorsController < ApplicationController
 
   def destroy
     vendor = Vendor.find(params[:id])
+    dealership = Dealership.find(params[:dealership_id])
     vendor.destroy
-    redirect_to root_path
+    redirect_to dealership_vendors_path(dealership)
   end
 
 

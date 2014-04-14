@@ -62,7 +62,7 @@ class ExpensesController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     @expense.dealership_id = dealership.id
     if @expense.save
-      redirect_to dealership_expense_path(dealership, @expense)
+      redirect_to dealership_expenses_path(dealership)
     else
       flash[:errors] = @expense.errors.full_messages
       flash[:expense] = params[:expense]
@@ -91,8 +91,9 @@ class ExpensesController < ApplicationController
 
   def destroy
     expense = Expense.find(params[:id])
+    dealership = Dealership.find(params[:dealership_id])
     expense.destroy
-    redirect_to root_path
+    redirect_to dealership_expenses_path(dealership)
   end
 
   def get_dates

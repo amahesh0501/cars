@@ -4,16 +4,14 @@ class DealsController < ApplicationController
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
-    @deals = @dealership.deals
+    @deals = @dealership.deals.order(:date).reverse
   end
 
   def show
     @dealership = Dealership.find(params[:dealership_id])
     @deal = Deal.find(params[:id])
     @customer = Customer.find(@deal.customer_id)
-    unless @deal.employee_id != nil
-      @employee = Employee.find(@deal.employee_id)
-    end
+    @employee = Employee.find(@deal.employee_id)
     @car = Car.find(@deal.car_id)
   end
 

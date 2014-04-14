@@ -6,18 +6,35 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <%= link_to "Create Vendor", new_dealership_vendor_path(@dealership) %>
-    <br/>
-    <br/>
-    <table class="table table-striped">
 
-      <% @vendors.each do |vendor| %>
+    <%= link_to "<i class='entypo-plus'></i> Add Vendor".html_safe, new_dealership_vendor_path(@dealership), class: "btn btn-success", role: "button" %>
+    <br/><br/>
+    <table class="table table-bordered datatable" id="table-1">
+      <thead>
         <tr>
-          <td><%= link_to vendor.name , dealership_vendor_path(@dealership, vendor)  %></td>
-          <td><%= link_to 'Delete Vendor', dealership_vendor_path(@dealership, vendor), :confirm => 'Are you sure?', :method => :delete %></td>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Contact Name</th>
+          <th>Contact E-Mail</th>
+          <th>Contact Phone</th>
         </tr>
-      <% end %>
+      </thead>
+      <tbody>
+        <% @vendors.each do |vendor| %>
+        <tr class="gradeU">
+          <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+          <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+          <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+          <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+          <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+        </tr>
+        <% end %>
+      </tbody>
     </table>
+    <%= "There are no vendors" if @vendors.length ==0 %>
+
+
+
 
 
 

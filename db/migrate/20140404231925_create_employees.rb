@@ -7,6 +7,7 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :ssn
       t.string :address
       t.string :phone
+      t.text :description
       t.attachment :image
 
       t.timestamps

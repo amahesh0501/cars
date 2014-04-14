@@ -1,3 +1,4 @@
+
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 
   <%= render 'layouts/sidebar' %>
@@ -7,29 +8,206 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <h2>Basic Information</h2>
-    Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> <br/>
-    Employee: <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) if @employee %> <br/>
-    Car: <%= link_to @car.make, dealership_car_path(@dealership, @car) %> <br/>
-    Date: <%= @deal.date %><br/>
+    <div class="profile-env">
 
-    <h2>Financials</h2>
-    Purchase Price: <%= @deal.amount %><br/>
-    Sales Tax: <%= @deal.sales_tax_amount %><br/>
-    Down Payment: <%= @deal.down_payment %><br/>
-    Term(months): <%= @deal.term %><br/>
-    APR: <%= @deal.apr %><br/>
-    Trade in Value: <%= @deal.trade_in_value %><br/>
+      <header class="row">
 
-    <h2>GAP Insurance</h2>
-    GAP Insurance: <%= @deal.gap_insurance %><br/>
-    GAP Company Name: <%= @deal.gap_name %><br/>
+        <div class="col-sm-2">
 
-    <h2>Calculations</h2>
-    Whatever we calculate goes here<br/>
+          <a href="#" class="profile-picture">
+            <img src="/deal.png" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong>Deal for <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></strong>
+                <span>Sold by <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) %> to <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" %></h3>
+                <span><a href="#">Purchase Price</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/deals/<%=@deal.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Deal
+            </a>
 
 
-    <%= link_to "Edit Deal", edit_dealership_deal_path(@dealership, @deal) %>
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" %></h4>
+                  <span><a href="#">Purchase Price</a></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= @deal.term ? "#{@deal.term} months" : "N/A" %></h4>
+                  <span><a href="#">Term</a></span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= @deal.apr ? "#{@deal.apr}%" : "N/A"%></h4>
+                  <span><a href="#">APR</a></span>
+                </div>
+              </div>
+
+
+            </div>
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#home" data-toggle="tab">Deal Details</a></li>
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+        <div class="tab-pane active" id="home">
+
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Car: <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Date: <%= @deal.date %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Financials</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Purchase Price: <%= "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" %></p>
+                  <p><i class="entypo-forward"></i>Sales Tax Amount: <%= @deal.sales_tax_amount ? "$#{number_with_delimiter(@deal.sales_tax_amount, :delimiter => ',')}" : "N/A"  %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Down Payment: <%= @deal.down_payment ? "$#{number_with_delimiter(@deal.down_payment, :delimiter => ',')}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Term: <%= @deal.term ? "#{@deal.term} months" : "N/A"  %></p>
+
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>APR: <%= @deal.apr ? "#{@deal.apr}%" : "N/A"  %></p>
+
+                  <p><i class="entypo-forward"></i>Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_delimiter(@deal.trade_in_value, :delimiter => ',')}" : "N/A"  %></p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">GAP Insurance</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Has GAP Insurance: <%= @deal.gap_insurance ? "Yes" : "No" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Has GAP Insurance: <%= @deal.gap_insurance ? @deal.gap_name : "N/A" %></p>
+
+                </div>
+                <div class="col-md-4">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Calculations</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p>Need calculations</p>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-4">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <%= link_to "<i class='entypo-cross'></i> Delete Deal".html_safe, dealership_deal_path(@dealership, @deal), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+
+
+
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+
+
+
+
 
 
 

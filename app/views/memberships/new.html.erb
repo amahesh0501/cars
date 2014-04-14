@@ -1,4 +1,7 @@
 <div class="container">
+  <br/><br/><br/>
+  <h2>Request access to join this dealership</h2>
+  <br/>
 <%= form_for [@dealership, @membership] do |f| %>
     <%= f.hidden_field :user_id, :value => @user.id %>
     <%= f.hidden_field :dealership_id, :value => @dealership_id %>
