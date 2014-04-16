@@ -57,7 +57,7 @@
             <tr class="gradeU">
               <td><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer)  %></td>
               <td><%= link_to "#{car.make_model_year}", dealership_car_path(@dealership, car)  %></td>
-              <td><%= link_to "$#{number_with_delimiter(deal.amount, :delimiter => ',')}", dealership_deal_path(@dealership, deal)  %></td>
+              <td><%= link_to "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}", dealership_deal_path(@dealership, deal)  %></td>
             </tr>
             <% end %>
           </tbody>

@@ -8,11 +8,12 @@ class DealershipsController < ApplicationController
     authenticate_user!
     dealership_active?
 
+    #DEALER THINGS
     @dealership = Dealership.find(params[:id])
-    @cars = @dealership.cars
-    @sold_cars = Car.where(dealership_id: @dealership.id, status: "Sold")
-    @frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
-    @repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs")
+    @cars = @dealership.cars.limit(4)
+    @sold_cars = Car.where(dealership_id: @dealership.id, status: "Sold").limit(4)
+    @frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline").limit(4)
+    @repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs").limit(4)
     @potential_customers = Customer.where(dealership_id: @dealership.id, status: "Potential Customer")
     @existing_customers = Customer.where(dealership_id: @dealership.id, status: "Existing Customer")
     @memberships = Membership.where(dealership_id: @dealership.id)
@@ -20,7 +21,41 @@ class DealershipsController < ApplicationController
     @expenses = @dealership.expenses
     @vendors = @dealership.vendors
     @employees = @dealership.employees
+    @conversations = @dealership.conversations.order("date DESC").limit(5)
     @membership = Membership.find_by_user_id_and_dealership_id(current_user.id, @dealership.id)
+
+    #FINANCIALS
+
+    @expenses = Expense.find(:all, :conditions => { :date => 30.days.ago..Date.today}, :order => "date DESC", :order => "date DESC" )
+    @repairs = Repair.find(:all, :conditions => { :date => 30.days.ago..Date.today}, :order => "date DESC", :order => "date DESC" )
+    @paychecks = Paycheck.find(:all, :conditions => { :date => 30.days.ago..Date.today}, :order => "date DESC", :order => "date DESC" )
+    @purchases = Purchase.find(:all, :conditions => { :date => 30.days.ago..Date.today}, :order => "date DESC", :order => "date DESC" )
+    @act_deals = Deal.find(:all, :conditions => { :date => 30.days.ago..Date.today}, :order => "date DESC", :order => "date DESC" )
+    @revenues = Revenue.find(:all, :conditions => { :date => 30.days.ago..Date.today}, :order => "date DESC", :order => "date DESC" )
+
+    @misc_expense_total = 0
+    @expenses.each {|expense| @misc_expense_total += expense.amount }
+    @repair_total = 0
+    @repairs.each {|repair| @repair_total += repair.amount }
+    @paycheck_total = 0
+    @paychecks.each {|paycheck| @paycheck_total += paycheck.amount }
+    @purchase_total = 0
+    @purchases.each {|purchase| @purchase_total += purchase.amount }
+    @deal_total = 0
+    @act_deals.each {|deal| @deal_total += deal.amount }
+    @misc_revenue_total = 0
+    @revenues.each {|revenue| @misc_revenue_total += revenue.amount }
+
+    @transactions = @expenses + @repairs + @paychecks + @purchases
+    @gains = @act_deals + @revenues
+    @expense_total = 0
+    @transactions.each {|transaction| @expense_total += transaction.amount if transaction.amount}
+    @revenue_total = 0
+    @gains.each {|gain| @revenue_total += gain.amount if gain.amount}
+    @profit = @revenue_total - @expense_total
+
+
+    #ACCESS
     if @dealership.active == true
       if @membership
         if @membership.has_access == true
@@ -114,6 +149,11 @@ class DealershipsController < ApplicationController
     dealership.active = true
     dealership.save
     redirect_to admin_path
+  end
+
+  def conversations
+    dealership = Dealership.find(params[:id])
+    @conversations = dealership.conversations.order("date DESC")
   end
 
 

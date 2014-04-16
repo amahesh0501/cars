@@ -92,7 +92,7 @@
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Email: <%= @customer.email.length > 0 ? "#{@customer.email}" : "Not Entered" %></p>
                   <p><i class="entypo-forward"></i>Phone: <%= @customer.phone.length > 0 ? "#{@customer.phone}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Date of Birth: <%= @customer.dob  ? "#{@customer.dob}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Date of Birth: <%= @customer.dob  ? "#{@customer.dob.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Address: <%= @customer.address.length > 0  ? "#{@customer.address}" : "Not Entered" %></p>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Manager Phone: <%= @customer.employer_phone.length > 0  ? "#{@customer.employer_phone}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Monthly Gross Salary: <%= @customer.monthly_gross_salary  ? "$#{number_with_delimiter(@customer.monthly_gross_salary, :delimiter => ',')}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Monthly Gross Salary: <%= @customer.monthly_gross_salary  ? "$#{number_with_precision(@customer.monthly_gross_salary, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
                 </div>
               </div>
             </div>
@@ -154,7 +154,7 @@
             <% @conversations.each do |conversation| %>
             <% employee = Employee.find(conversation.employee_id) if conversation.employee_id %>
             <li>
-              <time class="cbp_tmtime" datetime="2014-04-12T03:45"><span><%= conversation.date %></span> <span></span></time>
+              <time class="cbp_tmtime" datetime="2014-04-12T03:45"><span><%= conversation.date.strftime("%m/%d/%Y") %></span> <span></span></time>
 
 
               <% if conversation.medium == "Phone" %>
@@ -208,26 +208,25 @@
 
                   <h4>
                     <% customer = Customer.find(deal.customer_id) %>
-                    <% employee = Employee.find(deal.employee_id) %>
                     <% car = Car.find(deal.car_id) %>
-                    <%= link_to "Purchased #{car.make_model_year} from #{employee.name} for $#{number_with_delimiter(deal.amount, :delimiter => ',')} ", dealership_deal_path(@dealership, deal) %>
+                    <%= link_to "Purchased #{car.make_model_year} for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, deal) %>
                   </h4>
 
                   <div class="row info-list">
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Date: <%= deal.date %>
+                      Date: <%= deal.date.strftime("%m/%d/%Y") %>
                     </div>
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Final Sales Price: <%= deal.amount ? "$#{number_with_delimiter(deal.amount, :delimiter => ',')}" : "Not Entered" %>
+                      Final Sales Price: <%= deal.amount ? "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                     </div>
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Down Payment: <%= deal.down_payment ? "$#{number_with_delimiter(deal.down_payment, :delimiter => ',')}" : "Not Entered" %>
+                      Down Payment: <%= deal.down_payment ? "$#{number_with_precision(deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                     </div>
 
                     <div class="clear"></div>
@@ -244,7 +243,7 @@
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_delimiter(deal.trade_in_value, :delimiter => ',')}" : "Not Entered" %>
+                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_precision(deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                     </div>
 
                   </div>

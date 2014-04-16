@@ -14,7 +14,7 @@
         <div class="col-sm-2">
 
           <a href="#" class="profile-picture">
-            <img src="/deal.png" height ="115" width="115" style="border-radius: 50%;" />
+            <img src="<%= @vendor.image %>" height ="115" width="115" style="border-radius: 50%;" />
           </a>
 
         </div>
@@ -108,12 +108,12 @@
 
           <div class="panel panel-dark" data-collapsed="0">
             <div class="panel-heading">
-              <div class="panel-title">Notes</div>
+              <div class="panel-title">Description</div>
             </div>
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-8">
-                  No notes have been entered
+                  <%= @vendor.description.length > 0 ? @vendor.description : "No description has been entered" %>
 
                 </div>
               </div>
@@ -126,7 +126,7 @@
         <div class="tab-pane" id="transactions">
           <section class="profile-feed">
             <div class="profile-stories">
-              <%= link_to "<i class='entypo-plus'></i> Add Vendor Expense".html_safe, new_dealership_expense_path(@dealership, :vendor_id => @vendor.id), class: "btn btn-success", role: "button" %>
+              <%= link_to "<i class='entypo-plus'></i> Add Vendor Expense".html_safe, new_dealership_expense_path(@dealership, :vendor_id => @vendor.id, :redirect => "vendor"), class: "btn btn-success", role: "button" %>
               <br/><br/>
               <table class="table table-bordered datatable" id="table-1">
                 <thead>
@@ -142,8 +142,8 @@
                   <% @vendor_transactions.each do |transaction| %>
                   <tr class="gradeU">
                     <td><%= transaction.name  %></td>
-                    <td><%= "$#{number_with_delimiter(transaction.amount, :delimiter => ',')}" %></td>
-                    <td><%= transaction.date  %></td>
+                    <td><%= "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}" %></td>
+                    <td><%= transaction.date.strftime("%m/%d/%Y")  %></td>
                     <td><%= transaction.description  %></td>
                     <% if transaction.class.table_name == "repairs" %>
                     <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, transaction) %> | <%= link_to "Delete", dealership_repair_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %></td>

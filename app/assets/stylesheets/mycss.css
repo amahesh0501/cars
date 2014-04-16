@@ -30,3 +30,11 @@
 .login-content ul{
   list-style: none;
 }
+
+.dash-car{
+  height: 115px !important;
+}
+
+.num{
+  size: 10px !important;
+}

@@ -26,13 +26,17 @@
             <li>
               <div class="profile-name">
                 <strong>Deal for <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></strong>
+                <% if @employee %>
                 <span>Sold by <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) %> to <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></span>
+                <% else %>
+                <span>Sold to <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></span>
+                <% end %>
               </div>
             </li>
 
             <li>
               <div class="profile-stat">
-                <h3><%= "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" %></h3>
+                <h3><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></h3>
                 <span><a href="#">Purchase Price</a></span>
               </div>
             </li>
@@ -62,7 +66,7 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" %></h4>
+                  <h4><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></h4>
                   <span><a href="#">Purchase Price</a></span>
                 </div>
               </div>
@@ -116,7 +120,7 @@
                   <p><i class="entypo-forward"></i>Car: <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></p>
                 </div>
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Date: <%= @deal.date %></p>
+                  <p><i class="entypo-forward"></i>Date: <%= @deal.date.strftime("%m/%d/%Y") %></p>
                 </div>
               </div>
             </div>
@@ -129,18 +133,18 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Purchase Price: <%= "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" %></p>
-                  <p><i class="entypo-forward"></i>Sales Tax Amount: <%= @deal.sales_tax_amount ? "$#{number_with_delimiter(@deal.sales_tax_amount, :delimiter => ',')}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Purchase Price: <%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></p>
+                  <p><i class="entypo-forward"></i>Sales Tax Amount: <%= @deal.sales_tax_amount ? "$#{number_with_precision(@deal.sales_tax_amount, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                 </div>
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Down Payment: <%= @deal.down_payment ? "$#{number_with_delimiter(@deal.down_payment, :delimiter => ',')}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Down Payment: <%= @deal.down_payment ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Term: <%= @deal.term ? "#{@deal.term} months" : "N/A"  %></p>
 
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>APR: <%= @deal.apr ? "#{@deal.apr}%" : "N/A"  %></p>
 
-                  <p><i class="entypo-forward"></i>Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_delimiter(@deal.trade_in_value, :delimiter => ',')}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 
                 </div>
               </div>

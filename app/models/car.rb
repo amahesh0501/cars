@@ -8,7 +8,7 @@ class Car < ActiveRecord::Base
 
   validates_presence_of :make, :model, :year, :acquire_price, :acquire_date, :dealership_id, :status
 
-  has_attached_file :image, styles: { medium: "320x240"}
+  has_attached_file :image, styles: { small: "115x115", medium: "320x240"}, default_url: "/car.png"
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
 
   def acquire_price=(num)

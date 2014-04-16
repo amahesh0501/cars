@@ -83,19 +83,19 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= "$#{number_with_delimiter(@profit, :delimiter => ',')}" %></h4>
+                  <h4><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></h4>
                   <span><a href="#">Net Profit</a></span>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= "$#{number_with_delimiter(@revenue_total, :delimiter => ',')}" %></h4>
+                  <h4><%= "$#{number_with_precision(@revenue_total, :delimiter => ',', precision: 2)}" %></h4>
                   <span><a href="#">Revenue</a></span>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= "$#{number_with_delimiter(@expense_total, :delimiter => ',')}" %></h4>
+                  <h4><%= "$#{number_with_precision(@expense_total, :delimiter => ',', precision: 2)}" %></h4>
                   <span><a href="#">Expense</a></span>
                 </div>
               </div>
@@ -152,8 +152,8 @@
                       <tr class="gradeU">
                         <% car = Car.find(deal.car_id) %>
                         <td><%= link_to "Sold #{car.make_model_year}", dealership_deal_path(@dealership, deal)  %></td>
-                        <td><%= "$#{number_with_delimiter(deal.amount, :delimiter => ',')}"  %></td>
-                        <td><%= deal.date  %></td>
+                        <td><%= "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}"  %></td>
+                        <td><%= deal.date.strftime("%m/%d/%Y")  %></td>
                         <td><%= link_to "Edit", edit_dealership_deal_path(@dealership, deal)  %></td>
                       </tr>
                       <% end %>
@@ -176,8 +176,8 @@
                       <% @revenues.each do |revenue| %>
                       <tr class="gradeU">
                         <td><%= revenue.name %></td>
-                        <td><%= "$#{number_with_delimiter(revenue.amount, :delimiter => ',')}"  %></td>
-                        <td><%= revenue.date  %></td>
+                        <td><%= "$#{number_with_precision(revenue.amount, :delimiter => ',', precision: 2)}"  %></td>
+                        <td><%= revenue.date.strftime("%m/%d/%Y")  %></td>
                         <td><%= link_to "Edit", edit_dealership_revenue_path(@dealership, revenue)  %></td>
                       </tr>
                       <% end %>
@@ -223,8 +223,8 @@
                       <tr class="gradeU">
                         <% car = Car.find_by_make_model_year(purchase.name) %>
                         <td><%= link_to "Purchased for #{purchase.name}", dealership_car_path(@dealership, car)  %></td>
-                        <td><%= "$#{number_with_delimiter(purchase.amount, :delimiter => ',')}" %></td>
-                        <td><%= purchase.date  %></td>
+                        <td><%= "$#{number_with_precision(purchase.amount, :delimiter => ',', precision: 2)}" %></td>
+                        <td><%= purchase.date.strftime("%m/%d/%Y")  %></td>
                         <td><%= link_to "Edit", edit_dealership_car_path(@dealership, car)  %>
                         </tr>
                         <% end %>
@@ -249,8 +249,8 @@
                           <% car = Car.find(repair.car_id) %>
                           <td><%= repair.name  %></td>
                           <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car) %></td>
-                          <td><%= "$#{number_with_delimiter(repair.amount, :delimiter => ',')}" %></td>
-                          <td><%= repair.date  %></td>
+                          <td><%= "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" %></td>
+                          <td><%= repair.date.strftime("%m/%d/%Y")  %></td>
                           <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
                         </tr>
                         <% end %>
@@ -273,8 +273,8 @@
                        <% employee = Employee.find(paycheck.employee_id) %>
                        <tr class="gradeU">
                          <td><%= link_to "#{paycheck.name}", dealership_employee_path(@dealership, employee)  %></td>
-                         <td><%= "$#{number_with_delimiter(paycheck.amount, :delimiter => ',')}" %></td>
-                         <td><%= paycheck.date  %></td>
+                         <td><%= "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}" %></td>
+                         <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
                          <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)  %> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure?"  %></td>
 
                        </tr>
@@ -297,8 +297,8 @@
                       <% @expenses.each do |expense| %>
                       <tr class="gradeU">
                         <td><%= expense.name  %></td>
-                        <td><%= "$#{number_with_delimiter(expense.amount, :delimiter => ',')}" %></td>
-                        <td><%= expense.date  %></td>
+                        <td><%= "$#{number_with_precision(expense.amount, :delimiter => ',', precision: 2)}" %></td>
+                        <td><%= expense.date.strftime("%m/%d/%Y")  %></td>
                         <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, expense)  %> | <%= link_to "Delete", dealership_expense_path(@dealership, expense), method: "delete", confirm: "Are you sure?"  %></td>
                       </tr>
                       <% end %>
@@ -319,6 +319,32 @@
 
                 <div class="margin"></div>
 
+                <div class="row">
+
+                    <div class="col-sm-3 invoice-left">
+
+
+
+                    </div>
+
+                    <div class="col-sm-3 invoice-left">
+
+
+                    </div>
+
+                    <div class="col-md-6 invoice-right">
+
+                      <% if params[:start_date]  %>
+                      <h5><%= "Date Range: #{params[:start_date]} to #{params[:end_date]}" %></h5>
+                      <br/>
+                      <% end %>
+
+                    </div>
+
+                  </div>
+
+
+
                 <table class="table">
                   <thead>
                     <tr>
@@ -332,19 +358,19 @@
                     <tr>
                       <td>Vehicle Sales</td>
                       <td></td>
-                      <td class="text-right"><%= @deal_total %></td>
+                      <td class="text-right"><%= "$#{number_with_precision(@deal_total, :delimiter => ',', precision: 2)}" %></td>
                     </tr>
 
                     <tr>
                       <td>Misc Revenue</td>
                       <td></td>
-                      <td class="text-right"><%= @misc_revenue_total %></td>
+                      <td class="text-right"><%= "$#{number_with_precision(@misc_revenue_total, :delimiter => ',', precision: 2)}" %></td>
                     </tr>
 
                     <tr>
                       <td><b>Total</b></td>
                       <td></td>
-                      <td class="text-right"><b>$<%= @revenue_total %></b></td>
+                      <td class="text-right"><b><%= "$#{number_with_precision(@revenue_total, :delimiter => ',', precision: 2)}" %></b></td>
                     </tr>
 
 
@@ -366,31 +392,31 @@
                     <tr>
                       <td>Vehicle Purchases</td>
                       <td></td>
-                      <td class="text-right"><%= @purchase_total %></td>
+                      <td class="text-right"><%= "$#{number_with_precision(@purchase_total, :delimiter => ',', precision: 2)}" %></td>
                     </tr>
 
                     <tr>
                       <td>Repair Expenses</td>
                       <td></td>
-                      <td class="text-right"><%= @repair_total %></td>
+                      <td class="text-right"><%= "$#{number_with_precision(@repair_total, :delimiter => ',', precision: 2)}" %></td>
                     </tr>
 
                     <tr>
                       <td>Payroll Expenses</td>
                       <td></td>
-                      <td class="text-right"><%= @paycheck_total %></td>
+                      <td class="text-right"><%= "$#{number_with_precision(@paycheck_total, :delimiter => ',', precision: 2)}" %></td>
                     </tr>
 
                     <tr>
                       <td>Misc Expenses</td>
                       <td></td>
-                      <td class="text-right"><%= @misc_expense_total %></td>
+                      <td class="text-right"><%= "$#{number_with_precision(@misc_expense_total, :delimiter => ',', precision: 2)}" %></td>
                     </tr>
 
                     <tr>
                       <td><b>Total</b></td>
                       <td></td>
-                      <td class="text-right"><b><%= @expense_total %></b></td>
+                      <td class="text-right"><b><%= "$#{number_with_precision(@expense_total, :delimiter => ',', precision: 2)}" %></b></td>
                     </tr>
 
 
@@ -412,7 +438,7 @@
                     <tr>
                       <td>Net Profit</td>
                       <td></td>
-                      <td class="text-right"><%= @profit %></td>
+                      <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></b></td>
                     </tr>
                   </tbody>
                 </table>

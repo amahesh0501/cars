@@ -32,7 +32,7 @@
 
             <li>
               <div class="profile-stat">
-                <h3><%= @car.acquire_date %></h3>
+                <h3><%= @car.acquire_date.strftime("%m/%d/%Y") %></h3>
                 <span><a href="#">Acquire Date</a></span>
               </div>
             </li>
@@ -64,19 +64,19 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= @deal? "$#{number_with_delimiter(@profit, :delimiter => ',')}" : "N/A" %></h4>
+                  <h4><%= @deal? "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" : "N/A" %></h4>
                   <span><a href="#">Net Profit</a></span>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= @deal? "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" : "N/A" %></h4>
+                  <h4><%= @deal? "$#{number_with_precision(@deal.amount, :delimiter => ',', :precision => 2)}" : "N/A" %></h4>
                   <span><a href="#">Sale Price</a></span>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= "$#{number_with_delimiter(@total_price, :delimiter => ',')}"%></h4>
+                  <h4><%= "$#{number_with_precision(@total_price, :delimiter => ',', :precision => 2)}"%></h4>
                   <span><a href="#">Total Cost</a></span>
                 </div>
               </div>
@@ -159,10 +159,10 @@
                       <div class="panel-body">
                         <div class="row">
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_delimiter(@car.acquire_price, :delimiter => ',')}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
                           </div>
                           <div class="col-md-4">
                             <p><i class="entypo-forward"></i>Location: <%= @car.acquire_location.length > 0 ? "#{@car.acquire_location}" : "Not Entered" %></p>
@@ -181,7 +181,7 @@
                             <p><i class="entypo-forward"></i><%= @car.smog_status == true ? "This car has been smogged" : "This car has not been smogged" %></p>
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Date: <%= @car.smog_date ? "#{@car.smog_date}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Date: <%= @car.smog_date ? "#{@car.smog_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                           </div>
                           <div class="col-md-4">
                             <p><i class="entypo-forward"></i>Smog Location: <%= @car.smogged_by ? "#{@car.smogged_by}" : "Not Entered" %></p>
@@ -200,7 +200,7 @@
                             <p><i class="entypo-forward"></i><%= @car.flooring == true ? "This car has been floored" : "This car has not been floored" %></p>
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Date: <%= @car.flooring_date ? "#{@car.flooring_date}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Date: <%= @car.flooring_date ? "#{@car.flooring_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                           </div>
                           <div class="col-md-4">
                             <p><i class="entypo-forward"></i>Company: <%= @car.flooring_company ? "#{@car.flooring_company}" : "Not Entered" %></p>
@@ -236,9 +236,9 @@
                   <% @repairs.each do |repair| %>
                   <tr class="gradeU">
                     <td><%= repair.name  %></td>
-                    <td><%= repair.date  %></td>
-                    <td><%= "$#{number_with_delimiter(repair.amount, :delimiter => ',')}" %></td>
-                    <td><%= repair.description  %></td>
+                    <td><%= repair.date.strftime("%m/%d/%Y")  %></td>
+                    <td><%= "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" %></td>
+                    <td><%= repair.description.length > 0 ? repair.description : "No description entered"  %></td>
                     <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
                   </tr>
                   <% end %>
@@ -253,6 +253,7 @@
         </div>
 
       <% if @deal %>
+      <% customer = Customer.find(@deal.customer_id) %>
       <div class="tab-pane" id="deal">
         <section class="profile-feed">
           <div class="profile-stories">
@@ -264,26 +265,23 @@
 
               <div class="member-details">
                 <h4>
-                  <% customer = Customer.find(@deal.customer_id) %>
-                  <% employee = Employee.find(@deal.employee_id) %>
-                  <%= link_to "Sold by #{employee.name} to #{customer.name} for $#{number_with_delimiter(@deal.amount, :delimiter => ',')} ", dealership_deal_path(@dealership, @deal) %>
+                  <%= link_to "Sold to #{customer.name} for $#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, @deal) %>
                 </h4>
-
                     <div class="row info-list">
 
                   <div class="col-sm-4">
                     <i class="entypo-forward"></i>
-                    Date: <%= @deal.date %>
+                    Date: <%= @deal.date.strftime("%m/%d/%Y") %>
                   </div>
 
                   <div class="col-sm-4">
                     <i class="entypo-forward"></i>
-                    Final Sales Price: <%= @deal.amount ? "$#{number_with_delimiter(@deal.amount, :delimiter => ',')}" : "Not Entered" %>
+                    Final Sales Price: <%= @deal.amount ? "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                   </div>
 
                   <div class="col-sm-4">
                     <i class="entypo-forward"></i>
-                    Down Payment: <%= @deal.down_payment ? "$#{number_with_delimiter(@deal.down_payment, :delimiter => ',')}" : "Not Entered" %>
+                    Down Payment: <%= @deal.down_payment ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                   </div>
 
                   <div class="clear"></div>
@@ -300,7 +298,7 @@
 
                   <div class="col-sm-4">
                     <i class="entypo-forward"></i>
-                    Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_delimiter(@deal.trade_in_value, :delimiter => ',')}" : "Not Entered" %>
+                    Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                   </div>
 
                 </div>

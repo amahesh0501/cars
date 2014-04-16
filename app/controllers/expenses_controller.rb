@@ -12,17 +12,17 @@ class ExpensesController < ApplicationController
        @revenues = Revenue.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
 
        @misc_expense_total = 0
-       @misc_expense_total = @expenses.each {|expense| @misc_expense_total += expense.amount }
-       @repair_total = 0
-       @repair_total = @repairs.each {|repair| @repair_total += repair.amount }
-       @paycheck_total = 0
-       @paycheck_total = @paychecks.each {|paycheck| @paycheck_total += paycheck.amount }
-       @purchase_total = 0
-       @purchase_total = @purchases.each {|purchase| @purchase_total += purchase.amount }
-       @deal_total = 0
-       @deal_total = @deals.each {|deal| @deal_total += deal.amount }
-       @misc_revenue_total = 0
-       @misc_revenue_total = @revenues.each {|revenue| @misc_revenue_total += revenue.amount }
+      @expenses.each {|expense| @misc_expense_total += expense.amount }
+      @repair_total = 0
+      @repairs.each {|repair| @repair_total += repair.amount }
+      @paycheck_total = 0
+      @paychecks.each {|paycheck| @paycheck_total += paycheck.amount }
+      @purchase_total = 0
+      @purchases.each {|purchase| @purchase_total += purchase.amount }
+      @deal_total = 0
+      @deals.each {|deal| @deal_total += deal.amount }
+      @misc_revenue_total = 0
+      @revenues.each {|revenue| @misc_revenue_total += revenue.amount }
 
        @transactions = @expenses + @repairs + @paychecks + @purchases
        @gains = @deals + @revenues
@@ -45,17 +45,17 @@ class ExpensesController < ApplicationController
       @revenues = Revenue.find_all_by_dealership_id(params[:dealership_id], :order => "date DESC" )
 
       @misc_expense_total = 0
-      @misc_expense_total = @expenses.each {|expense| @misc_expense_total += expense.amount }
+      @expenses.each {|expense| @misc_expense_total += expense.amount }
       @repair_total = 0
-      @repair_total = @repairs.each {|repair| @repair_total += repair.amount }
+      @repairs.each {|repair| @repair_total += repair.amount }
       @paycheck_total = 0
-      @paycheck_total = @paychecks.each {|paycheck| @paycheck_total += paycheck.amount }
+      @paychecks.each {|paycheck| @paycheck_total += paycheck.amount }
       @purchase_total = 0
-      @purchase_total = @purchases.each {|purchase| @purchase_total += purchase.amount }
+      @purchases.each {|purchase| @purchase_total += purchase.amount }
       @deal_total = 0
-      @deal_total = @deals.each {|deal| @deal_total += deal.amount }
+      @deals.each {|deal| @deal_total += deal.amount }
       @misc_revenue_total = 0
-      @misc_revenue_total = @revenues.each {|revenue| @misc_revenue_total += revenue.amount }
+      @revenues.each {|revenue| @misc_revenue_total += revenue.amount }
 
       @transactions = @expenses + @repairs + @paychecks + @purchases
       @gains = @deals + @revenues

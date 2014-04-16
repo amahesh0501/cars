@@ -11,7 +11,7 @@ class DealsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @deal = Deal.find(params[:id])
     @customer = Customer.find(@deal.customer_id)
-    @employee = Employee.find(@deal.employee_id)
+    @employee = Employee.find(@deal.employee_id) if @deal.employee_id
     @car = Car.find(@deal.car_id)
   end
 

@@ -7,7 +7,7 @@ class Customer < ActiveRecord::Base
 
   validates_presence_of :name, :dealership_id, :status
 
-  has_attached_file :image, styles: { medium: "320x240"}
+  has_attached_file :image, styles: { medium: "320x240"}, default_url: "/profile.png"
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
 
   def monthly_gross_salary=(num)

@@ -94,7 +94,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Email: <%= @employee.email.length > 0 ? "#{@employee.email}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>SSN: <%= @employee.ssn  ? "#{@employee.ssn}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>SSN: <%= @employee.ssn.length > 0  ? "#{@employee.ssn}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Phone: <%= @employee.phone.length > 0 ? "#{@employee.phone}" : "Not Entered" %></p>
@@ -114,8 +114,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-8">
-                  No notes have been entered
-
+                  <%= @employee.description.length > 0  ? @employee.description : "No notes have been entered" %>
                 </div>
               </div>
             </div>
@@ -149,7 +148,7 @@
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Date: <%= deal.date %>
+                      Date: <%= deal.date.strftime("%m/%d/%Y") %>
                     </div>
 
                     <div class="col-sm-4">
@@ -207,18 +206,16 @@
                 <th>Amount</th>
                 <th>Date</th>
                 <th>Description</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Manage</th>
               </tr>
             </thead>
             <tbody>
               <% @paychecks.each do |paycheck|  %>
               <tr class="gradeU">
                 <td><%= "$#{number_with_delimiter(paycheck.amount, :delimiter => ',')}" %></td>
-                <td><%= paycheck.date  %></td>
-                <td><%= paycheck.description  %></td>
-                <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck, employee_id: paycheck.employee_id)%></td>
-                <td><%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure" %></td>
+                <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
+                <td><%= paycheck.description.length > 0 ? paycheck.description : "No description entered"  %></td>
+                <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck, employee_id: paycheck.employee_id)%> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure" %></td>
               </tr>
               <% end %>
             </tbody>

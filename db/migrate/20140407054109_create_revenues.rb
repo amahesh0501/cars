@@ -4,7 +4,7 @@ class CreateRevenues < ActiveRecord::Migration
       t.belongs_to :dealership
 
       t.string :name
-      t.integer :float
+      t.float :amount
       t.text :description
       t.date :date
 

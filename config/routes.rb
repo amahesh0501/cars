@@ -36,6 +36,7 @@ Cars::Application.routes.draw do
   match 'mark_active', :to => 'dealerships#mark_active', via: :get
   match 'blocked', :to => 'pages#blocked', via: :get
   match 'test', :to => 'pages#test', via: :get
+  match 'dealerships/:id/conversations', :to => 'dealerships#conversations', via: :get
 
 
 

@@ -33,7 +33,6 @@ class FormsController < ApplicationController
   def edit
     @dealership = Dealership.find(params[:dealership_id])
     @form = Form.find(params[:id])
-    @fields = flash[:form] if flash[:form]
 
   end
 
@@ -44,7 +43,6 @@ class FormsController < ApplicationController
       redirect_to dealership_form_path(dealership, form)
     else
       flash[:errors] = form.errors.full_messages
-      flash[:form] = params[:form]
       redirect_to edit_dealership_form_path(dealership, form)
     end
   end
