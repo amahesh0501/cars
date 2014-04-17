@@ -8,6 +8,8 @@ gem 'rails', '4.0.0'
 
 #My Gems
 gem 'devise'
+gem 'mechanize'
+gem 'nokogiri'
 
 gem "paperclip", "~> 3.0"
 

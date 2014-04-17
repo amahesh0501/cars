@@ -7,7 +7,7 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <h2>Edit <%= @car.make_model_year %> </h2>
+    <h2>Add a Vehicle </h2>
 
     <div class="panel-body">
 
@@ -16,36 +16,32 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Year</label>
       <div class="col-sm-5">
-        <%= f.text_field :year, class: "form-control" %>
+        <%= f.text_field :year,value: @year, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Make</label>
       <div class="col-sm-5">
-        <%= f.text_field :make, class: "form-control" %>
+        <%= f.text_field :make, value: @make, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Model</label>
       <div class="col-sm-5">
-        <%= f.text_field :model, class: "form-control" %>
+        <%= f.text_field :model,value: @model, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Trim</label>
       <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :trim,  class: "form-control" , value: @fields["trim"] %>
-        <% else %>
-          <%= f.text_field :trim,  class: "form-control"  %>
-        <% end %>
+        <%= f.text_field :trim,value: @trim, class: "form-control" %>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-sm-3 control-label">Vin</label>
       <div class="col-sm-5">
-        <%= f.text_field :vin, class: "form-control" %>
+        <%= f.text_field :vin,value: @vin, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
@@ -63,11 +59,7 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Description</label>
       <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_area :description,  class: "form-control" , value: @fields["description"] %>
-        <% else %>
-          <%= f.text_area :description,  class: "form-control"  %>
-        <% end %>
+        <%= f.text_area :description, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
@@ -79,7 +71,7 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Acquire Date</label>
       <div class="col-sm-5">
-        <%= f.text_field :acquire_date, class: "form-control" %>
+        <%= f.date_field :acquire_date, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
@@ -94,17 +86,13 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Acquire Location</label>
       <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :acquire_location,  class: "form-control" , value: @fields["acquire_location"] %>
-        <% else %>
-          <%= f.text_field :acquire_location,  class: "form-control"  %>
-        <% end %>
+        <%= f.text_field :acquire_location, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
-            <%= f.submit "Edit Vehicle", :class => 'btn btn-success'  %>
+            <%= f.submit "Create Vehicle", :class => 'btn btn-success'  %>
 
       </div>
     </div>
@@ -114,8 +102,5 @@
     </div>
   </div>
 </div>
-
-
-
 
 

@@ -1,5 +1,5 @@
 class Car < ActiveRecord::Base
-  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status
+  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim
 
   belongs_to :dealership
   has_one :deal
@@ -13,6 +13,19 @@ class Car < ActiveRecord::Base
 
   def acquire_price=(num)
     self[:acquire_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+
+  def vin_lookup(vin)
+    require 'nokogiri'
+    require 'open-uri'
+    doc = Nokogiri::HTML(open("http://www.decodethis.com/VIN-Decoded/vin/#{vin}"))
+    vin = doc.css('td')[10].text
+    make = doc.css('td')[18].text
+    model = doc.css('td')[22].text
+    trim = doc.css('td')[26].text
+    year = doc.css('td')[14].text
+    engine = doc.css('td')[16].text
+    [vin, make, model, year, trim, engine]
   end
 
 

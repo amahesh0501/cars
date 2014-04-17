@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20140414005333) do
     t.string   "make"
     t.string   "model"
     t.string   "vin"
+    t.string   "trim"
     t.integer  "year"
     t.string   "make_model_year"
     t.string   "miles"
@@ -201,7 +202,7 @@ ActiveRecord::Schema.define(version: 20140414005333) do
   create_table "revenues", force: true do |t|
     t.integer  "dealership_id"
     t.string   "name"
-    t.integer  "float"
+    t.float    "amount"
     t.text     "description"
     t.date     "date"
     t.datetime "created_at"

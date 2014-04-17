@@ -11,6 +11,31 @@
 
     <div class="panel-body">
 
+      <h4>Vin Lookup</h4>
+
+      <%= form_tag(controller: "cars", action: "new_with_vin", remote: true, class: "form-horizontal form-groups-bordered", via: "get") do %>
+      <div class="form-group">
+        <div class="col-sm-4">
+          <b>VIN</b><br/>
+            <%= text_field_tag(:vin) %>
+        </div>
+      </div>
+<br/><br/>
+      <div class="form-group">
+        <div class="col-sm-4">
+          <div class="input-group">
+            <%= hidden_field_tag(:dealership_id, @dealership.id) %>
+            <br/>
+            <%= submit_tag("Lookup Vehicle Information", class: "btn btn-info") %>
+          </div>
+        </div>
+      </div>
+      <br/><br/><br/><br/>
+
+      <% end %>
+
+      <h4>Enter Information Manually</h4>
+
     <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
     <div class="form-group">
@@ -29,6 +54,12 @@
       <label class="col-sm-3 control-label">Model</label>
       <div class="col-sm-5">
         <%= f.text_field :model, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Trim</label>
+      <div class="col-sm-5">
+        <%= f.text_field :trim, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">

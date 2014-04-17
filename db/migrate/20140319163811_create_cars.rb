@@ -9,6 +9,7 @@ class CreateCars < ActiveRecord::Migration
       t.string :make
       t.string :model
       t.string :vin
+      t.string :trim
       t.integer :year
       t.string :make_model_year
       t.string :miles

@@ -28,6 +28,19 @@ class CarsController < ApplicationController
     flash[:car] ? @car = Car.new(flash[:car]) : @car = Car.new
   end
 
+  def new_with_vin
+    @dealership = Dealership.find(params[:dealership_id])
+    @car = Car.new
+    details = @car.vin_lookup(params[:vin])
+    @vin = details[0]
+    @make = details[1]
+    @model = details[2]
+    @year = details[3]
+    @trim = details[4]
+    @engine = details[5]
+
+  end
+
   def create
     @car = Car.new(params[:car])
     dealership = Dealership.find(params[:dealership_id])
