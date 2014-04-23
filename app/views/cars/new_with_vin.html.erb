@@ -14,9 +14,9 @@
     <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Year</label>
+      <label class="col-sm-3 control-label">VIN</label>
       <div class="col-sm-5">
-        <%= f.text_field :year,value: @year, class: "form-control" %>
+        <%= f.text_field :vin,value: @vin, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
@@ -32,16 +32,15 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Year</label>
+      <div class="col-sm-5">
+        <%= f.text_field :year,value: @year, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">Trim</label>
       <div class="col-sm-5">
         <%= f.text_field :trim,value: @trim, class: "form-control" %>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Vin</label>
-      <div class="col-sm-5">
-        <%= f.text_field :vin,value: @vin, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
@@ -68,14 +67,59 @@
         <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
       </div>
     </div>
+    <h3>More Details</h3>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Acquire Date</label>
+      <label class="col-sm-3 control-label">Transmission</label>
+      <div class="col-sm-5">
+        <%= f.text_field :transmission,value: @transmission, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Body Style</label>
+      <div class="col-sm-5">
+        <%= f.text_field :body_style,value: @body_style, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Exterior Color</label>
+      <div class="col-sm-5">
+        <%= f.text_field :exterior_color,value: @exterior_color, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Interior Color</label>
+      <div class="col-sm-5">
+        <%= f.text_field :interior_color,value: @interior_color, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Engine Type</label>
+      <div class="col-sm-5">
+        <%= f.text_field :engine,value: @engine, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Wheelbase</label>
+      <div class="col-sm-5">
+        <%= f.text_field :wheel_base,value: @wheel_base, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">License Plate</label>
+      <div class="col-sm-5">
+        <%= f.text_field :license_plate,value: @license_plate, class: "form-control" %>
+      </div>
+    </div>
+
+    <h3>Acquistion Information</h3>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Acquire Date (required)</label>
       <div class="col-sm-5">
         <%= f.date_field :acquire_date, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Acquire Price</label>
+      <label class="col-sm-3 control-label">Acquire Price (required)</label>
       <div class="col-sm-5">
         <div class="input-group">
           <span class="input-group-addon">$</span>
@@ -89,9 +133,58 @@
         <%= f.text_field :acquire_location, class: "form-control" %>
       </div>
     </div>
+    <h3>Smog Information</h3>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Has been smogged?</label>
+      <div class="col-sm-5">
+        <%= f.radio_button :smog_status, "1" %>&nbsp;Yes<br/>
+        <%= f.radio_button :smog_status, "0" %>&nbsp; No
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Smog Date</label>
+      <div class="col-sm-5">
+        <%= f.date_field :smog_date, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Smog Location</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :smogged_by,  class: "form-control" , value: @fields["smogged_by"] %>
+        <% else %>
+          <%= f.text_field :smogged_by,  class: "form-control"  %>
+        <% end %>
+      </div>
+    </div>
+    <h3>Flooring Information</h3>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Has been floored?</label>
+      <div class="col-sm-5">
+        <%= f.radio_button :flooring, "1" %>&nbsp;Yes<br/>
+        <%= f.radio_button :flooring, "0" %>&nbsp; No
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Flooring Date</label>
+      <div class="col-sm-5">
+        <%= f.date_field :flooring_date, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Flooring Company</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :flooring_company,  class: "form-control" , value: @fields["flooring_company"] %>
+        <% else %>
+          <%= f.text_field :flooring_company,  class: "form-control"  %>
+        <% end %>
+      </div>
+    </div>
     <div class="form-group">
       <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
+            <%= f.hidden_field :from_vin_lookup, :value => true %>
             <%= f.submit "Create Vehicle", :class => 'btn btn-success'  %>
 
       </div>

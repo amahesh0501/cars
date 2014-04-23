@@ -19,13 +19,19 @@ class Car < ActiveRecord::Base
     require 'nokogiri'
     require 'open-uri'
     doc = Nokogiri::HTML(open("http://www.decodethis.com/VIN-Decoded/vin/#{vin}"))
-    vin = doc.css('td')[10].text
-    make = doc.css('td')[18].text
-    model = doc.css('td')[22].text
-    trim = doc.css('td')[26].text
-    year = doc.css('td')[14].text
-    engine = doc.css('td')[16].text
-    [vin, make, model, year, trim, engine]
+    doc.css('td')[10] != nil ?  vin = doc.css('td')[10].text : vin = ""
+    doc.css('td')[18] != nil ? make = doc.css('td')[18].text : make = ""
+    doc.css('td')[22] != nil ? model = doc.css('td')[22].text  : model = ""
+    doc.css('td')[14] != nil ? year = doc.css('td')[14].text : year = ""
+    doc.css('td')[26] != nil ? trim = doc.css('td')[26].text : trim = ""
+    doc.css('td')[38] != nil ? transmission = doc.css('td')[38].text  : transmission = ""
+    doc.css('td')[34] != nil ? body_style = doc.css('td')[34].text : body_style = ""
+    doc.css('td')[377] != nil ? interior_color = doc.css('td')[377].text : interior_color = ""
+    doc.css('td')[384] != nil ? exterior_color = doc.css('td')[384].text : exterior_color = ""
+    doc.css('td')[16] != nil ? engine = doc.css('td')[16].text : engine = ""
+    doc.css('td')[52] != nil && doc.css('td')[52].text.length > 3 ? wheel_base = doc.css('td')[52].text  : wheel_base = ""
+
+    [vin, make, model, year, trim, transmission, body_style, interior_color, exterior_color, engine, wheel_base, engine]
   end
 
 

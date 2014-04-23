@@ -1,6 +1,6 @@
 class CarsController < ApplicationController
 
-   before_filter :authenticate_user!, :dealership_active?, :is_member?
+   before_filter :authenticate_user!, :dealership_active?
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
@@ -26,6 +26,7 @@ class CarsController < ApplicationController
   def new
     @dealership = Dealership.find(params[:dealership_id])
     flash[:car] ? @car = Car.new(flash[:car]) : @car = Car.new
+    @no_vin_lookup = true if flash[:errors]
   end
 
   def new_with_vin
@@ -37,7 +38,12 @@ class CarsController < ApplicationController
     @model = details[2]
     @year = details[3]
     @trim = details[4]
-    @engine = details[5]
+    @transmission = details[5]
+    @body_style = details[6]
+    @interior_color = details[7]
+    @exterior_color = details[8]
+    @engine = details[9]
+    @wheel_base = details[10]
 
   end
 

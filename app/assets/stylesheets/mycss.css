@@ -38,3 +38,8 @@
 .num{
   size: 10px !important;
 }
+
+.vin-label{
+  text-align: right;
+  padding-top: 10px;
+}

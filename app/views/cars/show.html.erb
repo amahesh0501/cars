@@ -122,20 +122,19 @@
                             <p><i class="entypo-forward"></i>Vin: <%= @car.vin ? @car.vin : "Not Entered" %></p>
                             <p><i class="entypo-forward"></i>Miles: <%= @car.miles.length > 0 ? number_with_delimiter(@car.miles, :delimiter => ',') : "Not Entered" %></p>
                             <p><i class="entypo-forward"></i>Transmission: <%= @car.transmission ? @car.transmission : "Not Entered" %></p>
+
+                          </div>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine ? "#{@car.engine}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style ? "#{@car.body_style}" : "Not Entered" %></p>
                             <p><i class="entypo-forward"></i>Exterior Color: <%= @car.exterior_color ? "#{@car.exterior_color}" : "Not Entered" %></p>
 
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Fuel Type: <%= @car.fuel ? "#{@car.fuel}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine ? "#{@car.engine}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style ? "#{@car.body_style}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color ? "#{@car.interior_color}" : "Not Entered" %></p>
-
-                          </div>
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Door Count: <%= @car.doors ? "#{@car.doors}" : "Not Entered" %></p>
                             <p><i class="entypo-forward"></i>Wheel Base: <%= @car.wheel_base ? "#{@car.wheel_base}" : "Not Entered" %></p>
                             <p><i class="entypo-forward"></i>License Plate: <%= @car.license_plate ? "#{@car.license_plate}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color ? "#{@car.interior_color}" : "Not Entered" %></p>
+
                           </div>
                         </div>
                       </div>
