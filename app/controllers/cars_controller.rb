@@ -8,6 +8,7 @@ class CarsController < ApplicationController
     @sold_cars = Car.where(dealership_id: @dealership.id, status: "Sold")
     @frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs")
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def show
@@ -21,6 +22,7 @@ class CarsController < ApplicationController
     @deal = Deal.find_by_car_id(@car.id)
     @purchase_price = @deal.amount if @deal
     @profit = @purchase_price - @total_price if @purchase_price && @total_price
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

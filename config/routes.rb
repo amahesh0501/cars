@@ -37,7 +37,10 @@ Cars::Application.routes.draw do
   match 'blocked', :to => 'pages#blocked', via: :get
   match 'test', :to => 'pages#test', via: :get
   match 'dealerships/:id/conversations', :to => 'dealerships#conversations', via: :get
+  match 'dealerships/:id/no_access', :to => 'dealerships#no_access', via: :get, as: 'no_access'
   match 'new_with_vin', :to => 'cars#new_with_vin', via: :post
+  match 'dealerships/:id/search', :to => 'dealerships#search', via: :get, as: 'search'
+
 
 
 

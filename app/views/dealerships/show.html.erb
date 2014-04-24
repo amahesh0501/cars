@@ -7,7 +7,7 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-
+    <% if @is_admin == true %>
     <div class="row">
       <div class="col-sm-3">
 
@@ -27,7 +27,7 @@
           <div class="icon"><i class="entypo-users"></i></div>
           <div class="num" data-start="0" data-end="135" data-postfix="" data-duration="1500" data-delay="600"><h2 style="color: white;"><%= @potential_customers.length %></h2></div>
 
-          <h3>Potential <%= @potential_customers.length == 1 ? "Customer" : "Customers" %></h3>
+          <h3> <%= @potential_customers.length == 1 ? "Customer" : "Customers" %></h3>
           <p><%= @potential_customers.length == 1 ? "has" : "have" %> expressed interest.</p>
         </div></a>
 
@@ -57,6 +57,7 @@
 
       </div>
     </div>
+    <% end %>
 
     <br />
 
@@ -89,9 +90,9 @@
                   <div class="row">
 
                     <% @frontline_cars.each do |car| %>
-                    <div class="col-sm-3 col-xs-4" data-tag="1w">
+                    <div class="col-sm-3 col-xs-4">
                       <article class="image-thumb">
-                        <a href="/dealerships/<%= @dealership.id%>/vehicles/<%=car.id%>" class="image" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip on top" >
+                        <a href="/dealerships/<%= @dealership.id%>/vehicles/<%=car.id%>" class="image">
                           <img src="<%= car.image %>" class="dash-car" /> <%= car.make_model_year %>
                         </a>
                       </article>
@@ -134,9 +135,9 @@
                   <div class="row">
 
                     <% @sold_cars.each do |car| %>
-                    <div class="col-sm-3 col-xs-4" data-tag="1w">
+                    <div class="col-sm-3 col-xs-4" >
                       <article class="image-thumb">
-                        <a href="/dealerships/<%= @dealership.id%>/vehicles/<%=car.id%>" class="image" data-toggle="tooltip" data-placement="top" data-original-title="Tooltip on top" >
+                        <a href="/dealerships/<%= @dealership.id%>/vehicles/<%=car.id%>" class="image"  >
                           <img src="<%= car.image %>" class="dash-car" /> <%= car.make_model_year %>
                         </a>
                       </article>
@@ -159,7 +160,7 @@
         </div>
 
       </div>
-
+      <% if @is_admin == true %>
       <div class="col-sm-4">
 
         <div class="panel panel-dark">
@@ -168,11 +169,7 @@
               <div class="panel-title">
                 <%= link_to "Financials", dealership_expenses_path(@dealership) %>
                 <small>(Last 30 Days)</small>
-
               </div>
-
-
-
             </div>
           </div>
 
@@ -204,10 +201,6 @@
                   <td></td>
                   <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %><b></td>
                 </tr>
-
-
-
-
               </tbody>
             </table>
 
@@ -216,10 +209,12 @@
         </div>
 
       </div>
+      <% end %>
     </div>
 
 
     <br />
+
 
     <div class="row">
 
@@ -264,7 +259,7 @@
              <div class="cbp_tmlabel">
                <h2><%= employee ? employee.name : "Someone" %>  <span>spoke with <%=customer.name%></span></h2>
                <p><%= conversation.description %></p>
-               <p><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, customer, conversation) %> | <%= link_to "Delete", dealership_customer_conversation_path(@dealership, customer, conversation), method: "delete", confirm: "Are you sure?" %> </p>
+               <p><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, customer, conversation) %> <% if @is_admin == true %>| <%= link_to "Delete", dealership_customer_conversation_path(@dealership, customer, conversation), method: "delete", confirm: "Are you sure?" %><% end %> </p>
              </div>
 
            </li>

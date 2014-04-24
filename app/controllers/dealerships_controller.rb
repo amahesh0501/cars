@@ -7,6 +7,7 @@ class DealershipsController < ApplicationController
   def show
     authenticate_user!
     dealership_active?
+    is_dealership_admin_view_for_dashboard? ? @is_admin = true : @is_admin = false
 
     #DEALER THINGS
     @dealership = Dealership.find(params[:id])
@@ -154,6 +155,29 @@ class DealershipsController < ApplicationController
   def conversations
     dealership = Dealership.find(params[:id])
     @conversations = dealership.conversations.order("date DESC")
+  end
+
+  def no_access
+  end
+
+  def search
+    @membership = Membership.find_by_user_id(current_user.id)
+    @dealership = Dealership.find(params[:id])
+    @term = params[:search]
+    @cars = Car.search(params[:search])
+    @customers = Customer.search(params[:search])
+    @employees = Employee.search(params[:search])
+    @vendors = Vendor.search(params[:search])
+    @conversations = Conversation.search(params[:search])
+    @expenses = Expense.search(params[:search])
+    @paychecks = Paycheck.search(params[:search])
+    @repairs = Repair.search(params[:search])
+    @revenues = Revenue.search(params[:search])
+
+
+    @everything = @cars + @customers + @employees + @vendors + @conversations + @expenses + @paychecks + @repairs + @revenues
+    @transactions = @expenses + @paychecks + @repairs + @revenues
+
   end
 
 

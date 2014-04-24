@@ -6,19 +6,61 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <h2> Basic Information</h2>
-    <p><%= @revenue.name %></p>
-    <p><%= @revenue.amount %></p>
-    <p><%= @revenue.description %></p>
-    <p><%= @revenue.date %></p>
 
-    <%= link_to "Edit Revenue Entry", edit_dealership_revenue_path(@dealership, @revenue) %>
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Revenue Information</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Name: <%= @revenue.name.length > 0 ? "#{@revenue.name}" : "Not Entered" %></p>
+          </div>
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Amount: <%= @revenue.amount ? "$#{number_with_precision(@revenue.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+          </div>
+
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Date: <%= @revenue.date  ? "#{@revenue.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Description</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8">
+            <%= @revenue.description.length > 0 ? @revenue.description : "No description entered" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <a href="/dealerships/<%=@dealership.id%>/revenues/<%=@revenue.id%>/edit" class="btn btn-info">
+      <i class="entypo-pencil"></i>
+      Edit Revenue
+    </a>
+    <%if @membership.is_dealership_admin %>
+    <%= link_to "<i class='entypo-cross'></i> Delete Revenue".html_safe, dealership_revenue_path(@dealership, @revenue), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+    <% end %>
 
 
 
 
   </div>
+
 </div>
+
+
 
 
 

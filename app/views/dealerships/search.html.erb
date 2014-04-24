@@ -1,0 +1,617 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <section class="search-results-env">
+
+      <div class="row">
+        <div class="col-md-12">
+
+
+          <ul class="nav nav-tabs right-aligned">
+            <li class="tab-title pull-left">
+              <div class="search-string">Showing results for <strong>&ldquo;<%= @term %>&rdquo;</strong></div>
+            </li>
+
+
+          </ul>
+
+          <form method="get" class="search-bar" action="/dealerships/<%= @dealership.id %>/search" enctype="application/x-www-form-urlencoded">
+            <div class="input-group">
+              <input type="text" class="form-control input-lg" name="search" placeholder="Search for something...">
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-lg btn-primary btn-icon">
+                  Search
+                  <i class="entypo-search"></i>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+
+          <div class="search-results-panes">
+
+
+              <ul class="search-results">
+                <% if @everything.length == 0 %>
+                <li class="search-result">
+                  <div class="sr-inner">
+                    <h4>Sorry, no results</h4>
+                  </div>
+                </li>
+                <% else %>
+                    <ul class="nav nav-tabs">
+                      <li class="active"><a href="#everything" data-toggle="tab">Everything</a></li>
+                      <li><a href="#vehicles" data-toggle="tab">Vehicles</a></li>
+                      <li><a href="#customers" data-toggle="tab">Customers</a></li>
+                      <%if @membership.is_dealership_admin %>
+                      <li><a href="#employees" data-toggle="tab">Employees</a></li>
+                      <% end %>
+                      <li><a href="#vendors" data-toggle="tab">Vendors</a></li>
+                      <li><a href="#conversations" data-toggle="tab">Conversations</a></li>
+                      <li><a href="#transactions" data-toggle="tab">Transactions</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="everything">
+                          <% if @cars %>
+                            <% @cars.each do |car| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= car.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{car.make_model_year}", dealership_car_path(@dealership, car) %> &nbsp; <font size="2" class="result_type">Vehicle</font></h4>
+
+                                 <div class="row info-list">
+
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Vin: <%= car.vin && car.vin.length > 0 ? car.vin : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Miles: <%= car.miles && car.miles.length > 0 ? number_with_delimiter(car.miles, :delimiter => ',') : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Acqusition Date: <%= car.acquire_date ? "#{car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @customers %>
+                            <% @customers.each do |customer| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= customer.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer) %>&nbsp; <font size="2" class="result_type">Customer</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Email: <%= customer.email.length > 0 ? "#{customer.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Phone: <%= customer.phone.length > 0 ? "#{customer.phone}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Address: <%= customer.address.length > 0  ? "#{customer.address}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+                        <%if @membership.is_dealership_admin %>
+                          <% if @employees %>
+                            <% @employees.each do |employee| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= employee.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{employee.name}", dealership_employee_path(@dealership, employee) %>&nbsp; <font size="2" class="result_type">Employee</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Email: <%= employee.email.length > 0 ? "#{employee.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Phone: <%= employee.phone.length > 0 ? "#{employee.phone}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Address: <%= employee.address.length > 0 ? "#{employee.address}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+                        <% end %>
+
+                          <% if @vendors %>
+                            <% @vendors.each do |vendor| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= vendor.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vendor</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= vendor.contact_name.length > 0 ? "#{vendor.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= vendor.contact_email.length > 0 ? "#{vendor.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= vendor.contact_phone.length > 0  ? "#{vendor.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @conversations %>
+                            <% @conversations.each do |conversation| %>
+                              <% customer = Customer.find(conversation.customer_id) %>
+                              <%  conversation.employee_id  ? employee = Employee.find(conversation.employee_id).name : employee = "Someone" %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="/car.png" class="img-rounded" />
+                                 <i class="entypo-phone"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{employee} spoke with #{customer.name}", dealership_customer_conversation_path(@dealership, customer, conversation) %>&nbsp; <font size="2" class="result_type">Conversation</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-10">
+                                    <p><%= conversation.description %></p>
+                                   </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+
+
+                          <% if @expenses %>
+                            <% @expenses.each do |expense| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="/car.png" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{expense.name}", dealership_expense_path(@dealership, expense) %>&nbsp; <font size="2" class="result_type">Expense</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Name: <%= expense.name.length > 0 ? "#{expense.name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Amount: <%= expense.amount ? "$#{number_with_precision(expense.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Date: <%= expense.date  ? "#{expense.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+
+
+                          <% if @paychecks %>
+                            <% @paychecks.each do |paycheck| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="/car.png" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{paycheck.name}", dealership_paycheck_path(@dealership, paycheck) %>&nbsp; <font size="2" class="result_type">Paycheck</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Name: <%= paycheck.name.length > 0 ? "#{paycheck.name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Amount: <%= paycheck.amount ? "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Date: <%= paycheck.date  ? "#{paycheck.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @repairs %>
+                            <% @repairs.each do |repair| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="/car.png" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{repair.name}", dealership_repair_path(@dealership, repair) %>&nbsp; <font size="2" class="result_type">Repair</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Name: <%= repair.name.length > 0 ? "#{repair.name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Amount: <%= repair.amount ? "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Date: <%= repair.date  ? "#{repair.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @revenues %>
+                            <% @revenues.each do |revenue| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="/car.png" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{revenue.name}", dealership_revenue_path(@dealership, revenue) %>&nbsp; <font size="2" class="result_type">Revenue</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Name: <%= revenue.name.length > 0 ? "#{revenue.name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Amount: <%= revenue.amount ? "$#{number_with_precision(revenue.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Date: <%= revenue.date  ? "#{revenue.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+                      </div>
+                      <div class="tab-pane" id="vehicles">
+                          <% if @cars.length > 0 %>
+                            <% @cars.each do |car| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= car.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{car.make_model_year}", dealership_car_path(@dealership, car) %> &nbsp; <font size="2" class="result_type">Vehicle</font></h4>
+
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Vin: <%= car.vin && car.vin.length > 0 ? car.vin : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Miles: <%= car.miles && car.miles.length > 0 ? number_with_delimiter(car.miles, :delimiter => ',') : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Acqusition Date: <%= car.acquire_date ? "#{car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <li class="search-result">
+                            <div class="sr-inner">
+                              <br/>
+                              <h4>Sorry, no results</h4>
+                            </div>
+                          </li>
+                        <% end %>
+                      </div>
+                      <div class="tab-pane" id="customers">
+                          <% if @customers.length > 0 %>
+                            <% @customers.each do |customer| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= customer.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                <h4><%= link_to "#{customer.name}", dealership_customer_path(@dealership, customer) %>&nbsp; <font size="2" class="result_type">Customer</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Email: <%= customer.email.length > 0 ? "#{customer.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Phone: <%= customer.phone.length > 0 ? "#{customer.phone}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Address: <%= customer.address.length > 0  ? "#{customer.address}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <li class="search-result">
+                            <div class="sr-inner">
+                              <br/>
+                              <h4>Sorry, no results</h4>
+                            </div>
+                          </li>
+                        <% end %>
+                      </div>
+                      <%if @membership.is_dealership_admin %>
+                      <div class="tab-pane" id="employees">
+                          <% if @employees.length > 0 %>
+                            <% @employees.each do |employee| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= employee.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                <h4><%= link_to "#{employee.name}", dealership_employee_path(@dealership, employee) %>&nbsp; <font size="2" class="result_type">Employee</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Email: <%= employee.email.length > 0 ? "#{employee.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Phone: <%= employee.phone.length > 0 ? "#{employee.phone}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Address: <%= employee.address.length > 0 ? "#{employee.address}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <li class="search-result">
+                            <div class="sr-inner">
+                              <br/>
+                              <h4>Sorry, no results</h4>
+                            </div>
+                          </li>
+                        <% end %>
+                      </div>
+                      <% end %>
+                      <div class="tab-pane" id="vendors">
+                          <% if @vendors.length > 0 %>
+                            <% @vendors.each do |vendor| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= vendor.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vendor</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= vendor.contact_name.length > 0 ? "#{vendor.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= vendor.contact_email.length > 0 ? "#{vendor.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= vendor.contact_phone.length > 0  ? "#{vendor.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <li class="search-result">
+                            <div class="sr-inner">
+                              <br/>
+                              <h4>Sorry, no results</h4>
+                            </div>
+                          </li>
+                        <% end %>
+                      </div>
+                      <div class="tab-pane" id="conversations">
+                          <% if @conversations.length > 0 %>
+                            <% @conversations.each do |conversation| %>
+                              <% customer = Customer.find(conversation.customer_id) %>
+                              <%  conversation.employee_id  ? employee = Employee.find(conversation.employee_id).name : employee = "Someone" %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="/car.png" class="img-rounded" />
+                                 <i class="entypo-phone"></i>
+                               </a>
+                               <div class="member-details">
+                                <h4><%= link_to "#{employee} spoke with #{customer.name}", dealership_customer_conversation_path(@dealership, customer, conversation) %>&nbsp; <font size="2" class="result_type">Conversation</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-8">
+                                    <p><%= conversation.description %></p>
+                                   </div>
+
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% else %>
+                          <li class="search-result">
+                            <div class="sr-inner">
+                              <br/>
+                              <h4>Sorry, no results</h4>
+                            </div>
+                          </li>
+                        <% end %>
+                      </div>
+                    <div class="tab-pane" id="transactions">
+                        <% if @expenses %>
+                          <% @expenses.each do |expense| %>
+                            <div class="member-entry">
+                             <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                               <img src="/car.png" class="img-rounded" />
+                               <i class="entypo-forward"></i>
+                             </a>
+                             <div class="member-details">
+                               <h4><%= link_to "#{expense.name}", dealership_expense_path(@dealership, expense) %>&nbsp; <font size="2" class="result_type">Expense</font></h4>
+                               <div class="row info-list">
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Name: <%= expense.name.length > 0 ? "#{expense.name}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                   <p><i class="entypo-forward"></i>Amount: <%= expense.amount ? "$#{number_with_precision(expense.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Date: <%= expense.date  ? "#{expense.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      <% end %>
+
+
+
+                        <% if @paychecks %>
+                          <% @paychecks.each do |paycheck| %>
+                            <div class="member-entry">
+                             <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                               <img src="/car.png" class="img-rounded" />
+                               <i class="entypo-forward"></i>
+                             </a>
+                             <div class="member-details">
+                               <h4><%= link_to "#{paycheck.name}", dealership_paycheck_path(@dealership, paycheck) %>&nbsp; <font size="2" class="result_type">Paycheck</font></h4>
+                               <div class="row info-list">
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Name: <%= paycheck.name.length > 0 ? "#{paycheck.name}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                   <p><i class="entypo-forward"></i>Amount: <%= paycheck.amount ? "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Date: <%= paycheck.date  ? "#{paycheck.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      <% end %>
+
+                        <% if @repairs %>
+                          <% @repairs.each do |repair| %>
+                            <div class="member-entry">
+                             <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                               <img src="/car.png" class="img-rounded" />
+                               <i class="entypo-forward"></i>
+                             </a>
+                             <div class="member-details">
+                               <h4><%= link_to "#{repair.name}", dealership_repair_path(@dealership, repair) %>&nbsp; <font size="2" class="result_type">Repair</font></h4>
+                               <div class="row info-list">
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Name: <%= repair.name.length > 0 ? "#{repair.name}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                   <p><i class="entypo-forward"></i>Amount: <%= repair.amount ? "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Date: <%= repair.date  ? "#{repair.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      <% end %>
+
+                        <% if @revenues %>
+                          <% @revenues.each do |revenue| %>
+                            <div class="member-entry">
+                             <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                               <img src="/car.png" class="img-rounded" />
+                               <i class="entypo-forward"></i>
+                             </a>
+                             <div class="member-details">
+                               <h4><%= link_to "#{revenue.name}", dealership_revenue_path(@dealership, revenue) %>&nbsp; <font size="2" class="result_type">Revenue</font></h4>
+                               <div class="row info-list">
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Name: <%= revenue.name.length > 0 ? "#{revenue.name}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                   <p><i class="entypo-forward"></i>Amount: <%= revenue.amount ? "$#{number_with_precision(revenue.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                                 </div>
+                                 <div class="col-sm-4">
+                                  <p><i class="entypo-forward"></i>Date: <%= revenue.date  ? "#{revenue.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        <% end %>
+                      <% end %>
+                    </div>
+
+
+
+
+
+                <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </ul>
+
+
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+

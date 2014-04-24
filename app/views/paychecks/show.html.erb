@@ -6,19 +6,65 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <h2> Basic Information</h2>
-    <p><%= @paycheck.amount %></p>
-    <p><%= @paycheck.description %></p>
-    <p><%= @paycheck.date %></p>
-    <p><%= link_to @employee.name, dealership_employee_path(@dealership, @employee) if @employee %></p>
 
-    <%= link_to "Edit Paycheck", edit_dealership_paycheck_path(@dealership, @paycheck) %>
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Paycheck Information</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Employee Name: <%= link_to "#{@employee.name}", dealership_employee_path(@dealership, @employee) %></p>
+          </div>
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Amount: <%= @paycheck.amount ? "$#{number_with_precision(@paycheck.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+          </div>
+
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Date: <%= @paycheck.date  ? "#{@paycheck.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Description</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8">
+            <%= @paycheck.description.length > 0 ? @paycheck.description : "No description entered" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <a href="/dealerships/<%=@dealership.id%>/paychecks/<%=@paycheck.id%>/edit" class="btn btn-info">
+      <i class="entypo-pencil"></i>
+      Edit Paycheck
+    </a>
+    <%if @membership.is_dealership_admin %>
+    <%= link_to "<i class='entypo-cross'></i> Delete Paycheck".html_safe, dealership_paycheck_path(@dealership, @paycheck), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+    <% end %>
 
 
 
 
   </div>
+
 </div>
+
+
+
+
+
+
 
 
 

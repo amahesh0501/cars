@@ -2,6 +2,9 @@
 
     <header class="logo-env">
       <% membership = Membership.find_by_user_id(current_user.id) %>
+      <% dealership = Dealership.find(membership.dealership_id) %>
+      <% show = true if membership.is_dealership_admin == true %>
+
 
       <!-- logo -->
       <div class="logo">
@@ -39,8 +42,8 @@
       <!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
       <!-- Search Bar -->
       <li id="search">
-        <form method="get" action="">
-          <input type="text" name="q" class="search-input" placeholder="Search something..."/>
+        <form method="get" action="/dealerships/<%= dealership.id %>/search">
+          <input type="text" name="search" class="search-input" placeholder="Search something..."/>
           <button type="submit">
             <i class="entypo-search"></i>
           </button>
@@ -63,18 +66,21 @@
           <span>Customers</span>
         </a>
       </li>
+      <% if show == true %>
       <li>
         <a href="/dealerships/<%= membership.dealership_id %>/employees">
           <i class="entypo-user"></i>
           <span>Employees</span>
         </a>
       </li>
+      <% end %>
       <li>
         <a href="/dealerships/<%= membership.dealership_id %>/deals">
           <i class="entypo-briefcase"></i>
           <span>Deals</span>
         </a>
       </li>
+
       <li>
         <a href="/dealerships/<%= membership.dealership_id %>/expenses">
           <i class="entypo-tag"></i>
@@ -93,12 +99,14 @@
           <span>Forms</span>
         </a>
       </li>
+      <% if show == true %>
       <li>
         <a href="/dealerships/<%= membership.dealership_id %>/memberships">
           <i class="entypo-key"></i>
           <span>Memberships</span>
         </a>
       </li>
+      <% end %>
 
     </ul>
 

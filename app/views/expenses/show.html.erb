@@ -7,17 +7,62 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <h2> Basic Information</h2>
-    <p><%= @expense.name %></p>
-    <p><%= @expense.amount %></p>
-    <p><%= @expense.description %></p>
-    <p><%= @expense.date %></p>
-    <p><%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) if @vendor %></p>
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Expense Information</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Name: <%= @expense.name.length > 0 ? "#{@expense.name}" : "Not Entered" %></p>
+            <% if @vendor %>
+            <p><i class="entypo-forward"></i>Vendor: <%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) %></p>
+            <% else %>
+            <p><i class="entypo-forward"></i>Vendor: Not Entered </p>
+            <% end %>
+          </div>
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Amount: <%= @expense.amount ? "$#{number_with_precision(@expense.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+          </div>
 
-    <%= link_to "Edit Expense", edit_dealership_expense_path(@dealership, @expense) %>
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Date: <%= @expense.date  ? "#{@expense.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Description</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8">
+            <%= @expense.description.length > 0 ? @expense.description : "No description entered" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <a href="/dealerships/<%=@dealership.id%>/expenses/<%=@expense.id%>/edit" class="btn btn-info">
+      <i class="entypo-pencil"></i>
+      Edit Expense
+    </a>
+    <%if @membership.is_dealership_admin %>
+    <%= link_to "<i class='entypo-cross'></i> Delete Expense".html_safe, dealership_expense_path(@dealership, @expense), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+    <% end %>
+
+
 
 
   </div>
+
 </div>
 
 

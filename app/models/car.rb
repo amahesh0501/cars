@@ -34,6 +34,10 @@ class Car < ActiveRecord::Base
     [vin, make, model, year, trim, transmission, body_style, interior_color, exterior_color, engine, wheel_base, engine]
   end
 
+  def self.search(search)
+    find(:all, :conditions => ['lower(make_model_year) LIKE ? OR lower(vin) LIKE ?', "%#{search.downcase}%", "%#{search.downcase}%"])
+  end
+
 
 
 end

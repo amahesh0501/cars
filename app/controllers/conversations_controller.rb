@@ -7,8 +7,11 @@ class ConversationsController < ApplicationController
   end
 
   def show
+    @membership = Membership.find_by_user_id(current_user.id)
     @dealership = Dealership.find(params[:dealership_id])
     @conversation = Conversation.find(params[:id])
+    @customer = Customer.find(@conversation.customer_id)
+    @employee = Employee.find(@conversation.employee_id) if @conversation.employee_id
     @expenses = Expense.where(conversation_id: @conversation.id)
   end
 

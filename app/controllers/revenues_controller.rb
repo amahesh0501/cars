@@ -7,6 +7,7 @@ class RevenuesController < ApplicationController
   end
 
   def show
+    @membership = Membership.find_by_user_id(current_user.id)
     @dealership = Dealership.find(params[:dealership_id])
     @revenue = Revenue.find(params[:id])
   end
@@ -22,7 +23,7 @@ class RevenuesController < ApplicationController
     @revenue.dealership_id = dealership.id
     if @revenue.save
       dealership.revenues << @revenue
-      redirect_to dealership_expenses_path(dealership)
+      redirect_to dealership_revenue_path(dealership, @revenue)
     else
       flash[:errors] = @revenue.errors.full_messages
       flash[:revenue] = params[:revenue]
@@ -40,7 +41,8 @@ class RevenuesController < ApplicationController
     revenue = Revenue.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     if revenue.update_attributes(params[:revenue])
-      redirect_to dealership_expenses_path(dealership)
+      redirect_to dealership_revenue_path(dealership, revenue)
+
     else
       flash[:errors] = revenue.errors.full_messages
       flash[:revenue] = params[:revenue]

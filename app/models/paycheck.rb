@@ -9,5 +9,8 @@ class Paycheck < ActiveRecord::Base
   def amount=(num)
     self[:amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
+  def self.search(search)
+    find(:all, :conditions => ['lower(description) LIKE ? ', "%#{search.downcase}%"])
+  end
 
 end

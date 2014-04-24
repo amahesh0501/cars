@@ -7,8 +7,10 @@ class RepairsController < ApplicationController
   end
 
   def show
+    @membership = Membership.find_by_user_id(current_user.id)
     @dealership = Dealership.find(params[:dealership_id])
     @repair = Repair.find(params[:id])
+    @car = Car.find(@repair.car_id)
   end
 
   def new
@@ -24,7 +26,8 @@ class RepairsController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     @repair.dealership_id = dealership.id
     if @repair.save
-      redirect_to dealership_car_path(dealership, @car)
+      redirect_to dealership_repair_path(dealership, @repair)
+
     else
       flash[:errors] = @repair.errors.full_messages
       flash[:repair] = params[:repair]
@@ -45,7 +48,7 @@ class RepairsController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     @car = Car.find(repair.car_id)
     if repair.update_attributes(params[:repair])
-      redirect_to dealership_car_path(dealership, @car)
+      redirect_to dealership_repair_path(dealership, repair)
     else
       flash[:errors] = repair.errors.full_messages
       flash[:repair] = params[:repair]

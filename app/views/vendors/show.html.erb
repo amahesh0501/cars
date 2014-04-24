@@ -119,8 +119,9 @@
               </div>
             </div>
         </div>
-
+        <% if @is_admin == true %>
         <%= link_to "<i class='entypo-cross'></i> Delete Vendor".html_safe, dealership_vendor_path(@dealership, @vendor), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+        <% end %>
 
       </div>
         <div class="tab-pane" id="transactions">
@@ -148,7 +149,7 @@
                     <% if transaction.class.table_name == "repairs" %>
                     <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, transaction) %> | <%= link_to "Delete", dealership_repair_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %></td>
                     <% elsif transaction.class.table_name == "expenses" %>
-                    <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, transaction) %> | <%= link_to "Delete", dealership_expense_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %></td>
+                    <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, transaction) %> <% if @is_admin == true %>| <%= link_to "Delete", dealership_expense_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %><% end %></td>
                     <% end %>
                   </tr>
                   <% end %>

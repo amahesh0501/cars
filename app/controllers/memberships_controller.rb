@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
 
-  before_filter :authenticate_user!, :dealership_active?, :is_member?
+  before_filter :authenticate_user!, :dealership_active?, :is_member?, :is_dealership_admin?
 
   def index
     @dealership = Dealership.find(params[:dealership_id])

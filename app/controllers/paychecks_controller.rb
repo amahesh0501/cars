@@ -1,16 +1,16 @@
 class PaychecksController < ApplicationController
 
-  before_filter :authenticate_user!, :dealership_active?, :is_member?
+  before_filter :authenticate_user!, :dealership_active?, :is_member?, :is_dealership_admin?
 
   def index
     redirect_to root_path
   end
 
   def show
-    paycheck = Paycheck.find(params[:id])
-    dealership = Dealership.find(params[:dealership_id])
-    employee = Employee.find(paycheck.employee_id)
-    redirect_to dealership_employee_path(dealership, employee)
+    @membership = Membership.find_by_user_id(current_user.id)
+    @paycheck = Paycheck.find(params[:id])
+    @dealership = Dealership.find(params[:dealership_id])
+    @employee = Employee.find(@paycheck.employee_id)
   end
 
   def new
@@ -28,7 +28,8 @@ class PaychecksController < ApplicationController
     end
     @paycheck.dealership_id = dealership.id
     if @paycheck.save
-      redirect_to dealership_employee_path(dealership, employee)
+      redirect_to dealership_paycheck_path(dealership, @paycheck)
+
     else
       flash[:errors] = @paycheck.errors.full_messages
       flash[:paycheck] = params[:paycheck]
@@ -48,7 +49,7 @@ class PaychecksController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     employee = Employee.find(paycheck.employee_id)
     if paycheck.update_attributes(params[:paycheck])
-      redirect_to dealership_employee_path(dealership, employee)
+      redirect_to dealership_paycheck_path(dealership, paycheck)
     else
       flash[:errors] = paycheck.errors.full_messages
       flash[:paycheck] = params[:paycheck]

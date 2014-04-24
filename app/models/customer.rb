@@ -14,4 +14,9 @@ class Customer < ActiveRecord::Base
     self[:monthly_gross_salary] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
 
+  def self.search(search)
+    find(:all, :conditions => ['lower(name) LIKE ? OR lower(address) LIKE ? OR lower(phone) LIKE ? OR lower(email) LIKE ? OR lower(ssn) LIKE ?', "%#{search.downcase}%", "%#{search.downcase}%", "%#{search.downcase}%", "%#{search.downcase}%", "%#{search.downcase}%"])
+  end
+
+
 end

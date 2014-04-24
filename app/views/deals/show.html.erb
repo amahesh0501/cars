@@ -189,7 +189,9 @@
           </div>
 
 
+          <% if @is_admin == true %>
           <%= link_to "<i class='entypo-cross'></i> Delete Deal".html_safe, dealership_deal_path(@dealership, @deal), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+          <% end %>
 
 
 

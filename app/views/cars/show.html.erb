@@ -61,6 +61,7 @@
 
         <div class="row">
           <div class="col-sm-offset-2 col-sm-10">
+            <% if @is_admin == true %>
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-stat">
@@ -83,6 +84,7 @@
 
 
             </div>
+            <% end %>
 
 
 
@@ -119,21 +121,21 @@
 
                         <div class="row">
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Vin: <%= @car.vin ? @car.vin : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Miles: <%= @car.miles.length > 0 ? number_with_delimiter(@car.miles, :delimiter => ',') : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Transmission: <%= @car.transmission ? @car.transmission : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Vin: <%= @car.vin && @car.vin.length > 0 ? @car.vin : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Miles: <%= @car.miles && @car.miles.length > 0 ? number_with_delimiter(@car.miles, :delimiter => ',') : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Transmission: <%= @car.transmission && @car.transmission.length > 0 ? @car.transmission : "Not Entered" %></p>
 
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine ? "#{@car.engine}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style ? "#{@car.body_style}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Exterior Color: <%= @car.exterior_color ? "#{@car.exterior_color}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine && @car.engine.length > 0 ? "#{@car.engine}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style && @car.body_style.length > 0 ? "#{@car.body_style}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Exterior Color: <%= @car.exterior_color && @car.exterior_color.length > 0 ? "#{@car.exterior_color}" : "Not Entered" %></p>
 
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Wheel Base: <%= @car.wheel_base ? "#{@car.wheel_base}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>License Plate: <%= @car.license_plate ? "#{@car.license_plate}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color ? "#{@car.interior_color}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Wheel Base: <%= @car.wheel_base && @car.wheel_base.length > 0 ? "#{@car.wheel_base}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>License Plate: <%= @car.license_plate && @car.license_plate.length > 0 ? "#{@car.license_plate}" : "Not Entered" %></p>
+                            <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color && @car.interior_color.length > 0 ? "#{@car.interior_color}" : "Not Entered" %></p>
 
                           </div>
                         </div>
@@ -163,11 +165,14 @@
                             <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                           </div>
                           <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
-                          </div>
-                          <div class="col-md-4">
                             <p><i class="entypo-forward"></i>Location: <%= @car.acquire_location.length > 0 ? "#{@car.acquire_location}" : "Not Entered" %></p>
                           </div>
+                          <% if @is_admin == true %>
+                          <div class="col-md-4">
+                            <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                          </div>
+                          <% end %>
+
                         </div>
                       </div>
                     </div>
@@ -210,8 +215,9 @@
                       </div>
                     </div>
 
-
+                      <% if @is_admin == true %>
                       <%= link_to "<i class='entypo-cross'></i> Delete Car".html_safe, dealership_car_path(@dealership, @car), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+                      <% end %>
 
 
 
@@ -240,7 +246,9 @@
                     <td><%= repair.date.strftime("%m/%d/%Y")  %></td>
                     <td><%= "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" %></td>
                     <td><%= repair.description.length > 0 ? repair.description : "No description entered"  %></td>
-                    <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
+
+                    <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> <% if @is_admin == true %>| <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %><% end %></td>
+
                   </tr>
                   <% end %>
                 </tbody>

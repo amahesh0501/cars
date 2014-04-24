@@ -1,0 +1,60 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <ul class="cbp_tmtimeline">
+
+      <li>
+        <time class="cbp_tmtime" datetime="2014-04-12T03:45"><span><%= @conversation.date.strftime("%m/%d/%Y") %></span> <span></span></time>
+
+
+        <% if @conversation.medium == "Phone" %>
+        <div class="cbp_tmicon bg-success"><i class="entypo-phone"></i></div>
+        <% elsif @conversation.medium == "In Person" %>
+        <div class="cbp_tmicon bg-info"> <i class="entypo-users"></i></div>
+        <% elsif @conversation.medium == "E-Mail" %>
+        <div class="cbp_tmicon bg-warning"> <i class="entypo-mail"></i></div>
+        <% elsif @conversation.medium == "Online Chat" %>
+        <div class="cbp_tmicon bg-danger"> <i class="entypo-chat"></i></div>
+        <% elsif @conversation.medium == "Video Conference" %>
+        <div class="cbp_tmicon bg-success"> <i class="entypo-video"></i></div>
+        <% else %>
+        <div class="cbp_tmicon bg-info"> <i class="entypo-quote"></i></div>
+        <%end%>
+
+
+        <div class="cbp_tmlabel">
+          <h2><%= @employee ? @employee.name : "Someone" %>  <span>spoke with <%=@customer.name%></span></h2>
+          <p><%= @conversation.description %></p>
+          <p><%= link_to "Edit", edit_dealership_customer_conversation_path(@dealership, @customer, @conversation) %> <%if @membership.is_dealership_admin %>| <%= link_to "Delete", dealership_customer_conversation_path(@dealership, @customer, @conversation), method: "delete", confirm: "Are you sure?" %><% end %> </p>
+        </div>
+
+      </li>
+
+
+
+
+
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+

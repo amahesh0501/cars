@@ -3,6 +3,8 @@ class ExpensesController < ApplicationController
   before_filter :authenticate_user!, :dealership_active?, :is_member?
 
   def index
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
+
      if params[:start_date]
        @expenses = Expense.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
        @repairs = Repair.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
@@ -75,8 +77,10 @@ class ExpensesController < ApplicationController
   end
 
   def show
+    @membership = Membership.find_by_user_id(current_user.id)
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.find(params[:id])
+    @vendor = Vendor.find(@expense.vendor_id) if @expense.vendor_id
   end
 
   def new
@@ -90,7 +94,13 @@ class ExpensesController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     @expense.dealership_id = dealership.id
     if @expense.save
-      redirect_to dealership_expenses_path(dealership)
+      if params[:expense][:redirect] == "vendor" && @expense.vendor_id != nil
+        vendor = Vendor.find(params[:expense][:vendor_id])
+        redirect_to dealership_vendor_path(dealership, vendor)
+      else
+        redirect_to dealership_expense_path(dealership, @expense)
+
+      end
     else
       flash[:errors] = @expense.errors.full_messages
       flash[:expense] = params[:expense]

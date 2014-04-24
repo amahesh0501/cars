@@ -80,6 +80,7 @@
 
         <div class="row">
           <div class="col-sm-offset-2 col-sm-10">
+            <% if @is_admin == true %>
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-stat">
@@ -102,6 +103,7 @@
 
 
             </div>
+            <% end %>
 
 
 
@@ -110,7 +112,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#revenue" data-toggle="tab">Revenues</a></li>
               <li><a href="#expense" data-toggle="tab">Expenses</a></li>
-              <li><a href="#overview" data-toggle="tab">Overview</a></li>
+              <% if @is_admin == true %><li><a href="#overview" data-toggle="tab">Overview</a></li><% end %>
             </ul>
 
 
@@ -175,7 +177,7 @@
                     <tbody>
                       <% @revenues.each do |revenue| %>
                       <tr class="gradeU">
-                        <td><%= revenue.name %></td>
+                        <td><%= link_to revenue.name, dealership_revenue_path(@dealership, revenue) %></td>
                         <td><%= "$#{number_with_precision(revenue.amount, :delimiter => ',', precision: 2)}"  %></td>
                         <td><%= revenue.date.strftime("%m/%d/%Y")  %></td>
                         <td><%= link_to "Edit", edit_dealership_revenue_path(@dealership, revenue)  %></td>
@@ -197,17 +199,29 @@
         <div class="tab-pane" id="expense">
           <section class="profile-feed">
             <div class="profile-stories">
-              <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Expense".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp; <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp; <%= link_to "<i class='entypo-plus'></i> Add Paycheck Expense".html_safe, new_dealership_paycheck_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp; <%= link_to "<i class='entypo-plus'></i> Add Misc Expense".html_safe, new_dealership_expense_path(@dealership), class: "btn btn-success", role: "button" %>
+              <% if @is_admin == true %>
+              <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Expense".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+              <% end %>
+               <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+               <% if @is_admin == true %>
+               <%= link_to "<i class='entypo-plus'></i> Add Paycheck Expense".html_safe, new_dealership_paycheck_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+               <% end %>
+               <%= link_to "<i class='entypo-plus'></i> Add Misc Expense".html_safe, new_dealership_expense_path(@dealership), class: "btn btn-success", role: "button" %>
               <br/>
 
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#purchase" data-toggle="tab">Vehicle Purchases</a></li>
-                <li><a href="#repair" data-toggle="tab">Repairs</a></li>
-                <li><a href="#paycheck" data-toggle="tab">Employee Paychecks</a></li>
+                <% if @is_admin == true %><li class="active"><a href="#purchase" data-toggle="tab">Vehicle Purchases</a></li><% end %>
+                <% if @is_admin != true %>
+                  <li class="active"><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <% else %>
+                  <li><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <% end %>
+                <% if @is_admin == true %><li><a href="#paycheck" data-toggle="tab">Employee Paychecks</a></li><% end %>
                 <li><a href="#misc-exp" data-toggle="tab">Misc Expenses</a></li>
               </ul>
 
               <div class="tab-content">
+                <% if @is_admin == true %>
                 <div class="tab-pane active" id="purchase">
                   <table class="table table-bordered datatable" id="table-1">
                     <thead>
@@ -232,7 +246,12 @@
                     </table>
                     <%= "There are no vehicle purchases in this date range" if @purchases.length ==0 %>
                   </div>
-                  <div class="tab-pane" id="repair">
+                  <% end %>
+                  <% if @is_admin != true %>
+                    <div class="tab-pane active" id="repair">
+                  <% else %>
+                    <div class="tab-pane" id="repair">
+                  <% end %>
                     <table class="table table-bordered datatable" id="table-1">
                       <thead>
                         <tr>
@@ -247,7 +266,7 @@
                         <% @repairs.each do |repair| %>
                         <tr class="gradeU">
                           <% car = Car.find(repair.car_id) %>
-                          <td><%= repair.name  %></td>
+                          <td><%= link_to repair.name, dealership_repair_path(@dealership, repair) %></td>
                           <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car) %></td>
                           <td><%= "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" %></td>
                           <td><%= repair.date.strftime("%m/%d/%Y")  %></td>
@@ -258,6 +277,7 @@
                     </table>
                     <%= "There are no repair expenses in this date range" if @repairs.length ==0 %>
                   </div>
+                  <% if @is_admin == true %>
                   <div class="tab-pane" id="paycheck">
                     <table class="table table-bordered datatable" id="table-1">
                      <thead>
@@ -272,7 +292,7 @@
                        <% @paychecks.each do |paycheck| %>
                        <% employee = Employee.find(paycheck.employee_id) %>
                        <tr class="gradeU">
-                         <td><%= link_to "#{paycheck.name}", dealership_employee_path(@dealership, employee)  %></td>
+                         <td><%= link_to "#{paycheck.name}", dealership_paycheck_path(@dealership, paycheck)  %></td>
                          <td><%= "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}" %></td>
                          <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
                          <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)  %> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure?"  %></td>
@@ -283,6 +303,7 @@
                    </table>
                    <%= "There are no payroll expenses in this date range" if @paychecks.length ==0 %>
                  </div>
+                 <% end %>
                  <div class="tab-pane" id="misc-exp">
                    <table class="table table-bordered datatable" id="table-1">
                     <thead>
@@ -296,7 +317,7 @@
                     <tbody>
                       <% @expenses.each do |expense| %>
                       <tr class="gradeU">
-                        <td><%= expense.name  %></td>
+                        <td><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></td>
                         <td><%= "$#{number_with_precision(expense.amount, :delimiter => ',', precision: 2)}" %></td>
                         <td><%= expense.date.strftime("%m/%d/%Y")  %></td>
                         <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, expense)  %> | <%= link_to "Delete", dealership_expense_path(@dealership, expense), method: "delete", confirm: "Are you sure?"  %></td>
@@ -310,7 +331,7 @@
             </div>
           </section>
         </div>
-
+        <% if @is_admin == true %>
         <div class="tab-pane" id="overview">
           <section class="profile-feed">
             <div class="profile-stories">
@@ -451,6 +472,7 @@
             </div>
           </section>
         </div>
+        <% end %>
 
       </div>
     </div>

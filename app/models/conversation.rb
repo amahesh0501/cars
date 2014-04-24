@@ -7,4 +7,8 @@ class Conversation < ActiveRecord::Base
 
   validates_presence_of :date, :dealership_id, :customer_id, :description
 
+  def self.search(search)
+    find(:all, :conditions => ['lower(description) LIKE ? OR lower(medium) LIKE ?', "%#{search.downcase}%", "%#{search.downcase}%"])
+  end
+
 end
