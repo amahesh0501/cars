@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def index
+    authenticate_user!
     if current_user
       @membership = Membership.find_by_user_id(current_user.id)
       if @membership

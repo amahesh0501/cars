@@ -13,7 +13,7 @@
       <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@monthly_payment, :delimiter => ',', precision: 2)}" %></h2></div>
 
       <h3><%= "Monthly Payment" %></h3>
-      <p><%= "Something looks off, check your numbers and recalculate below" if @monthly_payment.to_f < 0 %></p>
+      <p><%= "Something looks off, check your numbers and recalculate below" if @monthly_payment.to_i <= 0 %></p>
     </div>
 
     <div class="panel panel-dark" data-collapsed="0">
@@ -26,7 +26,7 @@
             <p><i class="entypo-forward"></i>Sales Price: <%= "$#{number_with_precision(@sales_price, :delimiter => ',', precision: 2)}" %></p>
           </div>
           <div class="col-md-4">
-            <p><i class="entypo-forward"></i>Sales Tax: <%= "$#{number_with_precision(@sales_tax, :delimiter => ',', precision: 2)}" %></p>
+            <p><i class="entypo-forward"></i>Sales Tax Amount: <%= "$#{number_with_precision(@sales_tax_amount, :delimiter => ',', precision: 2)} (#{number_with_precision(@sales_tax_percent, :delimiter => ',', precision: 2)}%)" %></p>
           </div>
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>APR: <%= "#{number_with_precision(@apr, :delimiter => ',', precision: 2)}%" %></p>
@@ -74,12 +74,11 @@
       </div>
     </div><br/><br/><br/>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Sales Tax Amount</label>
+      <label class="col-sm-3 control-label">Sales Tax Percent</label>
       <div class="col-sm-5">
         <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= text_field_tag 'sales_tax_amount', nil, class: 'form-control', value: @sales_tax %>
-
+          <%= text_field_tag 'sales_tax_percent', nil, class: 'form-control', value: @sales_tax_percent %>
+          <span class="input-group-addon">%</span>
         </div>
       </div>
     </div><br/><br/>

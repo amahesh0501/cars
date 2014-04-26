@@ -7,6 +7,8 @@ class DealershipsController < ApplicationController
   def show
     authenticate_user!
     dealership_active?
+    authenticate_user!
+
     is_dealership_admin_view_for_dashboard? ? @is_admin = true : @is_admin = false
 
     #DEALER THINGS

@@ -29,17 +29,11 @@
                 <% if @employee %>
                 <span>Sold by <%= link_to @employee.name, dealership_employee_path(@dealership, @employee) %> to <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></span>
                 <% else %>
-                <span>Sold to <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></span>
+                <span>Sold to <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %> for <%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></span>
                 <% end %>
               </div>
             </li>
 
-            <li>
-              <div class="profile-stat">
-                <h3><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></h3>
-                <span><a href="#">Purchase Price</a></span>
-              </div>
-            </li>
 
           </ul>
 
@@ -134,7 +128,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Purchase Price: <%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></p>
-                  <p><i class="entypo-forward"></i>Sales Tax Amount: <%= @deal.sales_tax_amount ? "$#{number_with_precision(@deal.sales_tax_amount, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Sales Tax Amount: <%= @deal.sales_tax_amount ? "$#{number_with_precision(@deal.sales_tax_amount, :delimiter => ',', precision: 2)} (#{number_with_precision(@deal.sales_tax_percent, precision: 2)}%)" : "N/A"  %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Down Payment: <%= @deal.down_payment ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "N/A"  %></p>

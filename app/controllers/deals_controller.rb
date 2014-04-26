@@ -28,6 +28,7 @@ class DealsController < ApplicationController
     @deal = Deal.new(params[:deal])
     @dealership = Dealership.find(params[:dealership_id])
     @deal.dealership_id = @dealership.id
+    @deal.sales_tax_amount = @deal.amount * (@deal.sales_tax_percent / 100)
     if @deal.save
       @car = Car.find(@deal.car_id)
       @car.status = "Sold"
@@ -55,6 +56,7 @@ class DealsController < ApplicationController
   def update
     @deal = Deal.find(params[:id])
     @dealership = Dealership.find(params[:dealership_id])
+    @deal.sales_tax_amount = @deal.amount * (@deal.sales_tax_percent / 100)
     if @deal.update_attributes(params[:deal])
       redirect_to dealership_deal_path(@dealership, @deal)
     else
@@ -81,17 +83,23 @@ class DealsController < ApplicationController
   def quick_calculate
     dealership = Dealership.find(params[:dealership_id])
     params[:amount] ? sales_price = params[:amount].to_f : sales_price = 0
-    params[:sales_tax_amount] ? sales_tax = params[:sales_tax_amount].to_f : sales_tax = 0
     params[:down_payment] ? down_payment = params[:down_payment].to_f : down_payment = 0
     params[:term] ? term = params[:term].to_i : term = 1
     term = 1 if term == 0
     params[:apr] ? apr = params[:apr].to_f : apr = 0
     params[:trade_in_value] ? trade_in_value = params[:trade_in_value].to_f : trade_in_value = 0
+    if params[:sales_tax_percent] && sales_price
+      sales_tax_percent = params[:sales_tax_percent].to_f
+      sales_tax_amount = (sales_tax_percent * sales_price) / 100
+    else
+      sales_tax_amount = 0
+      sales_tax_percent = 0
+    end
 
-    final_price = sales_price + sales_tax - down_payment - trade_in_value
+    final_price = sales_price + sales_tax_amount - down_payment - trade_in_value
     monthly_payment = final_price / term
 
-    redirect_to quick_calculate_results_path(dealership, monthly_payment: monthly_payment, sales_price: sales_price, sales_tax: sales_tax, down_payment: down_payment, term: term, apr: apr, trade_in_value: trade_in_value )
+    redirect_to quick_calculate_results_path(dealership, monthly_payment: monthly_payment, sales_price: sales_price, sales_tax_amount: sales_tax_amount, sales_tax_percent: sales_tax_percent, down_payment: down_payment, term: term, apr: apr, trade_in_value: trade_in_value )
 
   end
 
@@ -99,7 +107,8 @@ class DealsController < ApplicationController
     @dealership = Dealership.find(params[:id])
     @monthly_payment = params[:monthly_payment]
     @sales_price = params[:sales_price]
-    @sales_tax = params[:sales_tax]
+    @sales_tax_amount = params[:sales_tax_amount]
+    @sales_tax_percent = params[:sales_tax_percent]
     @down_payment = params[:down_payment]
     @term = params[:term]
     @apr = params[:apr]

@@ -1,5 +1,5 @@
 class Deal < ActiveRecord::Base
-  attr_accessible :employee_id, :car_id, :customer_id, :dealership_id, :amount, :sales_tax_amount, :date, :down_payment, :apr, :term, :trade_in_value, :gap_insurance, :gap_name
+  attr_accessible :employee_id, :car_id, :customer_id, :dealership_id, :amount, :sales_tax_percent, :sales_tax_amount, :date, :down_payment, :apr, :term, :trade_in_value, :gap_insurance, :gap_name
 
   belongs_to :dealership
   belongs_to :customer

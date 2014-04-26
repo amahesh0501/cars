@@ -124,8 +124,16 @@ p, h1, h2, h3, h4, h5, h6{
   color: black !important ;
 }
 
+.error_messages{
+  color: red !important;
+}
+
 .form-control {
   border: 1px solid #bdc3c7 !important;
+}
+
+.signin-form {
+  border: 0px !important;
 }
 
 .tile-stats h2{

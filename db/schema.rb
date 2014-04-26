@@ -108,11 +108,12 @@ ActiveRecord::Schema.define(version: 20140414005333) do
     t.date     "date"
     t.float    "amount"
     t.float    "sales_tax_amount"
+    t.float    "sales_tax_percent"
     t.float    "down_payment"
     t.integer  "term"
     t.integer  "apr"
     t.float    "trade_in_value"
-    t.boolean  "gap_insurance",    default: false
+    t.boolean  "gap_insurance",     default: false
     t.string   "gap_name"
     t.datetime "created_at"
     t.datetime "updated_at"

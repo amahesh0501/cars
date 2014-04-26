@@ -8,6 +8,7 @@ class CreateDeals < ActiveRecord::Migration
       t.date :date
       t.float :amount
       t.float :sales_tax_amount
+      t.float :sales_tax_percent
       t.float :down_payment
       t.integer :term
       t.integer :apr

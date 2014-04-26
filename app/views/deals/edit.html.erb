@@ -48,17 +48,17 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Sales Tax Amount</label>
+      <label class="col-sm-3 control-label">Sales Tax Percent</label>
       <div class="col-sm-5">
         <% if @fields %>
           <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :sales_tax_amount, value: @fields["sales_tax_amount"], class: "form-control" %>
+            <%= f.text_field :sales_tax_percent, value: @fields["sales_tax_percent"], class: "form-control" %>
+            <span class="input-group-addon">%</span>
           </div>
         <% else %>
           <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :sales_tax_amount, class: "form-control" %>
+            <%= f.text_field :sales_tax_percent, class: "form-control" %>
+            <span class="input-group-addon">%</span>
           </div>
         <% end %>
       </div>
