@@ -1,6 +1,7 @@
 class DealsController < ApplicationController
 
-  before_filter :authenticate_user!, :dealership_active?, :is_member?
+  before_filter :authenticate_user!, :dealership_active?, :is_member?, :except => [:show_quick_calculations]
+  before_filter :authenticate_user!, :dealership_active?, :is_member_for_dashboard?, :only => [:show_quick_calculations]
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
@@ -75,6 +76,34 @@ class DealsController < ApplicationController
     end
     deal.destroy
     redirect_to root_path
+  end
+
+  def quick_calculate
+    dealership = Dealership.find(params[:dealership_id])
+    params[:amount] ? sales_price = params[:amount].to_f : sales_price = 0
+    params[:sales_tax_amount] ? sales_tax = params[:sales_tax_amount].to_f : sales_tax = 0
+    params[:down_payment] ? down_payment = params[:down_payment].to_f : down_payment = 0
+    params[:term] ? term = params[:term].to_i : term = 1
+    term = 1 if term == 0
+    params[:apr] ? apr = params[:apr].to_f : apr = 0
+    params[:trade_in_value] ? trade_in_value = params[:trade_in_value].to_f : trade_in_value = 0
+
+    final_price = sales_price + sales_tax - down_payment - trade_in_value
+    monthly_payment = final_price / term
+
+    redirect_to quick_calculate_results_path(dealership, monthly_payment: monthly_payment, sales_price: sales_price, sales_tax: sales_tax, down_payment: down_payment, term: term, apr: apr, trade_in_value: trade_in_value )
+
+  end
+
+  def show_quick_calculations
+    @dealership = Dealership.find(params[:id])
+    @monthly_payment = params[:monthly_payment]
+    @sales_price = params[:sales_price]
+    @sales_tax = params[:sales_tax]
+    @down_payment = params[:down_payment]
+    @term = params[:term]
+    @apr = params[:apr]
+    @trade_in_value = params[:trade_in_value]
   end
 
 

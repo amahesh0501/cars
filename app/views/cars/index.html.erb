@@ -39,7 +39,7 @@
             <% end %>
           </tbody>
         </table>
-        <%= "There are no frontline cars" if @frontline_cars.length ==0 %>
+        <p><%= "There are no frontline cars" if @frontline_cars.length ==0 %></p>
       </div>
       <div class="tab-pane" id="repairs">
         <br/>
@@ -64,7 +64,7 @@
             <% end %>
           </tbody>
         </table>
-        <%= "There are no cars which need repairs" if @repair_cars.length ==0 %>
+        <p><%= "There are no cars which need repairs" if @repair_cars.length ==0 %></p>
       </div>
       <div class="tab-pane" id="sold">
         <br/>
@@ -90,7 +90,7 @@
             <% end %>
           </tbody>
         </table>
-        <%= "There are no sold cars" if @sold_cars.length ==0 %>
+        <p><%= "There are no sold cars" if @sold_cars.length ==0 %></p>
       </div>
     </div>
 

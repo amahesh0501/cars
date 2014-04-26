@@ -22,4 +22,8 @@ class Deal < ActiveRecord::Base
     self[:trade_in_value] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
 
+  def quick_calculate
+
+  end
+
 end

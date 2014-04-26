@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     redirect_to blocked_path unless dealership.id == params[:dealership_id].to_i if membership
   end
 
+  def is_member_for_dashboard?
+    membership = Membership.find_by_user_id(current_user.id)
+    dealership = Dealership.find(membership.dealership_id) if membership
+    redirect_to blocked_path unless dealership.id == params[:id].to_i if membership
+  end
+
   def is_dealership_admin?
     membership = Membership.find_by_user_id(current_user.id)
     dealership = Dealership.find(membership.dealership_id)

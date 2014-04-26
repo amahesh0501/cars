@@ -39,7 +39,10 @@ Cars::Application.routes.draw do
   match 'dealerships/:id/conversations', :to => 'dealerships#conversations', via: :get
   match 'dealerships/:id/no_access', :to => 'dealerships#no_access', via: :get, as: 'no_access'
   match 'new_with_vin', :to => 'cars#new_with_vin', via: :post
+  match 'quick_calculate', :to => 'deals#quick_calculate', via: :post
   match 'dealerships/:id/search', :to => 'dealerships#search', via: :get, as: 'search'
+  match 'dealerships/:id/quick_calculate_results', :to => 'deals#show_quick_calculations', via: :get, as: 'quick_calculate_results'
+
 
 
 

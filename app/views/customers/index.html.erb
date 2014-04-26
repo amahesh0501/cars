@@ -37,7 +37,7 @@
             <% end %>
           </tbody>
         </table>
-        <%= "There are no potential customers" if @potential_customers.length ==0 %>
+        <p><%= "There are no potential customers" if @potential_customers.length ==0 %></p>
 
       </div>
       <div class="tab-pane" id="existing">
@@ -62,7 +62,7 @@
             <% end %>
           </tbody>
         </table>
-        <%= "There are no existing customers" if @existing_customers.length ==0 %>
+        <p><%= "There are no existing customers" if @existing_customers.length ==0 %></p>
       </div>
     </div>
 

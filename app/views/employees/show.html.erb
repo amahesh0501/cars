@@ -25,13 +25,13 @@
             <li>
               <div class="profile-name">
                 <strong><%= @employee.name %></strong>
-                <span><%= @employee.email.length > 0 ? @employee.email : "E-Mail not entered" %></span>
+                <span><%= @employee.email.length > 0 ? @employee.email : "Name" %></span>
               </div>
             </li>
 
             <li>
               <div class="profile-stat">
-                <h3><%= @employee.phone.length > 0 ? @employee.phone : "Not Entered" %></h3>
+                <h3><%= @employee.phone.length > 0 ? @employee.phone : "N/A" %></h3>
                 <span><a href="#">Phone Number</a></span>
               </div>
             </li>
@@ -153,12 +153,12 @@
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Final Sales Price: <%= deal.amount ? "$#{number_with_delimiter(deal.amount, :delimiter => ',')}" : "Not Entered" %>
+                      Final Sales Price: <%= deal.amount ? "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                     </div>
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Down Payment: <%= deal.down_payment ? "$#{number_with_delimiter(deal.down_payment, :delimiter => ',')}" : "Not Entered" %>
+                      Down Payment: <%= deal.down_payment ? "$#{number_with_precision(deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                     </div>
 
                     <div class="clear"></div>
@@ -175,7 +175,7 @@
 
                     <div class="col-sm-4">
                       <i class="entypo-forward"></i>
-                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_delimiter(deal.trade_in_value, :delimiter => ',')}" : "Not Entered" %>
+                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_precision(deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
                     </div>
 
                   </div>
