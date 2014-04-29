@@ -8,7 +8,22 @@ class CreateEmployees < ActiveRecord::Migration
       t.string :address
       t.string :phone
       t.text :description
-      t.attachment :image
+
+
+
+      #components
+       t.string :first
+       t.string :last
+       t.string :address_line_1
+       t.string :address_line_2
+       t.string :address_city
+       t.string :address_state
+       t.string :address_zip
+
+       #images
+       t.attachment :image
+       t.attachment :license_photo
+
 
       t.timestamps
 

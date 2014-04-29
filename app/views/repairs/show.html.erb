@@ -7,7 +7,18 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <div class="panel panel-dark" data-collapsed="0">
+    <a href="/dealerships/<%=@dealership.id%>/vehicles/<%=@car.id%>" class="btn btn-success">
+      <i class="entypo-shareable"></i>
+      Back to Vehicle
+    </a>
+    <a href="/dealerships/<%=@dealership.id%>/expenses" class="btn btn-success">
+      <i class="entypo-tag"></i>
+      Back to Financials
+    </a>
+    <br/><br/>
+
+
+<div class="panel panel-dark" data-collapsed="0">
       <div class="panel-heading">
         <div class="panel-title">Repair Information</div>
       </div>

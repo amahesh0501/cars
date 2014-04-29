@@ -31,9 +31,14 @@ class CreateCars < ActiveRecord::Migration
       t.boolean :smog_status, default: false
       t.date :smog_date
       t.string :smogged_by
+      t.float :smog_price, default: 0
       t.boolean :flooring, default: false
       t.string :flooring_company
       t.date :flooring_date
+
+      #more_information
+      t.float :wholesale_price
+      t.float :retail_price
 
       t.attachment :image
 

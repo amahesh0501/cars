@@ -5,6 +5,8 @@ class Expense < ActiveRecord::Base
   belongs_to :vendor
 
   validates_presence_of :name, :dealership_id, :amount, :date
+  validates_numericality_of :amount
+
 
   def amount=(num)
     self[:amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f

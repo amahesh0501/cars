@@ -110,6 +110,24 @@
         <%= f.text_field :license_plate,value: @license_plate, class: "form-control" %>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Wholesale Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :wholesale_price, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Retail Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :retail_price, class: "form-control" %>
+        </div>
+      </div>
+    </div>
 
     <h3>Acquistion Information</h3>
     <div class="form-group">
@@ -145,6 +163,22 @@
       <label class="col-sm-3 control-label">Smog Date</label>
       <div class="col-sm-5">
         <%= f.date_field :smog_date, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Smog Price</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :smog_price,  class: "form-control" , value: @fields["smog_price"] %>
+        </div>
+        <% else %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :smog_price,  class: "form-control"  %>
+        </div>
+        <% end %>
       </div>
     </div>
     <div class="form-group">

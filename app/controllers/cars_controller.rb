@@ -8,6 +8,11 @@ class CarsController < ApplicationController
     @sold_cars = Car.where(dealership_id: @dealership.id, status: "Sold")
     @frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs")
+    floored_repair_cars = Car.where(dealership_id: @dealership.id, status: "Needs Repairs", flooring: true)
+    floored_frontline_cars = Car.where(dealership_id: @dealership.id, status: "Frontline", flooring: true)
+    @floored_cars = floored_frontline_cars + floored_repair_cars
+    @floored_cars = @floored_cars.sort_by &:acquire_date
+
     is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
@@ -17,7 +22,8 @@ class CarsController < ApplicationController
     @repairs = Repair.where(car_id: @car.id)
     @car_repair_expenses = 0
     @repairs.each {|repair| @car_repair_expenses += repair.amount}
-    @total_price = @car.acquire_price + @car_repair_expenses if @car.acquire_price
+    @car.smog_price ? @smog_price = @car.smog_price : @smog_price = 0
+    @total_price = @car.acquire_price + @car_repair_expenses + @smog_price if @car.acquire_price
     @purchase_price = 0
     @deal = Deal.find_by_car_id(@car.id)
     @purchase_price = @deal.amount if @deal

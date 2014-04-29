@@ -19,6 +19,7 @@ class EmployeesController < ApplicationController
   def new
     @dealership = Dealership.find(params[:dealership_id])
     flash[:employee] ? @employee = Employee.new(flash[:employee]) : @employee = Employee.new
+    @us_states = us_states
 
   end
 
@@ -26,6 +27,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(params[:employee])
     @dealership = Dealership.find(params[:dealership_id])
     @employee.dealership_id = @dealership.id
+    @employee.name = params[:employee][:first] + params[:employee][:last]
     if @employee.save
       redirect_to dealership_employee_path(@dealership, @employee)
     else

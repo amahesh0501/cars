@@ -141,7 +141,7 @@
                     <% customer = Customer.find(deal.customer_id) %>
                     <% employee = Employee.find(deal.employee_id) %>
                     <% car = Car.find(deal.car_id) %>
-                    <%= link_to "Sold #{car.make_model_year} to #{customer.name} for  $#{number_with_delimiter(deal.amount, :delimiter => ',')} ", dealership_deal_path(@dealership, deal) %>
+                    <%= link_to "Sold #{car.make_model_year} to #{customer.name} for  $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, deal) %>
                   </h4>
 
                   <div class="row info-list">
@@ -212,7 +212,7 @@
             <tbody>
               <% @paychecks.each do |paycheck|  %>
               <tr class="gradeU">
-                <td><%= "$#{number_with_delimiter(paycheck.amount, :delimiter => ',')}" %></td>
+                <td><%= link_to "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, paycheck) %></td>
                 <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
                 <td><%= paycheck.description.length > 0 ? paycheck.description : "No description entered"  %></td>
                 <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck, employee_id: paycheck.employee_id)%> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure" %></td>

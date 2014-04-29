@@ -7,6 +7,12 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
+    <a href="/dealerships/<%=@dealership.id%>/expenses" class="btn btn-success">
+      <i class="entypo-tag"></i>
+      Back to Financials
+    </a>
+    <br/><br/>
+
     <div class="panel panel-dark" data-collapsed="0">
       <div class="panel-heading">
         <div class="panel-title">Expense Information</div>

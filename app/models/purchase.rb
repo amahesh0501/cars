@@ -5,6 +5,8 @@ class Purchase < ActiveRecord::Base
   belongs_to :car
 
   validates_presence_of :dealership_id, :car_id, :amount, :date
+  validates_numericality_of :amount
+
 
   def amount=(num)
     self[:amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f

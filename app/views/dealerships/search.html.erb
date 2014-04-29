@@ -560,6 +560,15 @@
                           </div>
                         <% end %>
                       <% end %>
+
+                      <% if @revenues.length == 0 && @paychecks.length == 0 && @expenses.length == 0 && @repairs.length == 0 %>
+                        <li class="search-result">
+                          <div class="sr-inner">
+                            <br/>
+                            <h4>Sorry, no results</h4>
+                          </div>
+                        </li>
+                      <% end %>
                     </div>
 
 

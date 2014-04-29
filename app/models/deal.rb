@@ -8,6 +8,8 @@ class Deal < ActiveRecord::Base
 
   validates_presence_of :dealership_id, :car_id, :customer_id, :date, :amount
   validates_uniqueness_of :car_id, message: "already has a deal associated with it. Please delete that deal to create a new one"
+  validates_numericality_of :amount, :sales_tax_amount, :sales_tax_percentm, :term, :down_payment, :apr, :trade_in_value
+
 
   def amount=(num)
     self[:amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f

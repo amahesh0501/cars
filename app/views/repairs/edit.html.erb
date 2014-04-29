@@ -30,6 +30,14 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Vendor</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :vendor_id, @vendors.all, :id, :name, prompt: true, :include_blank => "No Vendor" %>
+        &nbsp; <%= link_to "(Add New Vendor)", new_dealership_vendor_path(@dealership), target: "_blank" %>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="col-sm-3 control-label">Description</label>
       <div class="col-sm-5">
         <% if @fields %>
@@ -51,18 +59,12 @@
         <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Vendor</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :vendor_id, @vendors.all, :id, :name, prompt: true, :include_blank => "No Vendor" %>
-      </div>
-    </div>
 
 
     <div class="form-group">
       <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
-            <%= f.submit "Edit Repair Expense", :class => 'btn btn-success'  %>
+            <%= f.submit "Update Repair Expense", :class => 'btn btn-success'  %>
       </div>
     </div>
     <% end %>

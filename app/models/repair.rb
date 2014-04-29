@@ -6,6 +6,8 @@ class Repair < ActiveRecord::Base
   belongs_to :vendor
 
   validates_presence_of :dealership_id, :car_id, :name, :amount, :date
+  validates_numericality_of :amount
+
 
   def amount=(num)
     self[:amount] = num.to_s.scan(/\b-?[\d.]+/).join.to_f

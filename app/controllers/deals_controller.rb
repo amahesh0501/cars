@@ -14,13 +14,24 @@ class DealsController < ApplicationController
     @customer = Customer.find(@deal.customer_id)
     @employee = Employee.find(@deal.employee_id) if @deal.employee_id
     @car = Car.find(@deal.car_id)
+
+    @deal.amount ?  @sales_price = @deal.amount : @sales_price = 0
+    @deal.down_payment ?  @down_payment = @deal.down_payment : @down_payment = 0
+    @deal.term ?  @term = @deal.term : @term = 1
+    @deal.apr ?  @apr = @deal.apr : @apr = 0
+    @deal.trade_in_value ?  @trade_in_value = @deal.trade_in_value : @trade_in_value = 0
+    @deal.sales_tax_amount ?  @sales_tax_amount = @deal.sales_tax_amount : @sales_tax_amount = 0
+
+
+    @final_price = @sales_price + @sales_tax_amount - @down_payment - @trade_in_value
+    @monthly_payment = @final_price / @term
   end
 
   def new
     flash[:deal] ? @deal = Deal.new(flash[:deal]) : @deal = Deal.new
     @dealership = Dealership.find(params[:dealership_id])
     @employees = @dealership.employees
-    @cars = @dealership.cars
+    @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @customers = @dealership.customers
   end
 

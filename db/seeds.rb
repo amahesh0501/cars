@@ -7,3 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create(email: "amahesh0501@gmail.com", password: "12345678", site_admin: true)
+User.create(email: "sal@gmail.com", password: "12345678", site_admin: false)
+Dealership.create(dealership_name: "Auto1Pay", active: true)
+Membership.create(user_id: 2, dealership_id: 1, is_dealership_admin: true, has_access: true)

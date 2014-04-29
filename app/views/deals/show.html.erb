@@ -85,8 +85,10 @@
 
             <!-- tabs for the profile links -->
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#home" data-toggle="tab">Deal Details</a></li>
+              <li class="active"><a href="#home" data-toggle="tab">Calculations</a></li>
+              <li><a href="#profile" data-toggle="tab">Deal Deatils</a></li>
             </ul>
+
 
 
 
@@ -99,6 +101,123 @@
       </section>
       <div class="tab-content">
         <div class="tab-pane active" id="home">
+          <div class="tile-stats tile-aqua">
+            <div class="icon"><i class="entypo-calendar"></i></div>
+            <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@monthly_payment, :delimiter => ',', precision: 2)}" %></h2></div>
+
+            <h3><%= "Monthly Payment" %></h3>
+            <p><%= "Something looks off, check your numbers and recalculate below" if @monthly_payment.to_i <= 0 %></p>
+          </div>
+
+          <%= form_for [@dealership, @deal], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+          <%= render 'layouts/error_messages', object: f.object %>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Sales Price</label>
+            <div class="col-sm-5">
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <%= f.text_field :amount, class: "form-control" %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Sales Tax Percent</label>
+            <div class="col-sm-5">
+              <% if @fields %>
+                <div class="input-group">
+                  <%= f.text_field :sales_tax_percent, value: @fields["sales_tax_percent"], class: "form-control" %>
+                  <span class="input-group-addon">%</span>
+                </div>
+              <% else %>
+                <div class="input-group">
+                  <%= f.text_field :sales_tax_percent, class: "form-control" %>
+                  <span class="input-group-addon">%</span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Down Payment</label>
+            <div class="col-sm-5">
+              <% if @fields %>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <%= f.text_field :down_payment, value: @fields["down_payment"], class: "form-control" %>
+                </div>
+              <% else %>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <%= f.text_field :down_payment, class: "form-control" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Term</label>
+            <div class="col-sm-5">
+              <% if @fields %>
+              <div class="input-group">
+              <%= f.text_field :term, value: @fields["term"], class: "form-control" %>
+              <span class="input-group-addon">months</span>
+              </div>
+              <% else %>
+              <div class="input-group">
+              <%= f.text_field :term, class: "form-control" %>
+              <span class="input-group-addon">months</span>
+              </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">APR</label>
+            <div class="col-sm-5">
+              <% if @fields %>
+              <div class="input-group">
+              <%= f.text_field :apr, value: @fields["apr"], class: "form-control" %>
+              <span class="input-group-addon">%</span>
+              </div>
+              <% else %>
+              <div class="input-group">
+              <%= f.text_field :apr, class: "form-control" %>
+              <span class="input-group-addon">%</span>
+              </div>
+              <% end %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Trade in Value</label>
+            <div class="col-sm-5">
+              <% if @fields %>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <%= f.text_field :trade_in_value, value: @fields["trade_in_value"], class: "form-control" %>
+                </div>
+              <% else %>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <%= f.text_field :trade_in_value, class: "form-control" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label"></label>
+            <div class="col-sm-5">
+              <%= f.submit "Update Deal", :class => 'btn btn-success'  %>
+
+            </div>
+          </div>
+          <% end %>
+
+
+
+        </div>
+
+
+
+
+        <div class="tab-pane" id="profile">
 
 
           <div class="panel panel-dark" data-collapsed="0">
@@ -164,23 +283,7 @@
             </div>
           </div>
 
-          <div class="panel panel-dark" data-collapsed="0">
-            <div class="panel-heading">
-              <div class="panel-title">Calculations</div>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-4">
-                  <p>Need calculations</p>
-                </div>
-                <div class="col-md-4">
 
-                </div>
-                <div class="col-md-4">
-                </div>
-              </div>
-            </div>
-          </div>
 
 
           <% if @is_admin == true %>

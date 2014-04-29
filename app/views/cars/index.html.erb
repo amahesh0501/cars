@@ -14,6 +14,7 @@
       <li class="active"><a href="#frontline" data-toggle="tab">Frontline</a></li>
       <li><a href="#repairs" data-toggle="tab">Needs Repairs</a></li>
       <li><a href="#sold" data-toggle="tab">Sold</a></li>
+      <li><a href="#flooring" data-toggle="tab">Flooring</a></li>
     </ul>
 
     <div class="tab-content">
@@ -23,18 +24,19 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Miles</th>
-              <% if @is_admin == true %><th>Acquire Price</th><% end %>
               <th>VIN</th>
+              <% if @is_admin == true %><th>Acquire Price</th><% end %>
+              <th>Miles</th>
             </tr>
           </thead>
           <tbody>
             <% @frontline_cars.each do |car| %>
             <tr class="gradeU">
               <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
-              <td><%= link_to number_with_delimiter(car.miles, :delimiter => ','), dealership_car_path(@dealership, car)  %></td>
-              <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
               <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+              <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
+              <td><%= link_to number_with_delimiter(car.miles, :delimiter => ','), dealership_car_path(@dealership, car)  %></td>
+
             </tr>
             <% end %>
           </tbody>
@@ -47,19 +49,18 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Miles</th>
-              <% if @is_admin == true %><th>Acquire Price</th><% end %>
               <th>VIN</th>
+              <% if @is_admin == true %><th>Acquire Price</th><% end %>
+              <th>Miles</th>
             </tr>
           </thead>
           <tbody>
             <% @repair_cars.each do |car| %>
             <tr class="gradeU">
               <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
-              <td><%= link_to number_with_delimiter(car.miles, :delimiter => ','), dealership_car_path(@dealership, car)  %></td>
-              <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
-
               <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+              <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
+              <td><%= link_to number_with_delimiter(car.miles, :delimiter => ','), dealership_car_path(@dealership, car)  %></td>
             </tr>
             <% end %>
           </tbody>
@@ -72,9 +73,9 @@
           <thead>
             <tr>
               <th>Name</th>
+              <th>VIN</th>
               <th>Customer</th>
               <th>Purchase Price</th>
-              <th>VIN</th>
             </tr>
           </thead>
           <tbody>
@@ -83,14 +84,39 @@
             <% customer = Customer.find(deal.customer_id) %>
             <tr class="gradeU">
               <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
               <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
               <td><%= link_to "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td>
-              <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
             </tr>
             <% end %>
           </tbody>
         </table>
-        <p><%= "There are no sold cars" if @sold_cars.length ==0 %></p>
+        <p><%= "There are no sold cars. To mark a car as sold, please create a deal for it" if @sold_cars.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="flooring">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>VIN</th>
+              <% if @is_admin == true %><th>Acquire Price</th><% end %>
+              <th>Days Since Flooring Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @floored_cars.each do |car| %>
+            <% days = (Date.today.to_date - car.acquire_date.to_date).to_i %>
+            <tr class="gradeU">
+              <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+              <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+              <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
+              <td><%= link_to days, dealership_car_path(@dealership, car)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p><%= "There are no floored cars" if @floored_cars.length ==0 %></p>
       </div>
     </div>
 

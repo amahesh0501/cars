@@ -20,6 +20,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Year</label>
+      <div class="col-sm-5">
+        <%= f.text_field :year, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">Make</label>
       <div class="col-sm-5">
         <%= f.text_field :make, class: "form-control" %>
@@ -31,12 +37,7 @@
         <%= f.text_field :model, class: "form-control" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Year</label>
-      <div class="col-sm-5">
-        <%= f.text_field :year, class: "form-control" %>
-      </div>
-    </div>
+x
     <div class="form-group">
       <label class="col-sm-3 control-label">Trim</label>
       <div class="col-sm-5">
@@ -146,6 +147,38 @@
         <% end %>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Wholesale Price</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :wholesale_price,  class: "form-control" , value: @fields["wholesale_price"] %>
+        </div>
+        <% else %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :wholesale_price,  class: "form-control"  %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Retail Price</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :retail_price,  class: "form-control" , value: @fields["retail_price"] %>
+        </div>
+        <% else %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :retail_price,  class: "form-control"  %>
+        </div>
+        <% end %>
+      </div>
+    </div>
     <h3>Acquistion Information</h3>
     <div class="form-group">
       <label class="col-sm-3 control-label">Acquire Date</label>
@@ -187,6 +220,22 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Smog Price</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :smog_price,  class: "form-control" , value: @fields["smog_price"] %>
+        </div>
+        <% else %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :smog_price,  class: "form-control"  %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">Smog Location</label>
       <div class="col-sm-5">
         <% if @fields %>
@@ -224,7 +273,7 @@
     <div class="form-group">
       <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
-            <%= f.submit "Edit Vehicle", :class => 'btn btn-success'  %>
+            <%= f.submit "Update Vehicle", :class => 'btn btn-success'  %>
 
       </div>
     </div>
