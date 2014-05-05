@@ -63,13 +63,19 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">State</label>
       <div class="col-sm-5">
-        <%= f.text_field :address_state, class: "form-control" %>
+        <%= f.select :address_state, @us_states, prompt: true%>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Address Zip</label>
       <div class="col-sm-5">
-        <%= f.select :address_zip, @us_states%>
+        <%= f.text_field :address_zip, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Drivers License Photo</label>
+      <div class="col-sm-5">
+        <%= f.file_field :license_photo, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">

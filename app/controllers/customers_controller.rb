@@ -18,6 +18,8 @@ class CustomersController < ApplicationController
   def new
     @dealership = Dealership.find(params[:dealership_id])
     flash[:customer] ? @customer = Customer.new(flash[:customer]) : @customer = Customer.new
+    @us_states = us_states
+
   end
 
   def create
@@ -25,6 +27,8 @@ class CustomersController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     @customer.dealership_id = dealership.id
     @customer.status = "Potential Customer"
+    @customer.address = "#{params[:customer][:address_line_1]} #{params[:customer][:address_line_2]} #{params[:customer][:address_city]}, #{params[:customer][:address_state]} #{params[:customer][:address_zip]}"
+    @customer.employer_address = "#{params[:customer][:employer_address_line_1]} #{params[:customer][:employer_address_line_2]} #{params[:customer][:employer_address_city]}, #{params[:customer][:employer_address_state]} #{params[:customer][:employer_address_zip]}"
     if @customer.save
       redirect_to dealership_customer_path(dealership, @customer)
     else
@@ -38,11 +42,15 @@ class CustomersController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @customer = Customer.find(params[:id])
     @fields = flash[:customer] if flash[:customer]
+    @us_states = us_states
   end
 
   def update
     customer = Customer.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
+    customer.name = "#{params[:customer][:first]} #{params[:customer][:last]}"
+    customer.address = "#{params[:customer][:address_line_1]} #{params[:customer][:address_line_2]} #{params[:customer][:address_city]}, #{params[:customer][:address_state]} #{params[:customer][:address_zip]}"
+    customer.employer_address = "#{params[:customer][:employer_address_line_1]} #{params[:customer][:employer_address_line_2]} #{params[:customer][:employer_address_city]}, #{params[:customer][:employer_address_state]} #{params[:customer][:employer_address_zip]}"
     if customer.update_attributes(params[:customer])
       redirect_to dealership_customer_path(dealership, customer)
     else

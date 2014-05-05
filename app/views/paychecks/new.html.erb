@@ -36,6 +36,25 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Payment Method</label>
+      <div class="col-sm-5">
+        <%= f.select :payment_method, ['Cash', 'Credit Card', 'Check', 'Other'], prompt: true%>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Credit Card (if applicable)</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :card_id, @cards.all, :id, :name, prompt: true %>
+        &nbsp; <%= link_to "(Add New Card)", new_dealership_card_path(@dealership), target: "_blank" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Check Number (if applicable)</label>
+      <div class="col-sm-5">
+        <%= f.text_field :check_number, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">Description</label>
       <div class="col-sm-5">
         <%= f.text_area :description, class: "form-control" %>

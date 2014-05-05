@@ -25,7 +25,7 @@
             <li>
               <div class="profile-name">
                 <strong><%= @vendor.name %></strong>
-                <span><%= @vendor.address.length > 0 ? @vendor.address : "Address not entered" %></span>
+                <span><%= @vendor.category %></span>
               </div>
             </li>
 
@@ -93,7 +93,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Contact Name: <%= @vendor.contact_name.length > 0 ? "#{@vendor.contact_name}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Address: <%= @vendor.address.length > 0  ? "#{@vendor.address}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @vendor.address.length > 5  ? "#{@vendor.address}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Contact E-Mail: <%= @vendor.contact_email.length > 0 ? "#{@vendor.contact_email}" : "Not Entered" %></p>

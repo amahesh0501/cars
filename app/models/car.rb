@@ -1,7 +1,10 @@
 class Car < ActiveRecord::Base
-  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim, :wholesale_price, :retail_price, :smog_price
+  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim, :wholesale_price, :retail_price, :smog_price, :auction_id, :floorer_id, :card_id, :stock_number, :frontend_pac, :backend_pac, :invoice_number, :advertising_cost, :payment_method, :check_number, :other_costs
 
   belongs_to :dealership
+  belongs_to :floorer
+  belongs_to :auction
+  belongs_to :card
   has_one :deal
   has_many :repairs, dependent: :destroy
   has_one :purchase, dependent: :destroy
@@ -15,6 +18,22 @@ class Car < ActiveRecord::Base
 
   def acquire_price=(num)
     self[:acquire_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+
+  def frontend_pac=(num)
+    self[:frontend_pac] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+
+  def backend_pac=(num)
+    self[:backend_pac] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+
+  def advertising_cost=(num)
+    self[:advertising_cost] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+
+  def other_costs=(num)
+    self[:other_costs] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
 
   def wholesale_price=(num)

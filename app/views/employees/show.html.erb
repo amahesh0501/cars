@@ -100,12 +100,28 @@
                   <p><i class="entypo-forward"></i>Phone: <%= @employee.phone.length > 0 ? "#{@employee.phone}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Address: <%= @employee.address.length > 0 ? "#{@employee.address}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @employee.address.length > 5 ? "#{@employee.address}" : "Not Entered" %></p>
 
                 </div>
             </div>
           </div>
           </div>
+
+          <% if @employee.license_photo %>
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Driver License Photo</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <img src="<%= @employee.license_photo %>" height="200" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <% end %>
+
 
           <div class="panel panel-dark" data-collapsed="0">
             <div class="panel-heading">

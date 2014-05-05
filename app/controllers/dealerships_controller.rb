@@ -182,5 +182,13 @@ class DealershipsController < ApplicationController
 
   end
 
+  def partners
+    @dealership = Dealership.find(params[:id])
+    @repair_vendors = @dealership.vendors.where(category: "Vehicle Maintenance")
+    @other_vendors = @dealership.vendors.where(category: "Other")
+    @auctions = @dealership.auctions
+    @floorers = @dealership.floorers
+  end
+
 
 end

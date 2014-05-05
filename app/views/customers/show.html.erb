@@ -95,9 +95,9 @@
                   <p><i class="entypo-forward"></i>Date of Birth: <%= @customer.dob  ? "#{@customer.dob.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Address: <%= @customer.address.length > 0  ? "#{@customer.address}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @customer.address.length > 5  ? "#{@customer.address}" : "Not Entered" %></p>
 
-                  <p><i class="entypo-forward"></i>Time at Residence: <%= @customer.time_at_residence.length > 0 ? "#{@customer.time_at_residence}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Time at Residence: <%= @customer.time_at_residence.length > 0 ? "#{@customer.time_at_residence} months" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>SSN: <%= @customer.ssn.length > 0  ? "#{@customer.ssn}" : "Not Entered" %></p>
@@ -115,8 +115,8 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Employer Name: <%= @customer.employer.length > 0 ? "#{@customer.employer}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Employer Address: <%= @customer.employer_address.length > 0 ? "#{@customer.employer_address}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Time at Employer: <%= @customer.time_at_employer ? "#{@customer.time_at_employer}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Employer Address: <%= @customer.employer_address.length > 5 ? "#{@customer.employer_address}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Time at Employer: <%= @customer.time_at_employer ? "#{@customer.time_at_employer} months" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Manager Name: <%= @customer.employer_contact.length > 0  ? "#{@customer.employer_contact}" : "Not Entered" %></p>
@@ -129,6 +129,25 @@
               </div>
             </div>
           </div>
+
+          <% if @customer.license_photo %>
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Driver License Photo</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <img src="<%= @customer.license_photo %>" height="200" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <% end %>
+
+
+
+
           <div class="panel panel-dark" data-collapsed="0">
             <div class="panel-heading">
               <div class="panel-title">Notes</div>

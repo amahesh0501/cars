@@ -15,6 +15,9 @@ class Dealership < ActiveRecord::Base
   has_many :purchases
   has_many :revenues
   has_many :forms
+  has_many :auctions
+  has_many :floorers
+  has_many :cards
 
   validates_presence_of :dealership_name
 

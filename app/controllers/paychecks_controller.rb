@@ -17,6 +17,7 @@ class PaychecksController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     flash[:paycheck] ? @paycheck = Paycheck.new(flash[:paycheck]) : @paycheck = Paycheck.new
     @employees = @dealership.employees
+    @cards = @dealership.cards
   end
 
   def create
@@ -42,6 +43,7 @@ class PaychecksController < ApplicationController
     @paycheck = Paycheck.find(params[:id])
     @employees = @dealership.employees
     @fields = flash[:paycheck] if flash[:paycheck]
+    @cards = @dealership.cards
   end
 
   def update

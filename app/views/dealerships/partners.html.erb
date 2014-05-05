@@ -1,0 +1,147 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#repairs" data-toggle="tab">Vehicle Maintenance</a></li>
+      <li><a href="#auctions" data-toggle="tab">Auctions</a></li>
+      <li><a href="#finance" data-toggle="tab">Flooring Companies</a></li>
+      <li><a href="#other" data-toggle="tab">Other</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="repairs">
+        <%= link_to "<i class='entypo-plus'></i> Add Vehicle Maintenance Vendor".html_safe, new_dealership_vendor_path(@dealership), class: "btn btn-success", role: "button" %>
+        <br/><br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact Name</th>
+              <th>Contact E-Mail</th>
+              <th>Contact Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @repair_vendors.each do |vendor| %>
+            <tr class="gradeU">
+              <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+              <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p><%= "There are no vehicle maintenance vendors saved" if @repair_vendors.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="auctions">
+        <%= link_to "<i class='entypo-plus'></i> Add Auction".html_safe, new_dealership_auction_path(@dealership), class: "btn btn-success", role: "button" %>
+        <br/><br/>
+       <table class="table table-bordered datatable" id="table-1">
+         <thead>
+           <tr>
+             <th>Name</th>
+             <th>Address</th>
+             <th>Contact Name</th>
+             <th>Contact E-Mail</th>
+             <th>Contact Phone</th>
+           </tr>
+         </thead>
+         <tbody>
+           <% @auctions.each do |auction| %>
+           <tr class="gradeU">
+             <td><%= link_to auction.name, dealership_auction_path(@dealership, auction)  %></td>
+             <td><%= link_to auction.address, dealership_auction_path(@dealership, auction)  %></td>
+             <td><%= link_to auction.contact_name, dealership_auction_path(@dealership, auction)  %></td>
+             <td><%= link_to auction.email, dealership_auction_path(@dealership, auction) %></td>
+             <td><%= link_to auction.phone, dealership_auction_path(@dealership, auction)  %></td>
+           </tr>
+           <% end %>
+         </tbody>
+       </table>
+
+        <p><%= "There are no auctions saved" if @auctions.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="finance">
+        <%= link_to "<i class='entypo-plus'></i> Add Flooring Company".html_safe, new_dealership_floorer_path(@dealership), class: "btn btn-success", role: "button" %>
+
+        <br/><br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact Name</th>
+              <th>Contact E-Mail</th>
+              <th>Contact Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @floorers.each do |floorer| %>
+            <tr class="gradeU">
+              <td><%= link_to floorer.name, dealership_floorer_path(@dealership, floorer)  %></td>
+              <td><%= link_to floorer.address, dealership_floorer_path(@dealership, floorer)  %></td>
+              <td><%= link_to floorer.contact_name, dealership_floorer_path(@dealership, floorer)  %></td>
+              <td><%= link_to floorer.email, dealership_floorer_path(@dealership, floorer) %></td>
+              <td><%= link_to floorer.phone, dealership_floorer_path(@dealership, floorer)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p><%= "There are no flooring companies saved" if @floorers.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="other">
+        <br/><br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact Name</th>
+              <th>Contact E-Mail</th>
+              <th>Contact Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @other_vendors.each do |vendor| %>
+            <tr class="gradeU">
+              <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+              <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p><%= "There are no other vendors saved" if @other_vendors.length ==0 %></p>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+

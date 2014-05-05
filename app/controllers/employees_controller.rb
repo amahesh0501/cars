@@ -27,7 +27,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(params[:employee])
     @dealership = Dealership.find(params[:dealership_id])
     @employee.dealership_id = @dealership.id
-    @employee.name = params[:employee][:first] + params[:employee][:last]
+    @employee.address = "#{params[:employee][:address_line_1]} #{params[:employee][:address_line_2]} #{params[:employee][:address_city]}, #{params[:employee][:address_state]} #{params[:employee][:address_zip]}"
     if @employee.save
       redirect_to dealership_employee_path(@dealership, @employee)
     else
@@ -41,11 +41,13 @@ class EmployeesController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @employee = Employee.find(params[:id])
     @fields = flash[:employee] if flash[:employee]
+    @us_states = us_states
   end
 
   def update
     employee = Employee.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
+    employee.address = "#{params[:employee][:address_line_1]} #{params[:employee][:address_line_2]} #{params[:employee][:address_city]}, #{params[:employee][:address_state]} #{params[:employee][:address_zip]}"
     if employee.update_attributes(params[:employee])
       redirect_to dealership_employee_path(dealership, employee)
     else

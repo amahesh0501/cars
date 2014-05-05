@@ -4,7 +4,8 @@ class VendorsController < ApplicationController
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
-    @vendors = @dealership.vendors
+    redirect_to dealership_parthners_path(@dealership)
+
   end
 
   def show
@@ -19,12 +20,14 @@ class VendorsController < ApplicationController
   def new
     @dealership = Dealership.find(params[:dealership_id])
     flash[:vendor] ? @vendor = Vendor.new(flash[:vendor]) : @vendor = Vendor.new
+    @us_states = us_states
   end
 
   def create
     @vendor = Vendor.new(params[:vendor])
     dealership = Dealership.find(params[:dealership_id])
     @vendor.dealership_id = dealership.id
+    @vendor.address = "#{params[:vendor][:address_line_1]} #{params[:vendor][:address_line_2]} #{params[:vendor][:address_city]}, #{params[:vendor][:address_state]} #{params[:vendor][:address_zip]}"
     if @vendor.save
       dealership.vendors << @vendor
       redirect_to dealership_vendor_path(dealership, @vendor)
@@ -39,11 +42,14 @@ class VendorsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @vendor = Vendor.find(params[:id])
     @fields = flash[:vendor] if flash[:vendor]
+    @us_states = us_states
+    @category = @vendor.category
   end
 
   def update
     vendor = Vendor.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
+    vendor.address = "#{params[:vendor][:address_line_1]} #{params[:vendor][:address_line_2]} #{params[:vendor][:address_city]}, #{params[:vendor][:address_state]} #{params[:vendor][:address_zip]}"
     if vendor.update_attributes(params[:vendor])
       redirect_to dealership_vendor_path(dealership, vendor)
     else

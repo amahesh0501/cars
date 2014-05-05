@@ -54,8 +54,10 @@
     </div>
   </div>
     <% end %>
-
-    <p><%= "There are no employees" if @employees.length ==0 %></p>
+<% if @employees.length ==0 %>
+<br/><br/>
+<p>There are no employees </p>
+<% end %>
 
 
 

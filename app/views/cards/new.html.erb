@@ -1,0 +1,43 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Add a Credit Card </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership, @card], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Name</label>
+      <div class="col-sm-5">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Last 4 Digits</label>
+      <div class="col-sm-5">
+          <%= f.text_field :number, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Create Credit Card", :class => 'btn btn-success'  %>
+      </div>
+    </div>
+    <% end %>
+
+
+
+
+  </div>
+</div>
+
+

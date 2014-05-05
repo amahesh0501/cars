@@ -30,9 +30,9 @@ class DealsController < ApplicationController
   def new
     flash[:deal] ? @deal = Deal.new(flash[:deal]) : @deal = Deal.new
     @dealership = Dealership.find(params[:dealership_id])
-    @employees = @dealership.employees
+    @employees = @dealership.employees.order('name ASC')
     @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
-    @customers = @dealership.customers
+    @customers = @dealership.customers.order('name ASC')
   end
 
   def create

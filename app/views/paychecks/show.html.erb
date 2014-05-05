@@ -25,9 +25,17 @@
         <div class="row">
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>Employee Name: <%= link_to "#{@employee.name}", dealership_employee_path(@dealership, @employee) %></p>
+            <p><i class="entypo-forward"></i>Payment Method: <%= @paycheck.payment_method.length > 0  ? @paycheck.payment_method : "Not Entered" %></p>
+
           </div>
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>Amount: <%= @paycheck.amount ? "$#{number_with_precision(@paycheck.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+            <% if @paycheck.payment_method == "Credit Card" && @paycheck.card_id %>
+              <% card = Card.find(@paycheck.card_id) %>
+              <p><i class="entypo-forward"></i>Credit Card: <%= link_to "#{card.name} (##{card.number})", dealership_card_path(@dealership, card)  %></p>
+            <% elsif @paycheck.payment_method == "Check" && @paycheck.check_number %>
+              <p><i class="entypo-forward"></i>Check Number: <%= @paycheck.check_number.length > 0 ? @paycheck.check_number : "Not entered"  %></p>
+            <% end %>
           </div>
 
           <div class="col-md-4">

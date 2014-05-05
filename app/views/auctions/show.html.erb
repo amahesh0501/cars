@@ -1,0 +1,174 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <div class="profile-env">
+
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @auction.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @auction.name %></strong>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @vehicles.count %></h3>
+                <span><a href="#">Number of Vehciles</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/auctions/<%=@auction.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Auction
+            </a>
+
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+
+
+
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Auction Details</a></li>
+              <li><a href="#transactions" data-toggle="tab">Vehciles</a></li>
+
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Name: <%= @auction.contact_name.length > 0 ? "#{@auction.contact_name}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @auction.address.length > 5  ? "#{@auction.address}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact E-Mail: <%= @auction.email.length > 0 ? "#{@auction.email}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Phone: <%= @auction.phone.length > 0  ? "#{@auction.phone}" : "Not Entered" %></p>
+
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Description</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <%= @auction.description ? @auction.description : "No description has been entered" %>
+                </div>
+              </div>
+            </div>
+        </div>
+        <% if @is_admin == true %>
+        <%= link_to "<i class='entypo-cross'></i> Delete Auction".html_safe, dealership_auction_path(@dealership, @auction), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+        <% end %>
+
+      </div>
+        <div class="tab-pane" id="transactions">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add New Vehicle".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %>
+              <br/><br/>
+
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>VIN</th>
+                    <% if @is_admin == true %><th>Acquire Price</th><% end %>
+                    <th>Acquire Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @vehicles.each do |car| %>
+                  <tr class="gradeU">
+                    <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+                    <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+                    <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
+                    <td><%= link_to "#{car.acquire_date.strftime("%m/%d/%Y")}", dealership_car_path(@dealership, car)  %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= "There are no vehicles" if @vehicles.length ==0 %>
+
+
+
+            </div>
+          </section>
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
+
+

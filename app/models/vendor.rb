@@ -1,5 +1,5 @@
 class Vendor < ActiveRecord::Base
-  attr_accessible :name, :address, :contact_name, :contact_phone, :contact_email, :dealership_id, :image, :description
+  attr_accessible :name, :address, :contact_name, :contact_phone, :contact_email, :dealership_id, :image, :description, :category, :address_line_1, :address_line_2, :address_city, :address_state, :address_zip
 
   has_many :expenses
   belongs_to :dealership

@@ -30,6 +30,12 @@ class CreateCustomers < ActiveRecord::Migration
        t.string :address_state
        t.string :address_zip
 
+       t.string :employer_address_line_1
+       t.string :employer_address_line_2
+       t.string :employer_address_city
+       t.string :employer_address_state
+       t.string :employer_address_zip
+
         #images
         t.attachment :image
         t.attachment :license_photo

@@ -9,29 +9,128 @@
 
     <%= link_to "<i class='entypo-plus'></i> Add Vendor".html_safe, new_dealership_vendor_path(@dealership), class: "btn btn-success", role: "button" %>
     <br/><br/>
-    <table class="table table-bordered datatable" id="table-1">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Address</th>
-          <th>Contact Name</th>
-          <th>Contact E-Mail</th>
-          <th>Contact Phone</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @vendors.each do |vendor| %>
-        <tr class="gradeU">
-          <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
-          <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
-          <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
-          <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
-          <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <p><%= "There are no vendors" if @vendors.length ==0 %></p>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#repairs" data-toggle="tab">Vehicle Maintenance</a></li>
+      <li><a href="#auctions" data-toggle="tab">Auctions</a></li>
+      <li><a href="#finance" data-toggle="tab">Financial / Insurance</a></li>
+      <li><a href="#other" data-toggle="tab">Other</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="repairs">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact Name</th>
+              <th>Contact E-Mail</th>
+              <th>Contact Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @repair_vendors.each do |vendor| %>
+            <tr class="gradeU">
+              <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+              <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p><%= "There are no vehicle maintenance vendors saved" if @repair_vendors.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="auctions">
+        <br/>
+       <table class="table table-bordered datatable" id="table-1">
+         <thead>
+           <tr>
+             <th>Name</th>
+             <th>Address</th>
+             <th>Contact Name</th>
+             <th>Contact E-Mail</th>
+             <th>Contact Phone</th>
+           </tr>
+         </thead>
+         <tbody>
+           <% @auction_vendors.each do |vendor| %>
+           <tr class="gradeU">
+             <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+             <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+             <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+             <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+             <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+           </tr>
+           <% end %>
+         </tbody>
+       </table>
+
+        <p><%= "There are no auctions saved" if @auction_vendors.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="finance">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact Name</th>
+              <th>Contact E-Mail</th>
+              <th>Contact Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @financial_vendors.each do |vendor| %>
+            <tr class="gradeU">
+              <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+              <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p><%= "There are no financial (ie. banks) or insurance vendors saved" if @financial_vendors.length ==0 %></p>
+      </div>
+      <div class="tab-pane" id="other">
+        <br/>
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Contact Name</th>
+              <th>Contact E-Mail</th>
+              <th>Contact Phone</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @other_vendors.each do |vendor| %>
+            <tr class="gradeU">
+              <td><%= link_to vendor.name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.address, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_name, dealership_vendor_path(@dealership, vendor)  %></td>
+              <td><%= link_to vendor.contact_email, dealership_vendor_path(@dealership, vendor) %></td>
+              <td><%= link_to vendor.contact_phone, dealership_vendor_path(@dealership, vendor)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <p><%= "There are no other vendors saved" if @other_vendors.length ==0 %></p>
+      </div>
+  
+
+
+
+
 
 
 

@@ -6,16 +6,24 @@ class Employee < ActiveRecord::Base
   has_many :paychecks
   has_many :conversations
 
-  validates_presence_of :dealership_id, :name
+  validates_presence_of :dealership_id
 
   has_attached_file :image, styles: { medium: "320x240"}, default_url: "/profile.png"
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
 
-  has_attached_file :license_photo, styles: { medium: "320x240"}, default_url: "/profile.png"
+  has_attached_file :license_photo, styles: { medium: "320x240"}
   validates_attachment :license_photo, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
+
+  before_save :capitalize_names
 
   def self.search(search)
     find(:all, :conditions => ['lower(name) LIKE ? OR lower(address) LIKE ? OR lower(phone) LIKE ? OR lower(email) LIKE ? OR lower(ssn) LIKE ?', "%#{search.downcase}%", "%#{search.downcase}%", "%#{search.downcase}%", "%#{search.downcase}%", "%#{search.downcase}%"])
+  end
+
+  def capitalize_names
+    self.first = self.first.capitalize
+    self.last = self.last.capitalize
+    self.name = self.first + " " + self.last
   end
 
 

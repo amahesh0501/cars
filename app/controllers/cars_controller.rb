@@ -19,22 +19,31 @@ class CarsController < ApplicationController
   def show
     @dealership = Dealership.find(params[:dealership_id])
     @car = Car.find(params[:id])
+    @auction = Auction.find(@car.auction_id) if @car.auction_id
+    @floorer = Floorer.find(@car.floorer_id) if @car.floorer_id
     @repairs = Repair.where(car_id: @car.id)
     @car_repair_expenses = 0
     @repairs.each {|repair| @car_repair_expenses += repair.amount}
-    @car.smog_price ? @smog_price = @car.smog_price : @smog_price = 0
-    @total_price = @car.acquire_price + @car_repair_expenses + @smog_price if @car.acquire_price
+    @car.other_costs ? @other_costs = @car.other_costs : @other_costs = 0
+    @car.advertising_cost ? @advertising_cost = @car.advertising_cost : @advertising_cost = 0
+    @car.frontend_pac ? @frontend_pac = @car.frontend_pac : @frontend_pac = 0
+    @car.backend_pac ? @backend_pac = @car.backend_pac : @backend_pac = 0
+    @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @backend_pac if @car.acquire_price
     @purchase_price = 0
     @deal = Deal.find_by_car_id(@car.id)
     @purchase_price = @deal.amount if @deal
     @profit = @purchase_price - @total_price if @purchase_price && @total_price
     is_dealership_admin_view? ? @is_admin = true : @is_admin = false
+    @days_on_lot = (Date.today - @car.acquire_date).to_i if @car.status == "Frontline" || @car.status == "Needs Repairs"
   end
 
   def new
     @dealership = Dealership.find(params[:dealership_id])
     flash[:car] ? @car = Car.new(flash[:car]) : @car = Car.new
     @no_vin_lookup = true if flash[:errors]
+    @auctions = @dealership.auctions
+    @floorers = @dealership.floorers
+    @cards = @dealership.cards
   end
 
   def new_with_vin
@@ -52,6 +61,9 @@ class CarsController < ApplicationController
     @exterior_color = details[8]
     @engine = details[9]
     @wheel_base = details[10]
+    @auctions = @dealership.auctions
+    @floorers = @dealership.floorers
+    @cards = @dealership.cards
 
   end
 
@@ -66,6 +78,9 @@ class CarsController < ApplicationController
       purchase.amount = params[:car][:acquire_price]
       purchase.date = params[:car][:acquire_date]
       purchase.location = params[:car][:acquire_location]
+      purchase.payment_method = params[:car][:payment_method]
+      purchase.check_number = params[:car][:check_number]
+      purchase.card_id = params[:car][:card_id]
       purchase.car_id = @car.id
       purchase.dealership_id = dealership.id
       purchase.save
@@ -80,8 +95,10 @@ class CarsController < ApplicationController
   def edit
     @dealership = Dealership.find(params[:dealership_id])
     @car = Car.find(params[:id])
+    @auctions = @dealership.auctions
+    @floorers = @dealership.floorers
     @fields = flash[:car] if flash[:car]
-
+    @cards = @dealership.cards
   end
 
   def update
@@ -94,6 +111,9 @@ class CarsController < ApplicationController
       purchase.amount = params[:car][:acquire_price]
       purchase.date = params[:car][:acquire_date]
       purchase.location = params[:car][:acquire_location]
+      purchase.payment_method = params[:car][:payment_method]
+      purchase.check_number = params[:car][:check_number]
+      purchase.card_id = params[:car][:card_id]
       purchase.car_id = car.id
       purchase.dealership_id = dealership.id
       purchase.save

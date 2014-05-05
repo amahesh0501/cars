@@ -1,8 +1,10 @@
 class Paycheck < ActiveRecord::Base
-  attr_accessible :amount, :description, :date, :dealership_id, :employee_id, :name
+  attr_accessible :amount, :description, :date, :dealership_id, :employee_id, :name, :card_id, :payment_method, :check_number
 
   belongs_to :dealership
   belongs_to :employee
+  belongs_to :card
+
 
   validates_presence_of :dealership_id, :employee_id, :amount, :date
   validates_numericality_of :amount

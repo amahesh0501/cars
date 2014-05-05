@@ -1,0 +1,66 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= link_to "<i class='entypo-plus'></i> Add Card".html_safe, new_dealership_card_path(@dealership), class: "btn btn-success", role: "button" %>
+
+    <br/>
+
+        <% @cards.each do |card| %>
+
+    <div class="member-entry">
+
+      <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+        <img src="/card.png" class="img-rounded" />
+        <i class="entypo-forward"></i>
+      </a>
+    <div class="member-details">
+
+
+      <h4><%= link_to "#{card.name} (Ends in #{card.number})", dealership_card_path(@dealership, card) %></h4>
+
+      <div class="row info-list">
+
+        <div class="col-sm-4">
+        </div>
+
+        <div class="col-sm-4">
+
+        </div>
+
+        <div class="col-sm-4">
+
+        </div>
+
+        <div class="clear"></div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+    <% end %>
+<% if @cards.length ==0 %>
+<br/><br/>
+<p>There are no cards </p>
+<% end %>
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+

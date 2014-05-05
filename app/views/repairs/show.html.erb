@@ -27,6 +27,13 @@
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>Name: <%= @repair.name.length > 0 ? "#{@repair.name}" : "Not Entered" %></p>
             <p><i class="entypo-forward"></i>Vehice: <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></p>
+            <% if @repair.payment_method == "Credit Card" && @repair.card_id %>
+              <% card = Card.find(@repair.card_id) %>
+              <p><i class="entypo-forward"></i>Credit Card: <%= link_to "#{card.name} (##{card.number})", dealership_card_path(@dealership, card)  %></p>
+            <% elsif @repair.payment_method == "Check" && @repair.check_number %>
+              <p><i class="entypo-forward"></i>Check Number: <%= @repair.check_number.length > 0 ? @repair.check_number : "Not entered"  %></p>
+            <% end %>
+
 
           </div>
           <div class="col-md-4">
@@ -40,6 +47,7 @@
 
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>Date: <%= @repair.date  ? "#{@repair.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+            <p><i class="entypo-forward"></i>Payment Method: <%= @repair.payment_method.length > 0  ? @repair.payment_method : "Not Entered" %></p>
           </div>
 
 

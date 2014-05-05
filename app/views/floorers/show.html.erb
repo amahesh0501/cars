@@ -1,0 +1,175 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <div class="profile-env">
+
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @floorer.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @floorer.name %></strong>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @vehicles.count %></h3>
+                <span><a href="#">Number of Vehciles</a></span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/floorers/<%=@floorer.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Flooring Company
+            </a>
+
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+
+
+
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Flooring Company Details</a></li>
+              <li><a href="#transactions" data-toggle="tab">Vehciles</a></li>
+
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Name: <%= @floorer.contact_name.length > 0 ? "#{@floorer.contact_name}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @floorer.address.length > 5  ? "#{@floorer.address}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact E-Mail: <%= @floorer.email.length > 0 ? "#{@floorer.email}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Phone: <%= @floorer.phone.length > 0  ? "#{@floorer.phone}" : "Not Entered" %></p>
+
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Description</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <%= @floorer.description ? @floorer.description : "No description has been entered" %>
+                </div>
+              </div>
+            </div>
+        </div>
+        <% if @is_admin == true %>
+        <%= link_to "<i class='entypo-cross'></i> Delete Flooring Company".html_safe, dealership_floorer_path(@dealership, @floorer), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+        <% end %>
+
+      </div>
+        <div class="tab-pane" id="transactions">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add New Vehicle".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %>
+              <br/><br/>
+
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>VIN</th>
+                    <% if @is_admin == true %><th>Acquire Price</th><% end %>
+                    <th>Days on Lot</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @vehicles.each do |car| %>
+                  <% days = (Date.today.to_date - car.acquire_date.to_date).to_i %>
+                  <tr class="gradeU">
+                    <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car)  %></td>
+                    <td><%= link_to car.vin, dealership_car_path(@dealership, car)  %></td>
+                    <% if @is_admin == true %><td><%= link_to "$#{number_with_precision(car.acquire_price, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)  %></td><% end %>
+                    <td><%= link_to days, dealership_car_path(@dealership, car)  %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= "There are no vehicles" if @vehicles.length ==0 %>
+
+
+
+            </div>
+          </section>
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
+
+

@@ -2,6 +2,9 @@ class CreateCars < ActiveRecord::Migration
   def change
     create_table :cars do |t|
       t.belongs_to :dealership
+      t.belongs_to :auction
+      t.belongs_to :floorer
+      t.belongs_to :card
 
       t.string :status
 
@@ -11,6 +14,7 @@ class CreateCars < ActiveRecord::Migration
       t.string :vin
       t.string :trim
       t.integer :year
+      t.string :stock_number
       t.string :make_model_year
       t.string :miles
       t.string :transmission
@@ -28,6 +32,9 @@ class CreateCars < ActiveRecord::Migration
       t.date :acquire_date
       t.float :acquire_price
       t.string :acquire_location
+      t.string :payment_method
+      t.string :check_number
+      t.string :invoice_number
       t.boolean :smog_status, default: false
       t.date :smog_date
       t.string :smogged_by
@@ -39,6 +46,10 @@ class CreateCars < ActiveRecord::Migration
       #more_information
       t.float :wholesale_price
       t.float :retail_price
+      t.float :advertising_cost
+      t.float :other_costs
+      t.float :backend_pac
+      t.float :frontend_pac
 
       t.attachment :image
 

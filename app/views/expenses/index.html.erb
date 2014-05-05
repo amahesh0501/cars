@@ -112,6 +112,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#revenue" data-toggle="tab">Revenues</a></li>
               <li><a href="#expense" data-toggle="tab">Expenses</a></li>
+              <li><a href="#source" data-toggle="tab">Payment Sources</a></li>
               <% if @is_admin == true %><li><a href="#overview" data-toggle="tab">Overview</a></li><% end %>
             </ul>
 
@@ -202,19 +203,19 @@
               <% if @is_admin == true %>
               <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Expense".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% end %>
-               <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
-               <% if @is_admin == true %>
-               <%= link_to "<i class='entypo-plus'></i> Add Paycheck Expense".html_safe, new_dealership_paycheck_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
-               <% end %>
-               <%= link_to "<i class='entypo-plus'></i> Add Misc Expense".html_safe, new_dealership_expense_path(@dealership), class: "btn btn-success", role: "button" %>
+              <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+              <% if @is_admin == true %>
+              <%= link_to "<i class='entypo-plus'></i> Add Paycheck Expense".html_safe, new_dealership_paycheck_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+              <% end %>
+              <%= link_to "<i class='entypo-plus'></i> Add Misc Expense".html_safe, new_dealership_expense_path(@dealership), class: "btn btn-success", role: "button" %>
               <br/>
 
               <ul class="nav nav-tabs">
                 <% if @is_admin == true %><li class="active"><a href="#purchase" data-toggle="tab">Vehicle Purchases</a></li><% end %>
                 <% if @is_admin != true %>
-                  <li class="active"><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <li class="active"><a href="#repair" data-toggle="tab">Repairs</a></li>
                 <% else %>
-                  <li><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <li><a href="#repair" data-toggle="tab">Repairs</a></li>
                 <% end %>
                 <% if @is_admin == true %><li><a href="#paycheck" data-toggle="tab">Employee Paychecks</a></li><% end %>
                 <li><a href="#misc-exp" data-toggle="tab">Misc Expenses</a></li>
@@ -245,239 +246,487 @@
                       </tbody>
                     </table>
                     <p><%= "There are no vehicle purchases in this date range" if @purchases.length ==0 %><p>
-                  </div>
-                  <% end %>
-                  <% if @is_admin != true %>
+                    </div>
+                    <% end %>
+                    <% if @is_admin != true %>
                     <div class="tab-pane active" id="repair">
-                  <% else %>
-                    <div class="tab-pane" id="repair">
-                  <% end %>
-                    <table class="table table-bordered datatable" id="table-1">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Vehicle</th>
-                          <th>Amount</th>
-                          <th>Date</th>
-                          <th>Manage</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% @repairs.each do |repair| %>
-                        <tr class="gradeU">
-                          <% car = Car.find(repair.car_id) %>
-                          <td><%= link_to repair.name, dealership_repair_path(@dealership, repair) %></td>
-                          <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car) %></td>
-                          <td><%= "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" %></td>
-                          <td><%= repair.date.strftime("%m/%d/%Y")  %></td>
-                          <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
-                        </tr>
+                      <% else %>
+                      <div class="tab-pane" id="repair">
                         <% end %>
-                      </tbody>
-                    </table>
-                    <p><%= "There are no repair expenses in this date range" if @repairs.length ==0 %></p>
-                  </div>
-                  <% if @is_admin == true %>
-                  <div class="tab-pane" id="paycheck">
-                    <table class="table table-bordered datatable" id="table-1">
-                     <thead>
-                       <tr>
-                         <th>Employee</th>
-                         <th>Amount</th>
-                         <th>Date</th>
-                         <th>Manage</th>
-                       </tr>
-                     </thead>
-                     <tbody>
-                       <% @paychecks.each do |paycheck| %>
-                       <% employee = Employee.find(paycheck.employee_id) %>
-                       <tr class="gradeU">
-                         <td><%= link_to "#{paycheck.name}", dealership_paycheck_path(@dealership, paycheck)  %></td>
-                         <td><%= "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}" %></td>
-                         <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
-                         <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)  %> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure?"  %></td>
+                        <table class="table table-bordered datatable" id="table-1">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Vehicle</th>
+                              <th>Amount</th>
+                              <th>Date</th>
+                              <th>Manage</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% @repairs.each do |repair| %>
+                            <tr class="gradeU">
+                              <% car = Car.find(repair.car_id) %>
+                              <td><%= link_to repair.name, dealership_repair_path(@dealership, repair) %></td>
+                              <td><%= link_to car.make_model_year, dealership_car_path(@dealership, car) %></td>
+                              <td><%= "$#{number_with_precision(repair.amount, :delimiter => ',', precision: 2)}" %></td>
+                              <td><%= repair.date.strftime("%m/%d/%Y")  %></td>
+                              <td><%= link_to "Edit", edit_dealership_repair_path(@dealership, repair)  %> | <%= link_to "Delete", dealership_repair_path(@dealership, repair), method: "delete", confirm: "Are you sure?"  %></td>
+                            </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+                        <p><%= "There are no repair expenses in this date range" if @repairs.length ==0 %></p>
+                      </div>
+                      <% if @is_admin == true %>
+                      <div class="tab-pane" id="paycheck">
+                        <table class="table table-bordered datatable" id="table-1">
+                         <thead>
+                           <tr>
+                             <th>Employee</th>
+                             <th>Amount</th>
+                             <th>Date</th>
+                             <th>Manage</th>
+                           </tr>
+                         </thead>
+                         <tbody>
+                           <% @paychecks.each do |paycheck| %>
+                           <% employee = Employee.find(paycheck.employee_id) %>
+                           <tr class="gradeU">
+                             <td><%= link_to "#{paycheck.name}", dealership_paycheck_path(@dealership, paycheck)  %></td>
+                             <td><%= "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}" %></td>
+                             <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
+                             <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck)  %> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure?"  %></td>
 
-                       </tr>
-                       <% end %>
-                     </tbody>
-                   </table>
-                   <p><%= "There are no payroll expenses in this date range" if @paychecks.length ==0 %></p>
-                 </div>
-                 <% end %>
-                 <div class="tab-pane" id="misc-exp">
-                   <table class="table table-bordered datatable" id="table-1">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Manage</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <% @expenses.each do |expense| %>
-                      <tr class="gradeU">
-                        <td><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></td>
-                        <td><%= "$#{number_with_precision(expense.amount, :delimiter => ',', precision: 2)}" %></td>
-                        <td><%= expense.date.strftime("%m/%d/%Y")  %></td>
-                        <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, expense)  %> | <%= link_to "Delete", dealership_expense_path(@dealership, expense), method: "delete", confirm: "Are you sure?"  %></td>
-                      </tr>
-                      <% end %>
-                    </tbody>
-                  </table>
-                  <p><%= "There are no misc expenses in this date range" if @expenses.length ==0 %></p>
+                           </tr>
+                           <% end %>
+                         </tbody>
+                       </table>
+                       <p><%= "There are no payroll expenses in this date range" if @paychecks.length ==0 %></p>
+                     </div>
+                     <% end %>
+                     <div class="tab-pane" id="misc-exp">
+                       <table class="table table-bordered datatable" id="table-1">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Manage</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @expenses.each do |expense| %>
+                          <tr class="gradeU">
+                            <td><%= link_to expense.name, dealership_expense_path(@dealership, expense) %></td>
+                            <td><%= "$#{number_with_precision(expense.amount, :delimiter => ',', precision: 2)}" %></td>
+                            <td><%= expense.date.strftime("%m/%d/%Y")  %></td>
+                            <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, expense)  %> | <%= link_to "Delete", dealership_expense_path(@dealership, expense), method: "delete", confirm: "Are you sure?"  %></td>
+                          </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                      <p><%= "There are no misc expenses in this date range" if @expenses.length ==0 %></p>
+                    </div>
+                  </div>
                 </div>
+              </section>
+            </div>
+            <% if @is_admin == true %>
+            <div class="tab-pane" id="source">
+              <section class="profile-feed">
+                <div class="profile-stories">
+
+                  <br/>
+                  <%= link_to "<i class='entypo-credit-card'></i> Manage Credit Cards".html_safe, dealership_cards_path(@dealership), class: "btn btn-success", role: "button" %>
+                  <br/><br/>
+
+                  <div class="alert alert-default">
+                    <div class="row">
+
+                      <div class="col-md-3">
+                        <div class="profile-stat">
+                          <h4><%= "$#{number_with_precision(@cash_total, :delimiter => ',', precision: 2)}" %></h4>
+                          <span><a href="#">Cash</a></span>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="profile-stat">
+                          <h4><%= "$#{number_with_precision(@check_total, :delimiter => ',', precision: 2)}" %></h4>
+                          <span><a href="#">Check</a></span>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="profile-stat">
+                          <h4><%= "$#{number_with_precision(@other_total, :delimiter => ',', precision: 2)}" %></h4>
+                          <span><a href="#">Other</a></span>
+                        </div>
+                      </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                      <% @cards.each do |card| %>
+                        <% this_card_total = 0 %>
+                        <% card_transactions = @transactions.select { |transaction| transaction.card_id == card.id } %>
+                        <% card_transactions.each {|transaction| this_card_total += transaction.amount if transaction.amount} %>
+                        <div class="col-md-3">
+                          <div class="profile-stat">
+                            <h4><%= "$#{number_with_precision(this_card_total, :delimiter => ',', precision: 2)}" %></h4>
+                            <span><a href="#"><%= "Card (##{card.number})" %></a></span>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+
+
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                     <li class="active"><a href="#home" data-toggle="tab">Cash</a></li>
+                     <li><a href="#profile" data-toggle="tab">Check</a></li>
+                     <% @cards.each do |card| %>
+                     <li><a href="#card-<%= card.number %>" data-toggle="tab"><%= "Card(##{card.number})" %></a></li>
+                     <% end %>
+                     <li><a href="#messages" data-toggle="tab">Other</a></li>
+                   </ul>
+
+                   <!-- Tab panes -->
+                   <div class="tab-content">
+                     <div class="tab-pane active" id="home">
+                      <table class="table table-bordered datatable" id="table-1">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @cash_transactions.each do |transaction| %>
+                          <% if transaction.class.table_name == "repairs" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_repair_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_repair_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "expenses" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_expense_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_expense_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "paychecks" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_paycheck_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_paycheck_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "purchases" %>
+                          <% car = Car.find(transaction.car_id) %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_car_path(@dealership, car)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_car_path(@dealership, car)  %></td>
+                          </tr>
+                          <% end %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                      <p><%= "There are no cash transactions in this date range" if @cash_transactions.length ==0 %></p>
+                    </div>
+                    <div class="tab-pane" id="profile">
+                      <table class="table table-bordered datatable" id="table-1">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @check_transactions.each do |transaction| %>
+                          <% if transaction.class.table_name == "repairs" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_repair_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_repair_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "expenses" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_expense_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_expense_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "paychecks" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_paycheck_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_paycheck_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "purchases" %>
+                          <% car = Car.find(transaction.car_id) %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_car_path(@dealership, car)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_car_path(@dealership, car)  %></td>
+                          </tr>
+                          <% end %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                      <p><%= "There are no transactions paid by check in this date range" if @check_transactions.length ==0 %></p>
+
+                    </div>
+                    <% @cards.each do |card| %>
+                    <div class="tab-pane" id="card-<%= card.number %>">
+                      <% card_transactions = @transactions.select { |transaction| transaction.card_id == card.id } %>
+                      <table class="table table-bordered datatable" id="table-1">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% card_transactions.each do |transaction| %>
+                          <% if transaction.class.table_name == "repairs" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_repair_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_repair_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "expenses" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_expense_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_expense_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "paychecks" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_paycheck_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_paycheck_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "purchases" %>
+                          <% car = Car.find(transaction.car_id) %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_car_path(@dealership, car)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_car_path(@dealership, car)  %></td>
+                          </tr>
+                          <% end %>
+                          <% end %>
+                        </tbody>
+                      </table>
+
+                      <p><%= "There are no transactions for this card" if card_transactions.length ==0 %></p>
+
+
+                    </div>
+                    <% end %>
+
+
+
+
+
+
+
+
+
+                    <div class="tab-pane" id="messages">
+                      <table class="table table-bordered datatable" id="table-1">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @other_transactions.each do |transaction| %>
+                          <% if transaction.class.table_name == "repairs" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_repair_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_repair_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "expenses" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_expense_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_expense_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "paychecks" %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_paycheck_path(@dealership, transaction)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, transaction) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_paycheck_path(@dealership, transaction)  %></td>
+                          </tr>
+                          <% elsif transaction.class.table_name == "purchases" %>
+                          <% car = Car.find(transaction.car_id) %>
+                          <tr class="gradeU">
+                            <td><%= link_to transaction.name, dealership_car_path(@dealership, car)  %></td>
+                            <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car) %></td>
+                            <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_car_path(@dealership, car)  %></td>
+                          </tr>
+                          <% end %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                      <p><%= "There are no transactions paid by other methods in this date range" if @other_transactions.length ==0 %></p>
+
+                    </div>
+                  </div>
+                </section>
               </div>
-            </div>
-          </section>
-        </div>
-        <% if @is_admin == true %>
-        <div class="tab-pane" id="overview">
-          <section class="profile-feed">
-            <div class="profile-stories">
-              <div class="invoice">
+              <div class="tab-pane" id="overview">
+                <section class="profile-feed">
+                  <div class="profile-stories">
+                    <div class="invoice">
 
 
-                <div class="margin"></div>
+                      <div class="margin"></div>
 
-                <div class="row">
+                      <div class="row">
 
-                    <div class="col-sm-3 invoice-left">
+                        <div class="col-sm-3 invoice-left">
 
+
+
+                        </div>
+
+                        <div class="col-sm-3 invoice-left">
+
+
+                        </div>
+
+                        <div class="col-md-6 invoice-right">
+
+                          <% if params[:start_date]  %>
+                          <h5><%= "Date Range: #{params[:start_date]} to #{params[:end_date]}" %></h5>
+                          <br/>
+                          <% end %>
+
+                        </div>
+
+                      </div>
+
+
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th width="30%">Revenues</th>
+                            <th width="50%"></th>
+                            <th class="text-right">Total</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td>Vehicle Sales</td>
+                            <td></td>
+                            <td class="text-right"><%= "$#{number_with_precision(@deal_total, :delimiter => ',', precision: 2)}" %></td>
+                          </tr>
+
+                          <tr>
+                            <td>Misc Revenue</td>
+                            <td></td>
+                            <td class="text-right"><%= "$#{number_with_precision(@misc_revenue_total, :delimiter => ',', precision: 2)}" %></td>
+                          </tr>
+
+                          <tr>
+                            <td><b>Total</b></td>
+                            <td></td>
+                            <td class="text-right"><b><%= "$#{number_with_precision(@revenue_total, :delimiter => ',', precision: 2)}" %></b></td>
+                          </tr>
+
+
+
+
+                        </tbody>
+                      </table>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th width="30%">Expenses</th>
+                            <th width="50%"></th>
+                            <th class="text-right">Total</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td>Vehicle Purchases</td>
+                            <td></td>
+                            <td class="text-right"><%= "$#{number_with_precision(@purchase_total, :delimiter => ',', precision: 2)}" %></td>
+                          </tr>
+
+                          <tr>
+                            <td>Repair Expenses</td>
+                            <td></td>
+                            <td class="text-right"><%= "$#{number_with_precision(@repair_total, :delimiter => ',', precision: 2)}" %></td>
+                          </tr>
+
+                          <tr>
+                            <td>Payroll Expenses</td>
+                            <td></td>
+                            <td class="text-right"><%= "$#{number_with_precision(@paycheck_total, :delimiter => ',', precision: 2)}" %></td>
+                          </tr>
+
+                          <tr>
+                            <td>Misc Expenses</td>
+                            <td></td>
+                            <td class="text-right"><%= "$#{number_with_precision(@misc_expense_total, :delimiter => ',', precision: 2)}" %></td>
+                          </tr>
+
+                          <tr>
+                            <td><b>Total</b></td>
+                            <td></td>
+                            <td class="text-right"><b><%= "$#{number_with_precision(@expense_total, :delimiter => ',', precision: 2)}" %></b></td>
+                          </tr>
+
+
+
+
+                        </tbody>
+                      </table>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th width="30%">Net Profit</th>
+                            <th width="50%"></th>
+                            <th class="text-right">Total</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          <tr>
+                            <td>Net Profit</td>
+                            <td></td>
+                            <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></b></td>
+                          </tr>
+                        </tbody>
+                      </table>
 
 
                     </div>
 
-                    <div class="col-sm-3 invoice-left">
-
-
-                    </div>
-
-                    <div class="col-md-6 invoice-right">
-
-                      <% if params[:start_date]  %>
-                      <h5><%= "Date Range: #{params[:start_date]} to #{params[:end_date]}" %></h5>
-                      <br/>
-                      <% end %>
-
-                    </div>
-
-                  </div>
-
-
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="30%">Revenues</th>
-                      <th width="50%"></th>
-                      <th class="text-right">Total</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>Vehicle Sales</td>
-                      <td></td>
-                      <td class="text-right"><%= "$#{number_with_precision(@deal_total, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td>Misc Revenue</td>
-                      <td></td>
-                      <td class="text-right"><%= "$#{number_with_precision(@misc_revenue_total, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td><b>Total</b></td>
-                      <td></td>
-                      <td class="text-right"><b><%= "$#{number_with_precision(@revenue_total, :delimiter => ',', precision: 2)}" %></b></td>
-                    </tr>
-
-
-
-
-                  </tbody>
-                </table>
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="30%">Expenses</th>
-                      <th width="50%"></th>
-                      <th class="text-right">Total</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>Vehicle Purchases</td>
-                      <td></td>
-                      <td class="text-right"><%= "$#{number_with_precision(@purchase_total, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td>Repair Expenses</td>
-                      <td></td>
-                      <td class="text-right"><%= "$#{number_with_precision(@repair_total, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td>Payroll Expenses</td>
-                      <td></td>
-                      <td class="text-right"><%= "$#{number_with_precision(@paycheck_total, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td>Misc Expenses</td>
-                      <td></td>
-                      <td class="text-right"><%= "$#{number_with_precision(@misc_expense_total, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td><b>Total</b></td>
-                      <td></td>
-                      <td class="text-right"><b><%= "$#{number_with_precision(@expense_total, :delimiter => ',', precision: 2)}" %></b></td>
-                    </tr>
-
-
-
-
-                  </tbody>
-                </table>
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="30%">Net Profit</th>
-                      <th width="50%"></th>
-                      <th class="text-right">Total</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td>Net Profit</td>
-                      <td></td>
-                      <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></b></td>
-                    </tr>
-                  </tbody>
-                </table>
-
+                  </div><!-- Footer -->
 
                 </div>
-
-              </div><!-- Footer -->
-
+              </section>
             </div>
-          </section>
-        </div>
-        <% end %>
+            <% end %>
 
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
 
 

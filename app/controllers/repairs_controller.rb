@@ -17,7 +17,8 @@ class RepairsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     flash[:repair] ? @repair = Repair.new(flash[:repair]) : @repair = Repair.new
     @cars = @dealership.cars
-    @vendors = @dealership.vendors
+    @vendors = @dealership.vendors.where(category: "Vehicle Maintenance")
+    @cards = @dealership.cards
   end
 
   def create
@@ -41,6 +42,7 @@ class RepairsController < ApplicationController
     @cars = @dealership.cars
     @vendors = @dealership.vendors
     @fields = flash[:repair] if flash[:repair]
+    @cards = @dealership.cards
   end
 
   def update

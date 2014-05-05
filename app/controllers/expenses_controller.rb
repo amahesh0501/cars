@@ -4,16 +4,17 @@ class ExpensesController < ApplicationController
 
   def index
     is_dealership_admin_view? ? @is_admin = true : @is_admin = false
+    @dealership = Dealership.find(params[:dealership_id])
 
      if params[:start_date]
-       @expenses = Expense.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
-       @repairs = Repair.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
-       @paychecks = Paycheck.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
-       @purchases = Purchase.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
+       @expenses = Expense.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}", :dealership_id => params[:dealership_id]}, :order => "date DESC" )
+       @repairs = Repair.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}", :dealership_id => params[:dealership_id]}, :order => "date DESC" )
+       @paychecks = Paycheck.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}", :dealership_id => params[:dealership_id]}, :order => "date DESC" )
+       @purchases = Purchase.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}", :dealership_id => params[:dealership_id]}, :order => "date DESC" )
        @deals = Deal.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
-       @revenues = Revenue.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}"}, :order => "date DESC" )
+       @revenues = Revenue.find(:all, :conditions => { :date => "#{params[:start_date]}".."#{params[:end_date]}", :dealership_id => params[:dealership_id]}, :order => "date DESC" )
 
-       @misc_expense_total = 0
+      @misc_expense_total = 0
       @expenses.each {|expense| @misc_expense_total += expense.amount }
       @repair_total = 0
       @repairs.each {|repair| @repair_total += repair.amount }
@@ -27,6 +28,7 @@ class ExpensesController < ApplicationController
       @revenues.each {|revenue| @misc_revenue_total += revenue.amount }
 
        @transactions = @expenses + @repairs + @paychecks + @purchases
+
        @gains = @deals + @revenues
 
        @expense_total = 0
@@ -36,6 +38,25 @@ class ExpensesController < ApplicationController
        @gains.each {|gain| @revenue_total += gain.amount if gain.amount}
 
        @profit = @revenue_total - @expense_total
+
+       @cash_total = 0
+       @cash_transactions = @transactions.select { |transaction| transaction.payment_method == 'Cash' }
+       @cash_transactions.each {|transaction| @cash_total += transaction.amount if transaction.amount}
+
+       @check_total = 0
+       @check_transactions = @transactions.select { |transaction| transaction.payment_method == 'Check' }
+       @check_transactions.each {|transaction| @check_total += transaction.amount if transaction.amount}
+
+       @card_total = 0
+       @card_transactions = @transactions.select { |transaction| transaction.payment_method == 'Credit Card' }
+       @card_transactions.each {|transaction| @card_total += transaction.amount if transaction.amount}
+
+       @other_total = 0
+       @other_transactions = @transactions.select { |transaction| transaction.payment_method == 'Other' }
+       @other_transactions.each {|transaction| @other_total += transaction.amount if transaction.amount}
+
+       @cards = @dealership.cards
+
 
 
      else
@@ -70,6 +91,25 @@ class ExpensesController < ApplicationController
 
       @profit = @revenue_total - @expense_total
 
+
+      @cash_total = 0
+      @cash_transactions = @transactions.select { |transaction| transaction.payment_method == 'Cash' }
+      @cash_transactions.each {|transaction| @cash_total += transaction.amount if transaction.amount}
+
+      @check_total = 0
+      @check_transactions = @transactions.select { |transaction| transaction.payment_method == 'Check' }
+      @check_transactions.each {|transaction| @check_total += transaction.amount if transaction.amount}
+
+      @card_total = 0
+      @card_transactions = @transactions.select { |transaction| transaction.payment_method == 'Credit Card' }
+      @card_transactions.each {|transaction| @card_total += transaction.amount if transaction.amount}
+
+      @other_total = 0
+      @other_transactions = @transactions.select { |transaction| transaction.payment_method == 'Other' }
+      @other_transactions.each {|transaction| @other_total += transaction.amount if transaction.amount}
+
+      @cards = @dealership.cards
+
      end
 
 
@@ -87,6 +127,7 @@ class ExpensesController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     flash[:expense] ? @expense = Expense.new(flash[:expense]) : @expense = Expense.new
     @vendors = @dealership.vendors
+    @cards = @dealership.cards
   end
 
   def create
@@ -113,6 +154,7 @@ class ExpensesController < ApplicationController
     @expense = Expense.find(params[:id])
     @vendors = @dealership.vendors
     @fields = flash[:expense] if flash[:expense]
+    @cards = @dealership.cards
   end
 
   def update

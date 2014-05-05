@@ -9,6 +9,14 @@ class CreateVendors < ActiveRecord::Migration
       t.string :contact_email
       t.attachment :image
       t.text :description
+      t.string :category, default: "Vehicle Maintenance"
+
+      #components
+      t.string :address_line_1
+      t.string :address_line_2
+      t.string :address_city
+      t.string :address_state
+      t.string :address_zip
 
       t.timestamps
     end

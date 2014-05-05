@@ -20,13 +20,13 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Customer</label>
       <div class="col-sm-5">
-        <%= f.collection_select :customer_id, @customers.all, :id, :name, prompt: true, class: "form-control" %>
+        <%= f.collection_select :customer_id, @customers, :id, :name, prompt: true, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Employee</label>
       <div class="col-sm-5">
-        <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, class: "form-control" %>
+        <%= f.collection_select :employee_id, @employees, :id, :name, prompt: true, class: "form-control" %>
       </div>
     </div>
     <div class="form-group">
