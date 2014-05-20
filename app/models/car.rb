@@ -1,16 +1,19 @@
 class Car < ActiveRecord::Base
-  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim, :wholesale_price, :retail_price, :smog_price, :auction_id, :floorer_id, :card_id, :stock_number, :frontend_pac, :backend_pac, :invoice_number, :advertising_cost, :payment_method, :check_number, :other_costs
+  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim, :wholesale_price, :retail_price, :smog_price, :auction_id, :floorer_id, :card_id, :stock_number, :frontend_pac, :backend_pac, :invoice_number, :advertising_cost, :payment_method, :check_number, :other_costs, :customer_price
 
   belongs_to :dealership
   belongs_to :floorer
   belongs_to :auction
   belongs_to :card
   has_one :deal
+  has_many :temps
   has_many :repairs, dependent: :destroy
   has_one :purchase, dependent: :destroy
 
   validates_presence_of :make, :model, :year, :acquire_price, :acquire_date, :dealership_id, :status
   validates_numericality_of :acquire_price, :smog_price, :retail_price, :wholesale_price
+
+  validates_uniqueness_of :stock_number
 
 
   has_attached_file :image, styles: { small: "115x115", medium: "320x240"}, default_url: "/car.png"
@@ -46,6 +49,10 @@ class Car < ActiveRecord::Base
 
   def smog_price=(num)
     self[:smog_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
+
+  def customer_price=(num)
+    self[:customer_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
 
   def vin_lookup(vin)

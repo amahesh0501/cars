@@ -25,7 +25,7 @@
             <li>
               <div class="profile-name">
                 <strong><%= @employee.name %></strong>
-                <span><%= @employee.email.length > 0 ? @employee.email : "Name" %></span>
+                <span><%= @employee.title.length > 0 ? @employee.title : "Title not entered" %></span>
               </div>
             </li>
 
@@ -93,34 +93,27 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Employee Number: <%= @employee.number ? "#{@employee.number}" : "Not Entered" %></p>
                   <p><i class="entypo-forward"></i>Email: <%= @employee.email.length > 0 ? "#{@employee.email}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>SSN: <%= @employee.ssn.length > 0  ? "#{@employee.ssn}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>SSN (Last 4): <%= @employee.ssn.length > 0  ? "#{@employee.ssn}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Termination Date: <%= @employee.terminate_date ? "#{@employee.terminate_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Sales License Number: <%= @employee.sales_license.length > 0 ? "#{@employee.sales_license}" : "Not Entered" %></p>
                   <p><i class="entypo-forward"></i>Phone: <%= @employee.phone.length > 0 ? "#{@employee.phone}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Birthday: <%= @employee.birthday ? "#{@employee.birthday.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Drivers License Number: <%= @employee.driver_license_number.length > 0 ? "#{@employee.driver_license_number}" : "Not Entered" %></p>
                   <p><i class="entypo-forward"></i>Address: <%= @employee.address.length > 5 ? "#{@employee.address}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Hire Date: <%= @employee.hire_date ? "#{@employee.hire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
 
                 </div>
             </div>
           </div>
           </div>
 
-          <% if @employee.license_photo %>
-          <div class="panel panel-dark" data-collapsed="0">
-            <div class="panel-heading">
-              <div class="panel-title">Driver License Photo</div>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-8">
-                  <img src="<%= @employee.license_photo %>" height="200" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <% end %>
+
 
 
           <div class="panel panel-dark" data-collapsed="0">
@@ -140,77 +133,154 @@
 
       </div>
         <div class="tab-pane" id="deal">
-          <section class="profile-feed">
-            <div class="profile-stories">
-              <%= link_to "<i class='entypo-plus'></i> Add Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %><br/><br/>
-              <% @deals.each do |deal| %>
-              <div class="member-entry">
+          <%= link_to "<i class='entypo-plus'></i> Add Finalized Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %>
+          <%= link_to "<i class='entypo-plus'></i> Add Pending Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
 
-                <span class="member-img">
-                  <img src="/deal.png" class="img-rounded" />
-                </span>
+           <ul class="nav nav-tabs">
+            <li class="active"><a href="#final" data-toggle="tab">Finalized Deals</a></li>
+            <li><a href="#pending" data-toggle="tab">Pending Deals</a></li>
 
-                <div class="member-details">
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="final">
+              <section class="profile-feed">
+                <div class="profile-stories">
+
+                  <% @deals.each do |deal| %>
+                  <div class="member-entry">
+
+                    <span class="member-img">
+                      <img src="/deal.png" class="img-rounded" />
+                    </span>
+
+                    <div class="member-details">
 
 
-                  <h4>
-                    <% customer = Customer.find(deal.customer_id) %>
-                    <% employee = Employee.find(deal.employee_id) %>
-                    <% car = Car.find(deal.car_id) %>
-                    <%= link_to "Sold #{car.make_model_year} to #{customer.name} for  $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, deal) %>
-                  </h4>
+                      <h4>
+                        <% customer = Customer.find(deal.customer_id) %>
+                        <% employee = Employee.find(deal.employee_id) %>
+                        <% car = Car.find(deal.car_id) %>
+                        <%= link_to "Sold #{car.make_model_year} to #{customer.name} for  $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, deal) %>
+                      </h4>
 
-                  <div class="row info-list">
+                      <div class="row info-list">
 
-                    <div class="col-sm-4">
-                      <i class="entypo-forward"></i>
-                      Date: <%= deal.date.strftime("%m/%d/%Y") %>
-                    </div>
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Date: <%= deal.date.strftime("%m/%d/%Y") %>
+                        </div>
 
-                    <div class="col-sm-4">
-                      <i class="entypo-forward"></i>
-                      Final Sales Price: <%= deal.amount ? "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
-                    </div>
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Final Sales Price: <%= deal.amount ? "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        </div>
 
-                    <div class="col-sm-4">
-                      <i class="entypo-forward"></i>
-                      Down Payment: <%= deal.down_payment ? "$#{number_with_precision(deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
-                    </div>
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Down Payment: <%= deal.down_payment ? "$#{number_with_precision(deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        </div>
 
-                    <div class="clear"></div>
+                        <div class="clear"></div>
 
-                    <div class="col-sm-4">
-                      <i class="entypo-forward"></i>
-                      Term: <%= deal.term ? deal.term : "Not Entered" %>
-                    </div>
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Term: <%= deal.term ? deal.term : "Not Entered" %>
+                        </div>
 
-                    <div class="col-sm-4">
-                      <i class="entypo-forward"></i>
-                      APR: <%= deal.apr ? deal.apr : "Not Entered" %>
-                    </div>
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          APR: <%= deal.apr ? deal.apr : "Not Entered" %>
+                        </div>
 
-                    <div class="col-sm-4">
-                      <i class="entypo-forward"></i>
-                      Trade In Value: <%= deal.trade_in_value ? "$#{number_with_precision(deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Trade In Value: <%= deal.trade_in_value ? "$#{number_with_precision(deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        </div>
+
+                      </div>
                     </div>
 
                   </div>
+                  <% end %>
                 </div>
 
-              </div>
-              <% end %>
-            </div>
+                <% if @deals.length ==0 %>
+                <br/><p><%= @employee.name %> does not have any finalized deals yet %></p>
+                <%end%>
 
-            <% if @deals.length ==0 %>
-            <div class="member-entry">
-              <span class="member-img"><img src="/deal.png" class="img-rounded" /></span>
-              <div class="member-details">
-                <h4><%= "#{@employee.name} does not have any deals yet" %></h4>
-              </div>
+              </section>
             </div>
-            <%end%>
+            <div class="tab-pane" id="pending">
+              <section class="profile-feed">
+                <div class="profile-stories">
+                  <% @temps.each do |deal| %>
+                  <% customer = Customer.find(deal.customer_id) if deal.customer_id %>
+                  <div class="member-entry">
 
-          </section>
+                    <span class="member-img">
+                      <img src="/deal.png" class="img-rounded" />
+                    </span>
+
+                    <div class="member-details">
+                      <h4>
+                        <% if customer %>
+                        <%= link_to "Pending deal to #{customer.name} for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
+                        <% else %>
+                          <%= link_to "Pending deal for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
+                        <% end %>
+                      </h4>
+                          <div class="row info-list">
+
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Date: <%= deal.date ? deal.date.strftime("%m/%d/%Y") : "N/A" %>
+                        </div>
+
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Sales Price: <%= deal.amount ? "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        </div>
+
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Down Payment: <%= deal.down_payment ? "$#{number_with_precision(deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Term: <%= deal.term ? "#{deal.term}%" : "Not Entered" %>
+                        </div>
+
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          APR: <%= deal.apr ? deal.apr : "Not Entered" %>
+                        </div>
+
+                        <div class="col-sm-4">
+                          <i class="entypo-forward"></i>
+                          Trade In Value: <%= deal.trade_in_value ? "$#{number_with_precision(deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                  <% end %>
+                  <% if @temps.length == 0 %>
+                  <br/>
+                  <%= "There are  no pending deals" %>
+                  <% end %>
+                </div>
+              </section>
+            </div>
+          </div>
+
+
+
+
         </div>
         <div class="tab-pane" id="paycheck">
           <%= link_to "<i class='entypo-plus'></i> Add Paycheck".html_safe, new_dealership_paycheck_path(@dealership, :employee_id => @employee.id),  class: "btn btn-success", role: "button" %><br/><br/>

@@ -13,6 +13,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     @conversations = @customer.conversations.order(:date).reverse
     @deals = Deal.find_all_by_customer_id(@customer.id)
+    @temps = @customer.temps
   end
 
   def new

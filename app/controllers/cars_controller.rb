@@ -30,6 +30,7 @@ class CarsController < ApplicationController
     @car.backend_pac ? @backend_pac = @car.backend_pac : @backend_pac = 0
     @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @backend_pac if @car.acquire_price
     @purchase_price = 0
+    @temps = @car.temps
     @deal = Deal.find_by_car_id(@car.id)
     @purchase_price = @deal.amount if @deal
     @profit = @purchase_price - @total_price if @purchase_price && @total_price

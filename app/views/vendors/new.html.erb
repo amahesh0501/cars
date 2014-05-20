@@ -23,12 +23,6 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Category</label>
-      <div class="col-sm-5">
-        <%= f.select :category, ['Vehicle Maintenance', 'Other'], :selected => params[:vendor_category], prompt: true%>
-      </div>
-    </div>
-    <div class="form-group">
       <label class="col-sm-3 control-label">Address Line 1</label>
       <div class="col-sm-5">
         <%= f.text_field :address_line_1, class: "form-control" %>

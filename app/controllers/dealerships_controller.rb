@@ -84,7 +84,7 @@ class DealershipsController < ApplicationController
 
   def create
     authenticate_user!
-    @dealership = Dealership.new(dealership_name: params[:dealership_name], dealership_address: params[:dealership_address])
+    @dealership = Dealership.new(dealership_name: params[:dealership_name], dealership_address: params[:dealership_address], sales_tax:params[:sales_tax])
     user = User.new(email: params[:email], password: params[:password])
     if user.save && @dealership.save
       membership = Membership.create(user_id: user.id, dealership_id: @dealership.id, has_access: true, is_dealership_admin: true, email_address: user.email)
@@ -182,12 +182,16 @@ class DealershipsController < ApplicationController
 
   end
 
-  def partners
+  def third_parties
     @dealership = Dealership.find(params[:id])
-    @repair_vendors = @dealership.vendors.where(category: "Vehicle Maintenance")
-    @other_vendors = @dealership.vendors.where(category: "Other")
+    @vendors = @dealership.vendors
     @auctions = @dealership.auctions
     @floorers = @dealership.floorers
+    @gaps = @dealership.gaps
+    @warranties = @dealership.warranties
+    @lenders = @dealership.lenders
+    @partners = @dealership.partners
+
   end
 
 

@@ -49,7 +49,7 @@
 
         <a href="/dealerships/<%=@dealership.id%>/expenses"><div class="tile-stats tile-blue">
           <div class="icon"><i class="entypo-tag"></i></div>
-          <div class="num" data-start="0" data-end="52" data-postfix="" data-duration="1500" data-delay="1800"><h2 style="color: white;"> <%="$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}"%></h2></div>
+          <div class="num" data-start="0" data-end="52" data-postfix="" data-duration="1500" data-delay="1800"><h2 style="color: white;"> <%="$#{number_with_precision(@profit, :delimiter => ',', precision: 0)}"%></h2></div>
 
           <h3>Profit</h3>
           <p>in the last 30 days.</p>

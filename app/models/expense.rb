@@ -1,8 +1,9 @@
 class Expense < ActiveRecord::Base
-  attr_accessible :name, :amount, :description, :date, :dealership_id, :vendor_id, :card_id, :payment_method, :check_number
+  attr_accessible :name, :amount, :description, :date, :dealership_id, :vendor_id, :card_id, :payment_method, :check_number, :partner_id
 
   belongs_to :dealership
   belongs_to :vendor
+  belongs_to :partner
   belongs_to :card
 
 

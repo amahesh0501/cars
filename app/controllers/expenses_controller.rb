@@ -120,13 +120,13 @@ class ExpensesController < ApplicationController
     @membership = Membership.find_by_user_id(current_user.id)
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.find(params[:id])
-    @vendor = Vendor.find(@expense.vendor_id) if @expense.vendor_id
+    @partner = Partner.find(@expense.partner_id) if @expense.partner_id
   end
 
   def new
     @dealership = Dealership.find(params[:dealership_id])
     flash[:expense] ? @expense = Expense.new(flash[:expense]) : @expense = Expense.new
-    @vendors = @dealership.vendors
+    @partners = @dealership.partners
     @cards = @dealership.cards
   end
 
@@ -135,9 +135,9 @@ class ExpensesController < ApplicationController
     dealership = Dealership.find(params[:dealership_id])
     @expense.dealership_id = dealership.id
     if @expense.save
-      if params[:expense][:redirect] == "vendor" && @expense.vendor_id != nil
-        vendor = Vendor.find(params[:expense][:vendor_id])
-        redirect_to dealership_vendor_path(dealership, vendor)
+      if params[:expense][:redirect] == "partner" && @expense.partner_id != nil
+        partner = Partner.find(params[:expense][:partner_id])
+        redirect_to dealership_partner_path(dealership, partner)
       else
         redirect_to dealership_expense_path(dealership, @expense)
 
@@ -152,7 +152,7 @@ class ExpensesController < ApplicationController
   def edit
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.find(params[:id])
-    @vendors = @dealership.vendors
+    @partners = @dealership.partners
     @fields = flash[:expense] if flash[:expense]
     @cards = @dealership.cards
   end

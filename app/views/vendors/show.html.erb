@@ -25,14 +25,14 @@
             <li>
               <div class="profile-name">
                 <strong><%= @vendor.name %></strong>
-                <span><%= @vendor.category %></span>
+                <span><%= "Name" %></span>
               </div>
             </li>
 
             <li>
               <div class="profile-stat">
                 <h3><%= @transaction_count %></h3>
-                <span><a href="#">Number of Transactions</a></span>
+                <span>Number of Transactions</span>
               </div>
             </li>
 
@@ -127,7 +127,7 @@
         <div class="tab-pane" id="transactions">
           <section class="profile-feed">
             <div class="profile-stories">
-              <%= link_to "<i class='entypo-plus'></i> Add Vendor Expense".html_safe, new_dealership_expense_path(@dealership, :vendor_id => @vendor.id, :redirect => "vendor"), class: "btn btn-success", role: "button" %>
+              <%= link_to "<i class='entypo-plus'></i> Add Vendor Expense".html_safe, new_dealership_repair_path(@dealership, :vendor_id => @vendor.id, :redirect => "vendor"), class: "btn btn-success", role: "button" %>
               <br/><br/>
               <table class="table table-bordered datatable" id="table-1">
                 <thead>

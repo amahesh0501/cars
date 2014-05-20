@@ -1,0 +1,176 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <div class="profile-env">
+
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @warranty.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @warranty.name %></strong>
+                <span><%= "Name" %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/warranties/<%=@warranty.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Warranty Provider
+            </a>
+
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+
+
+
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Provider Details</a></li>
+              <li><a href="#deals" data-toggle="tab">Deals</a></li>
+
+
+
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Name: <%= @warranty.contact_name.length > 0 ? "#{@warranty.contact_name}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @warranty.address.length > 5  ? "#{@warranty.address}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact E-Mail: <%= @warranty.contact_email.length > 0 ? "#{@warranty.contact_email}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Phone: <%= @warranty.contact_phone.length > 0  ? "#{@warranty.contact_phone}" : "Not Entered" %></p>
+
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Description</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <%= @warranty.description.length > 0 ? @warranty.description : "No description has been entered" %>
+
+                </div>
+              </div>
+            </div>
+
+        </div>
+        <% if @is_admin == true %>
+        <%= link_to "<i class='entypo-cross'></i> Delete Warranty Provider".html_safe, dealership_warranty_path(@dealership, @warranty), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+        <% end %>
+
+      </div>
+      <div class="tab-pane" id="deals">
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Car</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @deals.each do |deal| %>
+            <% car = Car.find(deal.car_id) %>
+            <% customer = Customer.find(deal.customer_id) if deal.customer_id %>
+            <tr class="gradeU">
+              <td><%= link_to car.make_model_year, dealership_deal_path(@dealership, deal)  %></td>
+              <% if customer %>
+              <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
+              <% else %>
+              <td>N/A</td>
+              <% end %>
+              <td><%= link_to "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}", dealership_deal_path(@dealership, deal)  %></td>
+              <td><%= link_to deal.date.strftime("%m/%d/%Y"), dealership_deal_path(@dealership, deal)  %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p><%= "There are no deals" if @deals.length ==0 %></p>
+      </div>
+
+
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+

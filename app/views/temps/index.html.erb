@@ -1,0 +1,61 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+    <%= link_to "<i class='entypo-plus'></i> Add Pending Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
+
+    <br/>
+    <br/>
+
+    <ul class="nav nav-tabs" id="myTab">
+      <li class="active"><a href="#deals" data-toggle="tab">View Pending Deals</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="deals">
+        <table class="table table-bordered datatable" id="table-1">
+          <thead>
+            <tr>
+              <th>Car</th>
+              <th>Customer</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @temps.each do |temp| %>
+            <% car = Car.find(temp.car_id) %>
+            <% customer = Customer.find(temp.customer_id) if temp.customer_id %>
+            <tr class="gradeU">
+              <td><%= link_to car.make_model_year, dealership_temp_path(@dealership, temp) %></td>
+              <% if customer %>
+              <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
+              <% else %>
+              <td>N/A</td>
+              <% end %>
+              <td><%= link_to "$#{number_with_precision(temp.amount, :delimiter => ',', precision: 2)}", dealership_temp_path(@dealership, temp) %></td>
+              <td><%= link_to temp.date.strftime("%m/%d/%Y"), dealership_temp_path(@dealership, temp) %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <p><%= "There are no pending deals" if @temps.length ==0 %></p>
+      </div>
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+

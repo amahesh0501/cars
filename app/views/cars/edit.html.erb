@@ -20,6 +20,16 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Stock Number</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :stock_number,  class: "form-control" , value: @fields["stock_number"] %>
+        <% else %>
+          <%= f.text_field :stock_number,  class: "form-control"  %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">Year</label>
       <div class="col-sm-5">
         <%= f.text_field :year, class: "form-control" %>
@@ -49,16 +59,7 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Stock Number</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :stock_number,  class: "form-control" , value: @fields["stock_number"] %>
-        <% else %>
-          <%= f.text_field :stock_number,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
+
 
     <div class="form-group">
       <label class="col-sm-3 control-label">Miles</label>
@@ -229,6 +230,22 @@
     </div>
 
     <h3>Financial Information</h3>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Customer Price</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :customer_price,  class: "form-control" , value: @fields["customer_price"] %>
+        </div>
+        <% else %>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :customer_price,  class: "form-control"  %>
+        </div>
+        <% end %>
+      </div>
+    </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Wholesale Price</label>
       <div class="col-sm-5">

@@ -17,7 +17,7 @@ class RepairsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     flash[:repair] ? @repair = Repair.new(flash[:repair]) : @repair = Repair.new
     @cars = @dealership.cars
-    @vendors = @dealership.vendors.where(category: "Vehicle Maintenance")
+    @vendors = @dealership.vendors
     @cards = @dealership.cards
   end
 

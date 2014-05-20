@@ -1,13 +1,58 @@
-<div class="container">
-<%= form_for @dealership do |f| %>
-<div class="form-group">
-  <%= f.label :dealership_name %><br/>
-  <%= f.text_field :dealership_name %>
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Update Dealership Information </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Name</label>
+      <div class="col-sm-5">
+        <%= f.text_field :dealership_name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Address</label>
+      <div class="col-sm-5">
+          <%= f.text_field :dealership_address, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Default Sales Tax Percent</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <div class="input-group">
+            <%= f.text_field :sales_tax, value: @fields["sales_tax"], class: "form-control" %>
+            <span class="input-group-addon">%</span>
+          </div>
+        <% else %>
+          <div class="input-group">
+            <%= f.text_field :sales_tax, class: "form-control" %>
+            <span class="input-group-addon">%</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Update Dealership Information", :class => 'btn btn-success'  %>
+      </div>
+    </div>
+    <% end %>
+
+
+
+
+  </div>
 </div>
-<div class="form-group">
-  <%= f.label :dealership_address%><br/>
-  <%= f.text_field :dealership_address %>
-</div>
-<%= f.submit "Edit Dealership", :class => 'btn btn-success'  %>
-<% end %>
-</div>
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140503030723) do
+ActiveRecord::Schema.define(version: 20140520035908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.date     "flooring_date"
     t.float    "wholesale_price"
     t.float    "retail_price"
+    t.float    "customer_price"
     t.float    "advertising_cost"
     t.float    "other_costs"
     t.float    "backend_pac"
@@ -154,6 +155,7 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.string   "dealership_name"
     t.string   "dealership_address"
     t.string   "access_code",        default: "12345"
+    t.float    "sales_tax"
     t.boolean  "active",             default: true
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -164,6 +166,9 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.integer  "customer_id"
     t.integer  "employee_id"
     t.integer  "dealership_id"
+    t.integer  "warranty_id"
+    t.integer  "gap_id"
+    t.integer  "lender_id"
     t.date     "date"
     t.float    "amount"
     t.float    "sales_tax_amount"
@@ -172,8 +177,25 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.integer  "term"
     t.integer  "apr"
     t.float    "trade_in_value"
-    t.boolean  "gap_insurance",     default: false
-    t.string   "gap_name"
+    t.float    "trade_in_paid"
+    t.float    "days_to_first_payment"
+    t.float    "deffered_down_1_payment"
+    t.date     "deffered_down_1_date"
+    t.float    "deffered_down_2_payment"
+    t.date     "deffered_down_2_date"
+    t.float    "deffered_down_3_payment"
+    t.date     "deffered_down_3_date"
+    t.float    "smog_fee"
+    t.float    "doc_fee"
+    t.float    "reg_fee"
+    t.float    "warranty_term"
+    t.float    "warranty_cost"
+    t.float    "warranty_price"
+    t.string   "warranty_type"
+    t.float    "gap_term"
+    t.float    "gap_cost"
+    t.float    "gap_price"
+    t.float    "discount_fee"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -193,6 +215,13 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.string   "address_city"
     t.string   "address_state"
     t.string   "address_zip"
+    t.integer  "number"
+    t.date     "birthday"
+    t.date     "hire_date"
+    t.date     "terminate_date"
+    t.string   "title"
+    t.string   "driver_license_number"
+    t.string   "sales_license"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -208,6 +237,7 @@ ActiveRecord::Schema.define(version: 20140503030723) do
   create_table "expenses", force: true do |t|
     t.integer  "dealership_id"
     t.integer  "vendor_id"
+    t.integer  "partner_id"
     t.integer  "card_id"
     t.string   "name"
     t.float    "amount"
@@ -250,12 +280,75 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.datetime "form_pdf_updated_at"
   end
 
+  create_table "gaps", force: true do |t|
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.text     "description"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "address_city"
+    t.string   "address_state"
+    t.string   "address_zip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lenders", force: true do |t|
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.text     "description"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "address_city"
+    t.string   "address_state"
+    t.string   "address_zip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "memberships", force: true do |t|
     t.integer  "user_id"
     t.integer  "dealership_id"
     t.string   "email_address"
     t.boolean  "has_access",          default: false
     t.boolean  "is_dealership_admin", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "partners", force: true do |t|
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.text     "description"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "address_city"
+    t.string   "address_state"
+    t.string   "address_zip"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -313,6 +406,45 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.datetime "updated_at"
   end
 
+  create_table "temps", force: true do |t|
+    t.integer  "car_id"
+    t.integer  "customer_id"
+    t.integer  "employee_id"
+    t.integer  "dealership_id"
+    t.integer  "warranty_id"
+    t.integer  "gap_id"
+    t.integer  "lender_id"
+    t.date     "date"
+    t.float    "amount"
+    t.float    "sales_tax_amount"
+    t.float    "sales_tax_percent"
+    t.float    "down_payment"
+    t.integer  "term"
+    t.integer  "apr"
+    t.float    "trade_in_value"
+    t.float    "trade_in_paid"
+    t.float    "days_to_first_payment"
+    t.float    "deffered_down_1_payment"
+    t.date     "deffered_down_1_date"
+    t.float    "deffered_down_2_payment"
+    t.date     "deffered_down_2_date"
+    t.float    "deffered_down_3_payment"
+    t.date     "deffered_down_3_date"
+    t.float    "smog_fee"
+    t.float    "doc_fee"
+    t.float    "reg_fee"
+    t.float    "warranty_term"
+    t.float    "warranty_cost"
+    t.float    "warranty_price"
+    t.string   "warranty_type"
+    t.float    "gap_term"
+    t.float    "gap_cost"
+    t.float    "gap_price"
+    t.float    "discount_fee"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
@@ -344,7 +476,27 @@ ActiveRecord::Schema.define(version: 20140503030723) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "description"
-    t.string   "category",           default: "Vehicle Maintenance"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "address_city"
+    t.string   "address_state"
+    t.string   "address_zip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "warranties", force: true do |t|
+    t.integer  "dealership_id"
+    t.string   "name"
+    t.string   "address"
+    t.string   "contact_name"
+    t.string   "contact_phone"
+    t.string   "contact_email"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.text     "description"
     t.string   "address_line_1"
     t.string   "address_line_2"
     t.string   "address_city"

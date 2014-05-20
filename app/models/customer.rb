@@ -4,6 +4,7 @@ class Customer < ActiveRecord::Base
   belongs_to :dealership
   has_many :deals
   has_many :conversations, dependent: :destroy
+  has_many :temps
 
   validates_presence_of :dealership_id, :status
 

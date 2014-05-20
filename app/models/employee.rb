@@ -1,10 +1,11 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :name, :ssn, :email, :phone, :address, :image, :dealership_id, :description , :first, :last, :address_line_1, :address_line_2, :address_city, :address_state, :address_zip, :license_photo
+  attr_accessible :name, :ssn, :email, :phone, :address, :image, :dealership_id, :description , :first, :last, :address_line_1, :address_line_2, :address_city, :address_state, :address_zip, :license_photo, :number, :birthday, :hire_date, :terminate_date, :title, :driver_license_number, :sales_license
 
   belongs_to :dealership
   has_many :deals
   has_many :paychecks
   has_many :conversations
+  has_many :temps
 
   validates_presence_of :dealership_id
 

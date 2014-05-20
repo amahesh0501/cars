@@ -19,9 +19,14 @@ Cars::Application.routes.draw do
     resources :employees
     resources :revenues
     resources :forms
+    resources :temps
     resources :auctions
     resources :floorers
     resources :cards
+    resources :partners
+    resources :lenders
+    resources :gaps
+    resources :warranties
     resources :customers do
       resources :conversations
     end
@@ -44,7 +49,7 @@ Cars::Application.routes.draw do
   match 'new_with_vin', :to => 'cars#new_with_vin', via: :post
   match 'quick_calculate', :to => 'deals#quick_calculate', via: :post
   match 'dealerships/:id/search', :to => 'dealerships#search', via: :get, as: 'search'
-  match 'dealerships/:id/partners', :to => 'dealerships#partners', via: :get, as: 'partners'
+  match 'dealerships/:id/third_parties', :to => 'dealerships#third_parties', via: :get, as: 'parties'
   match 'dealerships/:id/quick_calculate_results', :to => 'deals#show_quick_calculations', via: :get, as: 'quick_calculate_results'
 
 

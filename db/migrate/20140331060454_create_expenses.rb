@@ -3,6 +3,7 @@ class CreateExpenses < ActiveRecord::Migration
     create_table :expenses do |t|
       t.belongs_to :dealership
       t.belongs_to :vendor
+      t.belongs_to :partner
       t.belongs_to :card
 
 

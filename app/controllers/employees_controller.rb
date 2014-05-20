@@ -14,6 +14,7 @@ class EmployeesController < ApplicationController
     @deals = Deal.where(employee_id: @employee.id)
     @cars = []
     @deals.each {|deal| @cars << Car.find(deal.car_id)}
+    @temps = @employee.temps
   end
 
   def new

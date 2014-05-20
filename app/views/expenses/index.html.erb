@@ -201,7 +201,7 @@
           <section class="profile-feed">
             <div class="profile-stories">
               <% if @is_admin == true %>
-              <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Expense".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+              <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Purchase".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% end %>
               <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% if @is_admin == true %>

@@ -12,6 +12,16 @@
     <%= form_for [@dealership, @employee], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Number</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :number, value: @fields["number"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :number, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">First Name</label>
       <div class="col-sm-5">
         <% if @fields %>
@@ -31,10 +41,38 @@
         <% end %>
       </div>
     </div>
-
-
     <div class="form-group">
-      <label class="col-sm-3 control-label">Social Security Number</label>
+      <label class="col-sm-3 control-label">Title</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :title, value: @fields["title"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :title, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Drivers Licence Number</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :driver_license_number, value: @fields["driver_license_number"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :driver_license_number, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Sales License Number</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :sales_license, value: @fields["sales_license"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :sales_license, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Social Security Number (Last 4)</label>
       <div class="col-sm-5">
         <% if @fields %>
           <%= f.text_field :ssn, value: @fields["ssn"], class: "form-control" %>
@@ -44,25 +82,38 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">E-Mail</label>
+      <label class="col-sm-3 control-label">Birthday</label>
       <div class="col-sm-5">
         <% if @fields %>
-          <%= f.text_field :email, value: @fields["email"],class: "form-control" %>
+          <%= f.date_field :birthday, value: @fields["birthday"], class: "form-control" %>
         <% else %>
-          <%= f.text_field :email, class: "form-control" %>
+          <%= f.date_field :birthday, class: "form-control" %>
         <% end %>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Phone</label>
+      <label class="col-sm-3 control-label">Hire Date</label>
       <div class="col-sm-5">
         <% if @fields %>
-          <%= f.text_field :phone, value: @fields["phone"], class: "form-control" %>
+          <%= f.date_field :hire_date, value: @fields["hire_date"], class: "form-control" %>
         <% else %>
-          <%= f.text_field :phone, class: "form-control" %>
+          <%= f.date_field :hire_date, class: "form-control" %>
         <% end %>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Termination Date</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.date_field :terminate_date, value: @fields["terminate_date"], class: "form-control" %>
+        <% else %>
+          <%= f.date_field :terminate_date, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+
+    <h3> Contact Information </h3>
+
     <div class="form-group">
       <label class="col-sm-3 control-label">Address Line 1</label>
       <div class="col-sm-5">
@@ -109,12 +160,30 @@
         <% end %>
       </div>
     </div>
+
+
+
     <div class="form-group">
-      <label class="col-sm-3 control-label">Drivers License Photo</label>
+      <label class="col-sm-3 control-label">E-Mail</label>
       <div class="col-sm-5">
-        <%= f.file_field :license_photo, class: "form-control" %>
+        <% if @fields %>
+          <%= f.text_field :email, value: @fields["email"],class: "form-control" %>
+        <% else %>
+          <%= f.text_field :email, class: "form-control" %>
+        <% end %>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Phone</label>
+      <div class="col-sm-5">
+        <% if @fields %>
+          <%= f.text_field :phone, value: @fields["phone"], class: "form-control" %>
+        <% else %>
+          <%= f.text_field :phone, class: "form-control" %>
+        <% end %>
+      </div>
+    </div>
+
     <div class="form-group">
       <label class="col-sm-3 control-label">Notes</label>
       <div class="col-sm-5">

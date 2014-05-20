@@ -46,6 +46,7 @@ class CreateCars < ActiveRecord::Migration
       #more_information
       t.float :wholesale_price
       t.float :retail_price
+      t.float :customer_price
       t.float :advertising_cost
       t.float :other_costs
       t.float :backend_pac

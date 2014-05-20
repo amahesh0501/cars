@@ -4,7 +4,7 @@ class VendorsController < ApplicationController
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
-    redirect_to dealership_parthners_path(@dealership)
+    redirect_to dealership_partners_path(@dealership)
 
   end
 
@@ -43,7 +43,6 @@ class VendorsController < ApplicationController
     @vendor = Vendor.find(params[:id])
     @fields = flash[:vendor] if flash[:vendor]
     @us_states = us_states
-    @category = @vendor.category
   end
 
   def update
@@ -63,7 +62,7 @@ class VendorsController < ApplicationController
     vendor = Vendor.find(params[:id])
     dealership = Dealership.find(params[:dealership_id])
     vendor.destroy
-    redirect_to dealership_vendors_path(dealership)
+    redirect_to dealership_partners_path(dealership)
   end
 
 

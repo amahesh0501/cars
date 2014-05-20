@@ -6,6 +6,7 @@ class DealsController < ApplicationController
   def index
     @dealership = Dealership.find(params[:dealership_id])
     @deals = @dealership.deals.order(:date).reverse
+    @temps = @dealership.temps.order(:date).reverse
   end
 
   def show
@@ -14,6 +15,10 @@ class DealsController < ApplicationController
     @customer = Customer.find(@deal.customer_id)
     @employee = Employee.find(@deal.employee_id) if @deal.employee_id
     @car = Car.find(@deal.car_id)
+
+    @gap = Gap.find(@deal.gap_id) if @deal.gap_id
+    @lender = Lender.find(@deal.lender_id) if @deal.lender_id
+    @warranty = Warranty.find(@deal.warranty_id) if @deal.warranty_id
 
     @deal.amount ?  @sales_price = @deal.amount : @sales_price = 0
     @deal.down_payment ?  @down_payment = @deal.down_payment : @down_payment = 0
@@ -33,6 +38,10 @@ class DealsController < ApplicationController
     @employees = @dealership.employees.order('name ASC')
     @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @customers = @dealership.customers.order('name ASC')
+    @gaps = @dealership.gaps
+    @warranties = @dealership.warranties
+    @lenders = @dealership.lenders
+
   end
 
   def create
@@ -59,8 +68,11 @@ class DealsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @deal = Deal.find(params[:id])
     @employees = @dealership.employees
-    @cars = @dealership.cars
+    @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @customers = @dealership.customers
+    @gaps = @dealership.gaps
+    @warranties = @dealership.warranties
+    @lenders = @dealership.lenders
     @fields = flash[:deal] if flash[:deal]
   end
 

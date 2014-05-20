@@ -19,6 +19,13 @@ class CreateEmployees < ActiveRecord::Migration
        t.string :address_city
        t.string :address_state
        t.string :address_zip
+       t.integer :number
+       t.date :birthday
+       t.date :hire_date
+       t.date :terminate_date
+       t.string :title
+       t.string :driver_license_number
+       t.string :sales_license
 
        #images
        t.attachment :image

@@ -1,0 +1,176 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <div class="profile-env">
+
+      <header class="row">
+
+        <div class="col-sm-2">
+
+          <a href="#" class="profile-picture">
+            <img src="<%= @partner.image %>" height ="115" width="115" style="border-radius: 50%;" />
+          </a>
+
+        </div>
+
+        <div class="col-sm-7">
+
+          <ul class="profile-info-sections">
+            <li>
+              <div class="profile-name">
+                <strong><%= @partner.name %></strong>
+                <span><%= "Name" %></span>
+              </div>
+            </li>
+
+            <li>
+              <div class="profile-stat">
+                <h3><%= @transaction_count %></h3>
+                <span>Number of Transactions</span>
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="col-sm-3">
+
+          <div class="profile-buttons">
+            <a href="/dealerships/<%=@dealership.id%>/partners/<%=@partner.id%>/edit" class="btn btn-info">
+              <i class="entypo-pencil"></i>
+              Edit Vendor
+            </a>
+
+
+
+          </div>
+        </div>
+
+      </header>
+
+      <section class="profile-info-tabs">
+
+        <div class="row">
+          <div class="col-sm-offset-2 col-sm-10">
+
+
+
+
+
+
+
+            <!-- tabs for the profile links -->
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#details" data-toggle="tab">Vendor Details</a></li>
+              <li><a href="#transactions" data-toggle="tab">Transactions</a></li>
+
+            </ul>
+
+
+
+
+          </div>
+
+
+        </div>
+
+      </section>
+      <div class="tab-content">
+
+        <div class="tab-pane active" id="details">
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Name: <%= @partner.contact_name.length > 0 ? "#{@partner.contact_name}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Address: <%= @partner.address.length > 5  ? "#{@partner.address}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact E-Mail: <%= @partner.contact_email.length > 0 ? "#{@partner.contact_email}" : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Contact Phone: <%= @partner.contact_phone.length > 0  ? "#{@partner.contact_phone}" : "Not Entered" %></p>
+
+                </div>
+            </div>
+          </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Description</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <%= @partner.description.length > 0 ? @partner.description : "No description has been entered" %>
+
+                </div>
+              </div>
+            </div>
+        </div>
+        <% if @is_admin == true %>
+        <%= link_to "<i class='entypo-cross'></i> Delete Vendor".html_safe, dealership_partner_path(@dealership, @partner), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+        <% end %>
+
+      </div>
+        <div class="tab-pane" id="transactions">
+          <section class="profile-feed">
+            <div class="profile-stories">
+              <%= link_to "<i class='entypo-plus'></i> Add Vendor Expense".html_safe, new_dealership_expense_path(@dealership, :partner_id => @partner.id, :redirect => "partner"), class: "btn btn-success", role: "button" %>
+              <br/><br/>
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @expenses.each do |transaction| %>
+                  <tr class="gradeU">
+                    <td><%= transaction.name  %></td>
+                    <td><%= "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}" %></td>
+                    <td><%= transaction.date.strftime("%m/%d/%Y")  %></td>
+                    <td><%= transaction.description  %></td>
+                    <td><%= link_to "Edit", edit_dealership_expense_path(@dealership, transaction) %> <% if @is_admin == true %>| <%= link_to "Delete", dealership_expense_path(@dealership, transaction), method: "delete", confirm: "Are you sure?"  %><% end %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+
+
+
+            </div>
+          </section>
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
+
+

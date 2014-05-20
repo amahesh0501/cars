@@ -21,8 +21,8 @@
         <div class="row">
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>Name: <%= @expense.name.length > 0 ? "#{@expense.name}" : "Not Entered" %></p>
-            <% if @vendor %>
-            <p><i class="entypo-forward"></i>Vendor: <%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) %></p>
+            <% if @partner %>
+            <p><i class="entypo-forward"></i>Vendor: <%= link_to @partner.name, dealership_partner_path(@dealership, @partner) %></p>
             <% else %>
             <p><i class="entypo-forward"></i>Vendor: Not Entered </p>
             <% end %>

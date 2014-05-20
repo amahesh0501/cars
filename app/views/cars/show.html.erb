@@ -71,8 +71,13 @@
               </div>
               <div class="col-md-3">
                 <div class="profile-stat">
-                  <h4><%= @deal? "$#{number_with_precision(@deal.amount, :delimiter => ',', :precision => 2)}" : "N/A" %></h4>
-                  <span>Sale Price</span>
+                  <% if @deal %>
+                    <h4><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', :precision => 2)}" %></h4>
+                    <span>Final Sale Price</span>
+                  <% else %>
+                    <h4><%= @car.customer_price ? "$#{number_with_precision(@car.customer_price, :delimiter => ',', :precision => 2)}" : "N/A" %></h4>
+                    <span>Customer Price</span>
+                  <% end %>
                 </div>
               </div>
               <div class="col-md-3">
@@ -93,10 +98,8 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Vehicle Details</a></li>
               <li><a href="#profile" data-toggle="tab">Repairs / Maintenance</a></li>
-              <% if @deal %>
-              <li><a href="#deal" data-toggle="tab">Deal Details</a></li>
-              <% end %>
-              <% if @is_admin == true %><li><a href="#finances" data-toggle="tab">Finances</a></li><% end %>
+              <li><a href="#deal" data-toggle="tab">Deals</a></li>
+              <% if @is_admin == true %><li><a href="#finances" data-toggle="tab">$</a></li><% end %>
             </ul>
 
 
@@ -271,63 +274,156 @@
           </section>
         </div>
 
-      <% if @deal %>
-      <% customer = Customer.find(@deal.customer_id) %>
+
       <div class="tab-pane" id="deal">
-        <section class="profile-feed">
-          <div class="profile-stories">
-            <div class="member-entry">
 
-              <span class="member-img">
-                <img src="/deal.png" class="img-rounded" />
-              </span>
+        <%= link_to "<i class='entypo-plus'></i> Add Finalized Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %>
+        <%= link_to "<i class='entypo-plus'></i> Add Pending Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
 
-              <div class="member-details">
-                <h4>
-                  <%= link_to "Sold to #{customer.name} for $#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, @deal) %>
-                </h4>
-                    <div class="row info-list">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#final" data-toggle="tab">Finalized Deal</a></li>
+          <li><a href="#pending" data-toggle="tab">Pending Deals</a></li>
 
-                  <div class="col-sm-4">
-                    <i class="entypo-forward"></i>
-                    Date: <%= @deal.date.strftime("%m/%d/%Y") %>
-                  </div>
+        </ul>
 
-                  <div class="col-sm-4">
-                    <i class="entypo-forward"></i>
-                    Final Sales Price: <%= @deal.amount ? "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
-                  </div>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="final">
+            <% if @deal %>
+            <% customer = Customer.find(@deal.customer_id) %>
+             <section class="profile-feed">
+               <div class="profile-stories">
+                 <div class="member-entry">
 
-                  <div class="col-sm-4">
-                    <i class="entypo-forward"></i>
-                    Down Payment: <%= @deal.down_payment ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
-                  </div>
+                   <span class="member-img">
+                     <img src="/deal.png" class="img-rounded" />
+                   </span>
 
-                  <div class="clear"></div>
+                   <div class="member-details">
+                     <h4>
+                       <%= link_to "Sold to #{customer.name} for $#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, @deal) %>
+                     </h4>
+                         <div class="row info-list">
 
-                  <div class="col-sm-4">
-                    <i class="entypo-forward"></i>
-                    Term: <%= @deal.term ? @deal.term : "Not Entered" %>
-                  </div>
+                       <div class="col-sm-4">
+                         <i class="entypo-forward"></i>
+                         Date: <%= @deal.date.strftime("%m/%d/%Y") %>
+                       </div>
 
-                  <div class="col-sm-4">
-                    <i class="entypo-forward"></i>
-                    APR: <%= @deal.apr ? @deal.apr : "Not Entered" %>
-                  </div>
+                       <div class="col-sm-4">
+                         <i class="entypo-forward"></i>
+                         Final Sales Price: <%= @deal.amount ? "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                       </div>
 
-                  <div class="col-sm-4">
-                    <i class="entypo-forward"></i>
-                    Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                       <div class="col-sm-4">
+                         <i class="entypo-forward"></i>
+                         Down Payment: <%= @deal.down_payment ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                       </div>
+
+                       <div class="clear"></div>
+
+                       <div class="col-sm-4">
+                         <i class="entypo-forward"></i>
+                         Term: <%= @deal.term ? @deal.term : "Not Entered" %>
+                       </div>
+
+                       <div class="col-sm-4">
+                         <i class="entypo-forward"></i>
+                         APR: <%= @deal.apr ? @deal.apr : "Not Entered" %>
+                       </div>
+
+                       <div class="col-sm-4">
+                         <i class="entypo-forward"></i>
+                         Trade In Value: <%= @deal.trade_in_value ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                       </div>
+
+                     </div>
+                   </div>
+
+                 </div>
+               </div>
+             </section>
+             <% else %>
+             <br/>
+             <%= "There is no finalized deal for this vehicle" %>
+             <% end %>
+          </div>
+          <div class="tab-pane" id="pending">
+            <section class="profile-feed">
+              <div class="profile-stories">
+                <% @temps.each do |deal| %>
+                <% customer = Customer.find(deal.customer_id) if deal.customer_id %>
+                <div class="member-entry">
+
+                  <span class="member-img">
+                    <img src="/deal.png" class="img-rounded" />
+                  </span>
+
+                  <div class="member-details">
+                    <h4>
+                      <% if customer %>
+                      <%= link_to "Pending deal to #{customer.name} for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
+                      <% else %>
+                        <%= link_to "Pending deal for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
+                      <% end %>
+                    </h4>
+                        <div class="row info-list">
+
+                      <div class="col-sm-4">
+                        <i class="entypo-forward"></i>
+                        Date: <%= deal.date ? deal.date.strftime("%m/%d/%Y") : "N/A" %>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <i class="entypo-forward"></i>
+                        Sales Price: <%= deal.amount ? "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <i class="entypo-forward"></i>
+                        Down Payment: <%= deal.down_payment ? "$#{number_with_precision(deal.down_payment, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                      </div>
+
+                      <div class="clear"></div>
+
+                      <div class="col-sm-4">
+                        <i class="entypo-forward"></i>
+                        Term: <%= deal.term ? "#{deal.term}%" : "Not Entered" %>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <i class="entypo-forward"></i>
+                        APR: <%= deal.apr ? deal.apr : "Not Entered" %>
+                      </div>
+
+                      <div class="col-sm-4">
+                        <i class="entypo-forward"></i>
+                        Trade In Value: <%= deal.trade_in_value ? "$#{number_with_precision(deal.trade_in_value, :delimiter => ',', precision: 2)}" : "Not Entered" %>
+                      </div>
+
+                    </div>
                   </div>
 
                 </div>
+                <% end %>
+                <% if @temps.length == 0 %>
+                <br/>
+                <%= "There are  no pending deals" %>
+                <% end %>
               </div>
-
-            </div>
+            </section>
           </div>
-        </section>
+        </div>
+
+
+
       </div>
-      <% end %>
+
+
+
+
+
+
 
       <% if @is_admin == true %>
         <div class="tab-pane" id="finances">
