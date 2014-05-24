@@ -6,8 +6,7 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-    <%= link_to "<i class='entypo-plus'></i> Add Finalized Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %>
-    <%= link_to "<i class='entypo-plus'></i> Add Pending Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
+    <%= link_to "<i class='entypo-plus'></i> Add Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
 
     <br/>
     <br/>
@@ -15,7 +14,6 @@
     <ul class="nav nav-tabs" id="myTab">
       <li class="active"><a href="#deals" data-toggle="tab">View Finalized Deals</a></li>
       <li><a href="#temp" data-toggle="tab">View Pending Deals</a></li>
-      <li><a href="#quick" data-toggle="tab">Quick Calculator</a></li>
     </ul>
 
     <div class="tab-content">
@@ -60,10 +58,14 @@
           </thead>
           <tbody>
             <% @temps.each do |deal| %>
-            <% car = Car.find(deal.car_id) %>
+            <% car = Car.find(deal.car_id) if deal.car_id %>
             <% customer = Customer.find(deal.customer_id) if deal.customer_id %>
             <tr class="gradeU">
+              <% if car %>
               <td><%= link_to car.make_model_year, dealership_temp_path(@dealership, deal)  %></td>
+              <% else %>
+              <td>N/A</td>
+              <% end %>
               <% if customer %>
               <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
               <% else %>
@@ -81,89 +83,7 @@
         </table>
         <p><%= "There are no deals" if @temps.length ==0 %></p>
       </div>
-      <div class="tab-pane" id="quick">
 
-        <%= form_tag(controller: "deals", action: "quick_calculate", remote: true, class: "form-horizontal form-groups-bordered", via: "get") do %>
-
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Sales Price</label>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <span class="input-group-addon">$</span>
-              <%= text_field_tag 'amount', nil, class: 'form-control' %>
-
-            </div>
-          </div>
-        </div><br/><br/><br/>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Sales Tax Percent</label>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <%= text_field_tag 'sales_tax_percent', nil, class: 'form-control' %>
-              <span class="input-group-addon">%</span>
-            </div>
-          </div>
-        </div><br/><br/>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Down Payment</label>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <span class="input-group-addon">$</span>
-              <%= text_field_tag 'down_payment', nil, class: 'form-control' %>
-          </div>
-        </div><br/><br/><br/>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Term</label>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <%= text_field_tag 'term', nil, class: 'form-control' %>
-              <span class="input-group-addon">months</span>
-            </div>
-          </div>
-        </div><br/><br/>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">APR</label>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <%= text_field_tag 'apr', nil, class: 'form-control' %>
-              <span class="input-group-addon">%</span>
-            </div>
-          </div>
-        </div><br/><br/>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Trade in Value</label>
-          <div class="col-sm-5">
-            <div class="input-group">
-              <span class="input-group-addon">$</span>
-              <%= text_field_tag 'trade_in_value', nil, class: 'form-control' %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br/><br/><br/>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">
-         <%= hidden_field_tag :dealership_id, @dealership.id %>
-       </label>
-       <div class="col-sm-5">
-        <%= submit_tag("Calculate", class: "btn btn-info") %>
-
-        <br/>
-      </div>
-    </div>
-
-
-    <br/><br/><br/><br/>
-
-    <% end %>
-
-
-
-
-
-
-
-  </div>
 </div>
 
 

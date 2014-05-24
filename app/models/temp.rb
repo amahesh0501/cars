@@ -11,7 +11,7 @@ class Temp < ActiveRecord::Base
   belongs_to :lender
 
   validates_presence_of :amount, :term
-  validates_numericality_of :amount, :sales_tax_amount, :sales_tax_percent, :term, :down_payment, :apr, :trade_in_value
+  validates_numericality_of :amount, :term
 
 
   def amount=(num)

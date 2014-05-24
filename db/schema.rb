@@ -155,7 +155,7 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.string   "dealership_name"
     t.string   "dealership_address"
     t.string   "access_code",        default: "12345"
-    t.float    "sales_tax"
+    t.float    "sales_tax",          default: 6.0
     t.boolean  "active",             default: true
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -170,32 +170,32 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.integer  "gap_id"
     t.integer  "lender_id"
     t.date     "date"
-    t.float    "amount"
-    t.float    "sales_tax_amount"
-    t.float    "sales_tax_percent"
-    t.float    "down_payment"
-    t.integer  "term"
-    t.integer  "apr"
+    t.float    "amount",                  default: 0.0
+    t.float    "sales_tax_amount",        default: 0.0
+    t.float    "sales_tax_percent",       default: 0.0
+    t.float    "down_payment",            default: 0.0
+    t.integer  "term",                    default: 0
+    t.integer  "apr",                     default: 0
     t.float    "trade_in_value"
     t.float    "trade_in_paid"
     t.float    "days_to_first_payment"
-    t.float    "deffered_down_1_payment"
+    t.float    "deffered_down_1_payment", default: 0.0
     t.date     "deffered_down_1_date"
-    t.float    "deffered_down_2_payment"
+    t.float    "deffered_down_2_payment", default: 0.0
     t.date     "deffered_down_2_date"
-    t.float    "deffered_down_3_payment"
+    t.float    "deffered_down_3_payment", default: 0.0
     t.date     "deffered_down_3_date"
-    t.float    "smog_fee"
-    t.float    "doc_fee"
-    t.float    "reg_fee"
-    t.float    "warranty_term"
-    t.float    "warranty_cost"
-    t.float    "warranty_price"
+    t.float    "smog_fee",                default: 0.0
+    t.float    "doc_fee",                 default: 0.0
+    t.float    "reg_fee",                 default: 0.0
+    t.float    "warranty_term",           default: 0.0
+    t.float    "warranty_cost",           default: 0.0
+    t.float    "warranty_price",          default: 0.0
     t.string   "warranty_type"
-    t.float    "gap_term"
-    t.float    "gap_cost"
-    t.float    "gap_price"
-    t.float    "discount_fee"
+    t.float    "gap_term",                default: 0.0
+    t.float    "gap_cost",                default: 0.0
+    t.float    "gap_price",               default: 0.0
+    t.float    "discount_fee",            default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -415,32 +415,32 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.integer  "gap_id"
     t.integer  "lender_id"
     t.date     "date"
-    t.float    "amount"
-    t.float    "sales_tax_amount"
-    t.float    "sales_tax_percent"
-    t.float    "down_payment"
-    t.integer  "term"
-    t.integer  "apr"
-    t.float    "trade_in_value"
-    t.float    "trade_in_paid"
+    t.float    "amount",                  default: 0.0
+    t.float    "sales_tax_amount",        default: 0.0
+    t.float    "sales_tax_percent",       default: 0.0
+    t.float    "down_payment",            default: 0.0
+    t.integer  "term",                    default: 0
+    t.integer  "apr",                     default: 0
+    t.float    "trade_in_value",          default: 0.0
+    t.float    "trade_in_paid",           default: 0.0
     t.float    "days_to_first_payment"
-    t.float    "deffered_down_1_payment"
+    t.float    "deffered_down_1_payment", default: 0.0
     t.date     "deffered_down_1_date"
-    t.float    "deffered_down_2_payment"
+    t.float    "deffered_down_2_payment", default: 0.0
     t.date     "deffered_down_2_date"
-    t.float    "deffered_down_3_payment"
+    t.float    "deffered_down_3_payment", default: 0.0
     t.date     "deffered_down_3_date"
-    t.float    "smog_fee"
-    t.float    "doc_fee"
-    t.float    "reg_fee"
-    t.float    "warranty_term"
-    t.float    "warranty_cost"
-    t.float    "warranty_price"
+    t.float    "smog_fee",                default: 0.0
+    t.float    "doc_fee",                 default: 0.0
+    t.float    "reg_fee",                 default: 0.0
+    t.float    "warranty_term",           default: 0.0
+    t.float    "warranty_cost",           default: 0.0
+    t.float    "warranty_price",          default: 0.0
     t.string   "warranty_type"
-    t.float    "gap_term"
-    t.float    "gap_cost"
-    t.float    "gap_price"
-    t.float    "discount_fee"
+    t.float    "gap_term",                default: 0.0
+    t.float    "gap_cost",                default: 0.0
+    t.float    "gap_price",               default: 0.0
+    t.float    "discount_fee",            default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

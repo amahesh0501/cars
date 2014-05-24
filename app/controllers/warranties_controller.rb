@@ -12,6 +12,7 @@ class WarrantiesController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @warranty = Warranty.find(params[:id])
     @deals = Deal.where(warranty_id: @warranty.id)
+    @temps = @warranty.temps
   end
 
   def new

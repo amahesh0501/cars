@@ -1,6 +1,6 @@
 class TempsController < ApplicationController
 
-  before_filter :authenticate_user!, :dealership_active?, :is_member?
+  # before_filter :authenticate_user!, :dealership_active?, :is_member?
 
   def index
     @dealership = Dealership.find(params[:dealership_id])
@@ -12,33 +12,33 @@ class TempsController < ApplicationController
     @temp = Temp.find(params[:id])
     @customer = Customer.find(@temp.customer_id) if @temp.customer_id
     @employee = Employee.find(@temp.employee_id) if @temp.employee_id
-    @car = Car.find(@temp.car_id)
-
+    @car = Car.find(@temp.car_id) if @temp.car_id
     @gap = Gap.find(@temp.gap_id) if @temp.gap_id
     @lender = Lender.find(@temp.lender_id) if @temp.lender_id
     @warranty = Warranty.find(@temp.warranty_id) if @temp.warranty_id
 
-    @temp.amount ?  @sales_price = @temp.amount : @sales_price = 0
-    @temp.down_payment ?  @down_payment = @temp.down_payment : @down_payment = 0
-    @temp.term ?  @term = @temp.term : @term = 1
-    @temp.apr ?  @apr = @temp.apr : @apr = 0
-    @temp.trade_in_value ?  @trade_in_value = @temp.trade_in_value : @trade_in_value = 0
-    @temp.sales_tax_amount ?  @sales_tax_amount = @temp.sales_tax_amount : @sales_tax_amount = 0
+    # @temp.down_payment ?  @down_payment = @temp.down_payment : @down_payment = 0
+    # @temp.term ?  @term = @temp.term : @term = 1
+    # @temp.apr ?  @apr = @temp.apr : @apr = 0
+    # @temp.trade_in_value ?  @trade_in_value = @temp.trade_in_value : @trade_in_value = 0
+    # @temp.sales_tax_amount ?  @sales_tax_amount = @temp.sales_tax_amount : @sales_tax_amount = 0
 
 
-    @final_price = @sales_price + @sales_tax_amount - @down_payment - @trade_in_value
-    @monthly_payment = @final_price / @term
+    @amount_financed = @temp.amount + @temp.sales_tax_amount + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.gap_price + @temp.warranty_price + @temp.trade_in_paid - @temp.down_payment - @temp.trade_in_value
+    interest = @temp.apr  * 0.01 if @temp.apr
+    interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
+    @monthly_payment = (@amount_financed + @interest_charge) / @temp.term
   end
 
   def new
-    flash[:temp] ? @temp = Temp.new(flash[:temp]) : @temp = Temp.new
     @dealership = Dealership.find(params[:dealership_id])
-    @employees = @dealership.employees.order('name ASC')
-    @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
-    @customers = @dealership.customers.order('name ASC')
-    @gaps = @dealership.gaps
-    @warranties = @dealership.warranties
-    @lenders = @dealership.lenders
+    sales_tax_amount = 10000 * (@dealership.sales_tax / 100)
+
+    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: @dealership.sales_tax, sales_tax_amount: sales_tax_amount)
+    temp.save
+    redirect_to dealership_temp_path(@dealership, temp)
+
+
 
   end
 
@@ -77,7 +77,7 @@ class TempsController < ApplicationController
     else
       flash[:errors] = @temp.errors.full_messages
       flash[:temp] = params[:temp]
-      redirect_to edit_dealership_temp_path(@dealership, @temp)
+      redirect_to dealership_temp_path(@dealership, @temp)
     end
   end
 
@@ -85,6 +85,17 @@ class TempsController < ApplicationController
     temp = Temp.find(params[:id])
     temp.destroy
     redirect_to root_path
+  end
+
+  def convert
+    temp = Temp.find(params[:id])
+    @dealership = Dealership.find(1)
+    flash[:deal] = {employee_id: temp.employee_id, car_id: temp.car_id, customer_id: temp.customer_id, dealership_id: temp.dealership_id, warranty_id: temp.warranty_id, gap_id: temp.gap_id, lender_id: temp.lender_id, amount: temp.amount, sales_tax_percent: temp.sales_tax_percent, sales_tax_amount: temp.sales_tax_amount, date: temp.date, down_payment: temp.down_payment, apr: temp.apr, term: temp.term, trade_in_value: temp.trade_in_value, trade_in_paid: temp.trade_in_paid, days_to_first_payment: temp.days_to_first_payment, deffered_down_1_payment: temp.deffered_down_1_payment, deffered_down_1_date: temp.deffered_down_1_date, smog_fee: temp.smog_fee, doc_fee: temp.doc_fee, reg_fee: temp.reg_fee, warranty_term: temp.warranty_term, warranty_cost: temp.warranty_cost, warranty_price: temp.warranty_price, warranty_type: temp.warranty_type, gap_term: temp.gap_term, gap_cost: temp.gap_cost, gap_price: temp.gap_price, discount_fee: temp.discount_fee}
+      p temp
+        p "*"  * 100
+        p flash[:deal]
+
+    redirect_to new_dealership_deal_path(@dealership)
   end
 
 end

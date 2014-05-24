@@ -12,6 +12,8 @@ class GapsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @gap = Gap.find(params[:id])
     @deals = Deal.where(gap_id: @gap.id)
+    @temps = @gap.temps
+
   end
 
   def new

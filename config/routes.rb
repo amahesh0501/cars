@@ -51,6 +51,7 @@ Cars::Application.routes.draw do
   match 'dealerships/:id/search', :to => 'dealerships#search', via: :get, as: 'search'
   match 'dealerships/:id/third_parties', :to => 'dealerships#third_parties', via: :get, as: 'parties'
   match 'dealerships/:id/quick_calculate_results', :to => 'deals#show_quick_calculations', via: :get, as: 'quick_calculate_results'
+  match 'dealerships/:id/temps/:id/convert', :to => 'temps#convert', via: :get, as: 'temp_convert'
 
 
 

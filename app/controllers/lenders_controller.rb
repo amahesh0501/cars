@@ -12,6 +12,8 @@ class LendersController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @lender = Lender.find(params[:id])
     @deals = Deal.where(lender_id: @lender.id)
+    @temps = @lender.temps
+
   end
 
   def new
