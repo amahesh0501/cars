@@ -11,6 +11,11 @@ class RepairsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @repair = Repair.find(params[:id])
     @car = Car.find(@repair.car_id)
+    @vendor = Vendor.find(@repair.vendor_id) if @repair.vendor_id
+    @lender = Lender.find(@repair.lender_id) if @repair.lender_id
+    @gap = Gap.find(@repair.gap_id) if @repair.gap_id
+    @warranty = Warranty.find(@repair.warranty_id) if @repair.warranty_id
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new
@@ -19,6 +24,9 @@ class RepairsController < ApplicationController
     @cars = @dealership.cars
     @vendors = @dealership.vendors
     @cards = @dealership.cards
+    @lenders = @dealership.lenders
+    @warranties = @dealership.warranties
+    @gaps = @dealership.gaps
   end
 
   def create
@@ -43,6 +51,9 @@ class RepairsController < ApplicationController
     @vendors = @dealership.vendors
     @fields = flash[:repair] if flash[:repair]
     @cards = @dealership.cards
+    @lenders = @dealership.lenders
+    @warranties = @dealership.warranties
+    @gaps = @dealership.gaps
   end
 
   def update

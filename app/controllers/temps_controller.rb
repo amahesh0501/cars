@@ -17,6 +17,10 @@ class TempsController < ApplicationController
     @lender = Lender.find(@temp.lender_id) if @temp.lender_id
     @warranty = Warranty.find(@temp.warranty_id) if @temp.warranty_id
 
+    @employees = @dealership.employees.order('name ASC')
+    @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
+    @customers = @dealership.customers.order('name ASC')
+
     # @temp.down_payment ?  @down_payment = @temp.down_payment : @down_payment = 0
     # @temp.term ?  @term = @temp.term : @term = 1
     # @temp.apr ?  @apr = @temp.apr : @apr = 0
@@ -24,17 +28,18 @@ class TempsController < ApplicationController
     # @temp.sales_tax_amount ?  @sales_tax_amount = @temp.sales_tax_amount : @sales_tax_amount = 0
 
 
-    @amount_financed = @temp.amount + @temp.sales_tax_amount + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.gap_price + @temp.warranty_price + @temp.trade_in_paid - @temp.down_payment - @temp.trade_in_value
+    @amount_financed = @temp.amount + (@temp.amount * @temp.sales_tax_percent/100) + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.other_fee + @temp.gap_price + @temp.warranty_price + @temp.trade_in_paid - @temp.down_payment - @temp.trade_in_value
     interest = @temp.apr  * 0.01 if @temp.apr
     interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
     @monthly_payment = (@amount_financed + @interest_charge) / @temp.term
+
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new
     @dealership = Dealership.find(params[:dealership_id])
-    sales_tax_amount = 10000 * (@dealership.sales_tax / 100)
 
-    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: @dealership.sales_tax, sales_tax_amount: sales_tax_amount)
+    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: @dealership.sales_tax)
     temp.save
     redirect_to dealership_temp_path(@dealership, temp)
 
@@ -59,13 +64,7 @@ class TempsController < ApplicationController
   def edit
     @dealership = Dealership.find(params[:dealership_id])
     @temp = Temp.find(params[:id])
-    @employees = @dealership.employees
-    @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
-    @customers = @dealership.customers
-    @gaps = @dealership.gaps
-    @warranties = @dealership.warranties
-    @lenders = @dealership.lenders
-    @fields = flash[:temp] if flash[:temp]
+    redirect_to dealership_temp_path(@dealership, @temp)
   end
 
   def update
@@ -82,9 +81,10 @@ class TempsController < ApplicationController
   end
 
   def destroy
+    dealership = Dealership.find(params[:dealership_id])
     temp = Temp.find(params[:id])
     temp.destroy
-    redirect_to root_path
+    redirect_to dealership_deals_path(dealership)
   end
 
   def convert

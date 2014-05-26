@@ -20,13 +20,25 @@
 
 <div class="panel panel-dark" data-collapsed="0">
       <div class="panel-heading">
-        <div class="panel-title">Repair Information</div>
+        <div class="panel-title">Vehicle expense Information</div>
       </div>
       <div class="panel-body">
         <div class="row">
           <div class="col-md-4">
             <p><i class="entypo-forward"></i>Name: <%= @repair.name.length > 0 ? "#{@repair.name}" : "Not Entered" %></p>
             <p><i class="entypo-forward"></i>Vehice: <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></p>
+
+
+          </div>
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Amount: <%= @repair.amount ? "$#{number_with_precision(@repair.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+            <p><i class="entypo-forward"></i>Payment Method: <%= @repair.payment_method.length > 0  ? @repair.payment_method : "Not Entered" %></p>
+
+
+          </div>
+
+          <div class="col-md-4">
+            <p><i class="entypo-forward"></i>Date: <%= @repair.date  ? "#{@repair.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
             <% if @repair.payment_method == "Credit Card" && @repair.card_id %>
               <% card = Card.find(@repair.card_id) %>
               <p><i class="entypo-forward"></i>Credit Card: <%= link_to "#{card.name} (##{card.number})", dealership_card_path(@dealership, card)  %></p>
@@ -34,20 +46,6 @@
               <p><i class="entypo-forward"></i>Check Number: <%= @repair.check_number.length > 0 ? @repair.check_number : "Not entered"  %></p>
             <% end %>
 
-
-          </div>
-          <div class="col-md-4">
-            <p><i class="entypo-forward"></i>Amount: <%= @repair.amount ? "$#{number_with_precision(@repair.amount, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
-            <% if @vendor %>
-              <p><i class="entypo-forward"></i>Vendor: <%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) %></p>
-            <% else %>
-              <p><i class="entypo-forward"></i>Vendor: Not Entered </p>
-            <% end %>
-          </div>
-
-          <div class="col-md-4">
-            <p><i class="entypo-forward"></i>Date: <%= @repair.date  ? "#{@repair.date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
-            <p><i class="entypo-forward"></i>Payment Method: <%= @repair.payment_method.length > 0  ? @repair.payment_method : "Not Entered" %></p>
           </div>
 
 
@@ -67,16 +65,60 @@
       </div>
     </div>
 
+    <div class="panel panel-dark" data-collapsed="0">
+      <div class="panel-heading">
+        <div class="panel-title">Partners</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-4">
+            <% if @vendor %>
+              <p><i class="entypo-forward"></i>Vendor: <%= link_to @vendor.name, dealership_vendor_path(@dealership, @vendor) %></p>
+            <% else %>
+              <p><i class="entypo-forward"></i>Vendor: Not Entered </p>
+            <% end %>
+            <% if @lender %>
+              <p><i class="entypo-forward"></i>Lender: <%= link_to @lender.name, dealership_lender_path(@dealership, @lender) %></p>
+            <% else %>
+              <p><i class="entypo-forward"></i>Lender: Not Entered </p>
+            <% end %>
+
+
+          </div>
+          <div class="col-md-4">
+            <% if @gap %>
+              <p><i class="entypo-forward"></i>Gap Insurance Provider: <%= link_to @gap.name, dealership_gap_path(@dealership, @gap) %></p>
+            <% else %>
+              <p><i class="entypo-forward"></i>Gap Insurance Provider: Not Entered </p>
+            <% end %>
+
+          </div>
+
+          <div class="col-md-4">
+            <% if @warranty %>
+              <p><i class="entypo-forward"></i>Warranty Provider: <%= link_to @warranty.name, dealership_warranty_path(@dealership, @warranty) %></p>
+            <% else %>
+              <p><i class="entypo-forward"></i>Warranty Provider: Not Entered </p>
+            <% end %>
+
+          </div>
+
+
+        </div>
+
+      </div>
+    </div>
 
 
 
 
-    <a href="/dealerships/<%=@dealership.id%>/repairs/<%=@repair.id%>/edit" class="btn btn-info">
+
+    <a href="/dealerships/<%=@dealership.id%>/vehicle-expenses/<%=@repair.id%>/edit" class="btn btn-info">
       <i class="entypo-pencil"></i>
-      Edit Repair
+      Edit Vehicle Expense
     </a>
     <%if @membership.is_dealership_admin %>
-    <%= link_to "<i class='entypo-cross'></i> Delete Repair".html_safe, dealership_repair_path(@dealership, @repair), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+    <%= link_to "<i class='entypo-cross'></i> Delete Vehicle Expense".html_safe, dealership_repair_path(@dealership, @repair), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
     <% end %>
 
 

@@ -13,7 +13,6 @@ class Car < ActiveRecord::Base
   validates_presence_of :make, :model, :year, :acquire_price, :acquire_date, :dealership_id, :status
   validates_numericality_of :acquire_price, :smog_price, :retail_price, :wholesale_price
 
-  validates_uniqueness_of :stock_number
 
 
   has_attached_file :image, styles: { small: "115x115", medium: "320x240"}, default_url: "/car.png"

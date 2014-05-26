@@ -15,6 +15,7 @@ class VendorsController < ApplicationController
     @repairs = Repair.where(vendor_id: @vendor.id)
     @vendor_transactions = @expenses + @repairs
     @transaction_count = @vendor_transactions.length
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

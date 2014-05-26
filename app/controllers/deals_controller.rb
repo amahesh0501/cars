@@ -10,6 +10,7 @@ class DealsController < ApplicationController
   end
 
   def show
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
     @dealership = Dealership.find(params[:dealership_id])
     @deal = Deal.find(params[:id])
     @customer = Customer.find(@deal.customer_id)
@@ -20,16 +21,16 @@ class DealsController < ApplicationController
     @lender = Lender.find(@deal.lender_id) if @deal.lender_id
     @warranty = Warranty.find(@deal.warranty_id) if @deal.warranty_id
 
-    @deal.amount ?  @sales_price = @deal.amount : @sales_price = 0
-    @deal.down_payment ?  @down_payment = @deal.down_payment : @down_payment = 0
-    @deal.term ?  @term = @deal.term : @term = 1
-    @deal.apr ?  @apr = @deal.apr : @apr = 0
-    @deal.trade_in_value ?  @trade_in_value = @deal.trade_in_value : @trade_in_value = 0
-    @deal.sales_tax_amount ?  @sales_tax_amount = @deal.sales_tax_amount : @sales_tax_amount = 0
 
 
-    @final_price = @sales_price + @sales_tax_amount - @down_payment - @trade_in_value
-    @monthly_payment = @final_price / @term
+
+
+
+   @amount_financed = @deal.amount + (@deal.amount * @deal.sales_tax_percent/100) + @deal.smog_fee + @deal.doc_fee + @deal.reg_fee+ @deal.other_fee + @deal.gap_price + @deal.warranty_price + @deal.trade_in_paid - @deal.down_payment - @deal.trade_in_value
+
+   interest = @deal.apr  * 0.01 if @deal.apr
+   interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
+   @monthly_payment = (@amount_financed + @interest_charge) / @deal.term
   end
 
   def new

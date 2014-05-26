@@ -13,6 +13,7 @@ class WarrantiesController < ApplicationController
     @warranty = Warranty.find(params[:id])
     @deals = Deal.where(warranty_id: @warranty.id)
     @temps = @warranty.temps
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

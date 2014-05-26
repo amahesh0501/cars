@@ -5,6 +5,9 @@ class CreateRepairs < ActiveRecord::Migration
       t.belongs_to :dealership
       t.belongs_to :vendor
       t.belongs_to :card
+      t.belongs_to :gap
+      t.belongs_to :warranty
+      t.belongs_to :lender
 
 
       t.string :name

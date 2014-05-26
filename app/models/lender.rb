@@ -4,6 +4,7 @@ class Lender < ActiveRecord::Base
   belongs_to :dealership
   has_many :deals
   has_many :temps
+  has_many :repairs
 
   validates_presence_of :dealership_id, :name
   has_attached_file :image, styles: { medium: "320x240"}, default_url: "/vendor.jpg"

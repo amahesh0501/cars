@@ -11,6 +11,7 @@ class PaychecksController < ApplicationController
     @paycheck = Paycheck.find(params[:id])
     @dealership = Dealership.find(params[:dealership_id])
     @employee = Employee.find(@paycheck.employee_id)
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

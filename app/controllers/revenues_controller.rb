@@ -10,6 +10,7 @@ class RevenuesController < ApplicationController
     @membership = Membership.find_by_user_id(current_user.id)
     @dealership = Dealership.find(params[:dealership_id])
     @revenue = Revenue.find(params[:id])
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

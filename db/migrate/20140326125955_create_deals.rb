@@ -16,6 +16,8 @@ class CreateDeals < ActiveRecord::Migration
       t.float :down_payment, default: 0
       t.integer :term, default: 1
       t.integer :apr, default: 0
+      t.float :commission, default: 0
+
 
 
       t.float :trade_in_value #payoff
@@ -30,16 +32,15 @@ class CreateDeals < ActiveRecord::Migration
       t.date :deffered_down_3_date
 
       t.float :smog_fee, default: 0
+      t.float :other_fee, default: 0
       t.float :doc_fee, default: 0
       t.float :reg_fee, default: 0
 
       t.float :warranty_term, default: 0
-      t.float :warranty_cost, default: 0
       t.float :warranty_price, default: 0
       t.string :warranty_type
 
       t.float :gap_term, default: 0
-      t.float :gap_cost, default: 0
       t.float :gap_price, default: 0
 
       t.float :discount_fee, default: 0

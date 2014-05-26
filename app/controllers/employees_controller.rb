@@ -15,6 +15,7 @@ class EmployeesController < ApplicationController
     @cars = []
     @deals.each {|deal| @cars << Car.find(deal.car_id)}
     @temps = @employee.temps
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

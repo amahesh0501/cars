@@ -54,6 +54,7 @@
               <th>Customer</th>
               <th>Amount</th>
               <th>Date</th>
+              <th>Manage</th>
             </tr>
           </thead>
           <tbody>
@@ -64,12 +65,12 @@
               <% if car %>
               <td><%= link_to car.make_model_year, dealership_temp_path(@dealership, deal)  %></td>
               <% else %>
-              <td>N/A</td>
+              <td><%= link_to "N/A", dealership_temp_path(@dealership, deal)  %></td>
               <% end %>
               <% if customer %>
-              <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
+              <td><%= link_to customer.name, dealership_temp_path(@dealership, deal)  %></td>
               <% else %>
-              <td>N/A</td>
+              <td><%= link_to "N/A", dealership_temp_path(@dealership, deal)  %></td>
               <% end %>
               <td><%= link_to "$#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)}", dealership_temp_path(@dealership, deal)  %></td>
               <% if deal.date %>
@@ -77,6 +78,7 @@
               <% else %>
               <td><%= link_to "N/A", dealership_temp_path(@dealership, deal)  %></td>
               <% end %>
+              <td><%= link_to "Edit", edit_dealership_temp_path(@dealership, deal)  %> | <%= link_to "Delete", dealership_temp_path(@dealership, deal), method: "delete", confirm: "Are you sure?"  %></td>
             </tr>
             <% end %>
           </tbody>

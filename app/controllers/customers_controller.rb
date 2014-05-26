@@ -14,6 +14,7 @@ class CustomersController < ApplicationController
     @conversations = @customer.conversations.order(:date).reverse
     @deals = Deal.find_all_by_customer_id(@customer.id)
     @temps = @customer.temps
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

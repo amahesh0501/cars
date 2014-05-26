@@ -121,6 +121,7 @@ class ExpensesController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @expense = Expense.find(params[:id])
     @partner = Partner.find(@expense.partner_id) if @expense.partner_id
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

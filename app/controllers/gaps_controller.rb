@@ -13,7 +13,7 @@ class GapsController < ApplicationController
     @gap = Gap.find(params[:id])
     @deals = Deal.where(gap_id: @gap.id)
     @temps = @gap.temps
-
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

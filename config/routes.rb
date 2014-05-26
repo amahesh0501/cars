@@ -13,7 +13,7 @@ Cars::Application.routes.draw do
     resources :deals
     resources :cars, path:"vehicles"
     resources :expenses
-    resources :repairs
+    resources :repairs, path:"vehicle-expenses"
     resources :paychecks
     resources :vendors
     resources :employees

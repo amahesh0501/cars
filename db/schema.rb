@@ -174,8 +174,9 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.float    "sales_tax_amount",        default: 0.0
     t.float    "sales_tax_percent",       default: 0.0
     t.float    "down_payment",            default: 0.0
-    t.integer  "term",                    default: 0
+    t.integer  "term",                    default: 1
     t.integer  "apr",                     default: 0
+    t.float    "commission",              default: 0.0
     t.float    "trade_in_value"
     t.float    "trade_in_paid"
     t.float    "days_to_first_payment"
@@ -186,14 +187,13 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.float    "deffered_down_3_payment", default: 0.0
     t.date     "deffered_down_3_date"
     t.float    "smog_fee",                default: 0.0
+    t.float    "other_fee",               default: 0.0
     t.float    "doc_fee",                 default: 0.0
     t.float    "reg_fee",                 default: 0.0
     t.float    "warranty_term",           default: 0.0
-    t.float    "warranty_cost",           default: 0.0
     t.float    "warranty_price",          default: 0.0
     t.string   "warranty_type"
     t.float    "gap_term",                default: 0.0
-    t.float    "gap_cost",                default: 0.0
     t.float    "gap_price",               default: 0.0
     t.float    "discount_fee",            default: 0.0
     t.datetime "created_at"
@@ -386,6 +386,9 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.integer  "dealership_id"
     t.integer  "vendor_id"
     t.integer  "card_id"
+    t.integer  "gap_id"
+    t.integer  "warranty_id"
+    t.integer  "lender_id"
     t.string   "name"
     t.float    "amount"
     t.text     "description"
@@ -419,7 +422,7 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.float    "sales_tax_amount",        default: 0.0
     t.float    "sales_tax_percent",       default: 0.0
     t.float    "down_payment",            default: 0.0
-    t.integer  "term",                    default: 0
+    t.integer  "term",                    default: 1
     t.integer  "apr",                     default: 0
     t.float    "trade_in_value",          default: 0.0
     t.float    "trade_in_paid",           default: 0.0
@@ -431,14 +434,13 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.float    "deffered_down_3_payment", default: 0.0
     t.date     "deffered_down_3_date"
     t.float    "smog_fee",                default: 0.0
-    t.float    "doc_fee",                 default: 0.0
-    t.float    "reg_fee",                 default: 0.0
+    t.float    "other_fee",               default: 0.0
+    t.float    "doc_fee",                 default: 50.0
+    t.float    "reg_fee",                 default: 50.0
     t.float    "warranty_term",           default: 0.0
-    t.float    "warranty_cost",           default: 0.0
     t.float    "warranty_price",          default: 0.0
     t.string   "warranty_type"
     t.float    "gap_term",                default: 0.0
-    t.float    "gap_cost",                default: 0.0
     t.float    "gap_price",               default: 0.0
     t.float    "discount_fee",            default: 0.0
     t.datetime "created_at"

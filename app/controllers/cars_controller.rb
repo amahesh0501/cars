@@ -29,9 +29,14 @@ class CarsController < ApplicationController
     @car.frontend_pac ? @frontend_pac = @car.frontend_pac : @frontend_pac = 0
     @car.backend_pac ? @backend_pac = @car.backend_pac : @backend_pac = 0
     @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @backend_pac if @car.acquire_price
+
     @purchase_price = 0
     @temps = @car.temps
     @deal = Deal.find_by_car_id(@car.id)
+    if @deal
+      @amount_financed = @deal.amount + (@deal.amount * @deal.sales_tax_percent/100) + @deal.smog_fee + @deal.doc_fee + @deal.reg_fee + @deal.other_fee + @deal.gap_price + @deal.warranty_price
+    end
+
     @purchase_price = @deal.amount if @deal
     @profit = @purchase_price - @total_price if @purchase_price && @total_price
     is_dealership_admin_view? ? @is_admin = true : @is_admin = false

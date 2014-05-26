@@ -13,7 +13,7 @@ class LendersController < ApplicationController
     @lender = Lender.find(params[:id])
     @deals = Deal.where(lender_id: @lender.id)
     @temps = @lender.temps
-
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

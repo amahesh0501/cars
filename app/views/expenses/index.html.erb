@@ -203,7 +203,7 @@
               <% if @is_admin == true %>
               <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Purchase".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% end %>
-              <%= link_to "<i class='entypo-plus'></i> Add Repair Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+              <%= link_to "<i class='entypo-plus'></i> Add Vehicle Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% if @is_admin == true %>
               <%= link_to "<i class='entypo-plus'></i> Add Paycheck Expense".html_safe, new_dealership_paycheck_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% end %>
@@ -213,9 +213,9 @@
               <ul class="nav nav-tabs">
                 <% if @is_admin == true %><li class="active"><a href="#purchase" data-toggle="tab">Vehicle Purchases</a></li><% end %>
                 <% if @is_admin != true %>
-                <li class="active"><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <li class="active"><a href="#repair" data-toggle="tab">Vehilce Expenses</a></li>
                 <% else %>
-                <li><a href="#repair" data-toggle="tab">Repairs</a></li>
+                <li><a href="#repair" data-toggle="tab">Vehicle Expenses</a></li>
                 <% end %>
                 <% if @is_admin == true %><li><a href="#paycheck" data-toggle="tab">Employee Paychecks</a></li><% end %>
                 <li><a href="#misc-exp" data-toggle="tab">Misc Expenses</a></li>

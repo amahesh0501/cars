@@ -13,6 +13,7 @@ class ConversationsController < ApplicationController
     @customer = Customer.find(@conversation.customer_id)
     @employee = Employee.find(@conversation.employee_id) if @conversation.employee_id
     @expenses = Expense.where(conversation_id: @conversation.id)
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

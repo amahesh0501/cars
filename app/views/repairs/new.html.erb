@@ -7,13 +7,21 @@
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
 
-    <h2>Add a Repair Expense </h2>
+    <h2>Add a Vehicle Expense </h2>
 
     <div class="panel-body">
+
+
 
     <%= form_for [@dealership, @repair], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
 
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Car</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, :selected => params[:car_id] %>
+      </div>
+    </div>
     <div class="form-group">
       <label class="col-sm-3 control-label">Name</label>
       <div class="col-sm-5">
@@ -50,13 +58,6 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Vendor</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :vendor_id, @vendors.all, :id, :name, prompt: true, selected: params[:vendor_id] %>
-        &nbsp; <%= link_to "(Add New Vendor)", new_dealership_vendor_path(@dealership), target: "_blank" %>
-      </div>
-    </div>
-    <div class="form-group">
       <label class="col-sm-3 control-label">Description</label>
       <div class="col-sm-5">
         <%= f.text_area :description, class: "form-control" %>
@@ -68,10 +69,35 @@
         <%= f.date_field :date, class: "form-control" %>
       </div>
     </div>
+
+
+    <h3>Partners</h3>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Car</label>
+      <label class="col-sm-3 control-label">Vendor</label>
       <div class="col-sm-5">
-        <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, :selected => params[:car_id] %>
+        <%= f.collection_select :vendor_id, @vendors.all, :id, :name, prompt: true, selected: params[:vendor_id] %>
+        &nbsp; <%= link_to "(Add New Vendor)", new_dealership_vendor_path(@dealership), target: "_blank" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Warranty Provider</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :warranty_id, @warranties.all, :id, :name, prompt: true, selected: params[:warranty_id] %>
+        &nbsp; <%= link_to "(Add New Warranty Provider)", new_dealership_warranty_path(@dealership), target: "_blank" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">GAP Provider</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :gap_id, @gaps.all, :id, :name, prompt: true, selected: params[:gap_id] %>
+        &nbsp; <%= link_to "(Add New GAP Provider)", new_dealership_gap_path(@dealership), target: "_blank" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Lender</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :lender_id, @lenders.all, :id, :name, prompt: true, selected: params[:lender_id] %>
+        &nbsp; <%= link_to "(Add New Lender)", new_dealership_lender_path(@dealership), target: "_blank" %>
       </div>
     </div>
 
@@ -80,7 +106,7 @@
     <div class="form-group">
       <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
-            <%= f.submit "Create Repair Expense", :class => 'btn btn-success'  %>
+            <%= f.submit "Create Vehicle Expense", :class => 'btn btn-success'  %>
       </div>
     </div>
     <% end %>

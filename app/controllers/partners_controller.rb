@@ -13,6 +13,7 @@ class PartnersController < ApplicationController
     @partner = Partner.find(params[:id])
     @expenses = Expense.where(partner_id: @partner.id)
     @transaction_count = @expenses.length
+    is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
 
   def new

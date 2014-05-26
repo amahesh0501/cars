@@ -85,8 +85,7 @@
 
             <!-- tabs for the profile links -->
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#home" data-toggle="tab">Calculations</a></li>
-              <li><a href="#profile" data-toggle="tab">Deal Deatils</a></li>
+              <li class="active"><a href="#home" data-toggle="tab">Deal Details</a></li>
             </ul>
 
 
@@ -101,123 +100,44 @@
       </section>
       <div class="tab-content">
         <div class="tab-pane active" id="home">
-          <div class="tile-stats tile-aqua">
-            <div class="icon"><i class="entypo-calendar"></i></div>
-            <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@monthly_payment, :delimiter => ',', precision: 2)}" %></h2></div>
 
-            <h3><%= "Monthly Payment" %></h3>
-            <p><%= "Something looks off, check your numbers and recalculate below" if @monthly_payment.to_i <= 0 %></p>
-          </div>
+          <div class="row">
+            <div class="col-sm-4">
 
-          <%= form_for [@dealership, @deal], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
-          <%= render 'layouts/error_messages', object: f.object %>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Sales Price</label>
-            <div class="col-sm-5">
-              <div class="input-group">
-                <span class="input-group-addon">$</span>
-                <%= f.text_field :amount, class: "form-control" %>
+              <div class="tile-stats tile-aqua">
+                <div class="icon"><i class="entypo-calendar"></i></div>
+                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@monthly_payment, :delimiter => ',', precision: 2)}" %></h2></div>
+
+                <h3><%= "Monthly Payment" %></h3>
               </div>
+
             </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Sales Tax Percent</label>
-            <div class="col-sm-5">
-              <% if @fields %>
-                <div class="input-group">
-                  <%= f.text_field :sales_tax_percent, value: @fields["sales_tax_percent"], class: "form-control" %>
-                  <span class="input-group-addon">%</span>
-                </div>
-              <% else %>
-                <div class="input-group">
-                  <%= f.text_field :sales_tax_percent, class: "form-control" %>
-                  <span class="input-group-addon">%</span>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Down Payment</label>
-            <div class="col-sm-5">
-              <% if @fields %>
-                <div class="input-group">
-                  <span class="input-group-addon">$</span>
-                  <%= f.text_field :down_payment, value: @fields["down_payment"], class: "form-control" %>
-                </div>
-              <% else %>
-                <div class="input-group">
-                  <span class="input-group-addon">$</span>
-                  <%= f.text_field :down_payment, class: "form-control" %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Term</label>
-            <div class="col-sm-5">
-              <% if @fields %>
-              <div class="input-group">
-              <%= f.text_field :term, value: @fields["term"], class: "form-control" %>
-              <span class="input-group-addon">months</span>
+
+            <div class="col-sm-4">
+
+              <div class="tile-stats tile-red">
+                <div class="icon"><i class="entypo-clipboard"></i></div>
+                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@amount_financed, :delimiter => ',', precision: 2)}" %></h2></div>
+
+                <h3><%= "Amount Financed" %></h3>
               </div>
-              <% else %>
-              <div class="input-group">
-              <%= f.text_field :term, class: "form-control" %>
-              <span class="input-group-addon">months</span>
+
+            </div>
+
+            <div class="col-sm-4">
+
+              <div class="tile-stats tile-green">
+                <div class="icon"><i class="entypo-flash"></i></div>
+                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@interest_charge, :delimiter => ',', precision: 2)}" %></h2></div>
+
+                <h3><%= "Interest Charged" %></h3>
               </div>
-              <% end %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">APR</label>
-            <div class="col-sm-5">
-              <% if @fields %>
-              <div class="input-group">
-              <%= f.text_field :apr, value: @fields["apr"], class: "form-control" %>
-              <span class="input-group-addon">%</span>
-              </div>
-              <% else %>
-              <div class="input-group">
-              <%= f.text_field :apr, class: "form-control" %>
-              <span class="input-group-addon">%</span>
-              </div>
-              <% end %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">Trade in Value</label>
-            <div class="col-sm-5">
-              <% if @fields %>
-                <div class="input-group">
-                  <span class="input-group-addon">$</span>
-                  <%= f.text_field :trade_in_value, value: @fields["trade_in_value"], class: "form-control" %>
-                </div>
-              <% else %>
-                <div class="input-group">
-                  <span class="input-group-addon">$</span>
-                  <%= f.text_field :trade_in_value, class: "form-control" %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="col-sm-3 control-label"></label>
-            <div class="col-sm-5">
-              <%= f.submit "Update Deal", :class => 'btn btn-success'  %>
 
             </div>
+
+
           </div>
-          <% end %>
 
-
-
-        </div>
-
-
-
-
-        <div class="tab-pane" id="profile">
 
 
           <div class="panel panel-dark" data-collapsed="0">
@@ -250,6 +170,7 @@
                   <p><i class="entypo-forward"></i>Term: <%= @deal.term > 0 ? "#{@deal.term} months" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Defered Down Payment Date: <%= @deal.deffered_down_1_date ? @deal.deffered_down_1_date.strftime("%m/%d/%Y") : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Trade Allowance: <%= @deal.trade_in_value > 0 ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Registration Fee: <%= @deal.reg_fee > 0 ? "$#{number_with_precision(@deal.reg_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 
 
 
@@ -259,6 +180,8 @@
                   <p><i class="entypo-forward"></i>Down Payment: <%= @deal.down_payment > 0 ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                   <% first_payment_date = @deal.deffered_down_1_date + @deal.days_to_first_payment if @deal.days_to_first_payment %>
                   <p><i class="entypo-forward"></i>First Payment Date: <%= first_payment_date ? first_payment_date("%m/%d/%Y") : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Smog Fee: <%= @deal.smog_fee > 0 ? "$#{number_with_precision(@deal.smog_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Other Fees: <%= @deal.other_fee > 0 ? "$#{number_with_precision(@deal.other_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 
 
                 </div>
@@ -266,6 +189,7 @@
                   <p><i class="entypo-forward"></i>APR: <%= @deal.apr > 0 ? "#{@deal.apr}%" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Defered Down Payment: <%= @deal.deffered_down_1_payment > 0 ? "$#{number_with_precision(@deal.deffered_down_1_payment, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Less Payoff: <%= @deal.trade_in_paid > 0 ? "$#{number_with_precision(@deal.trade_in_paid, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Document Fee: <%= @deal.doc_fee > 0 ? "$#{number_with_precision(@deal.doc_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 
 
                 </div>
@@ -281,14 +205,12 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>GAP Provider: <%= @gap ? @gap.name : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Price Charged Customer: <%= @deal.gap_price ? "$#{number_with_precision(@deal.gap_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>GAP Price: <%= @deal.gap_price ? "$#{number_with_precision(@deal.gap_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Term: <%= @deal.gap_term ? "#{number_with_precision(@deal.gap_term, :delimiter => ',', precision: 0)} months" : "Not Entered" %></p>
                 </div>
-                <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Cost: <%= @deal.gap_cost ? "$#{number_with_precision(@deal.gap_cost, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
-                </div>
+
               </div>
             </div>
           </div>
@@ -301,12 +223,11 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Warranty Provider: <%= @warranty ? @warranty.name : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Cost: <%= @deal.warranty_cost ? "$#{number_with_precision(@deal.warranty_cost, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Warranty Price: <%= @deal.warranty_price ? "$#{number_with_precision(@deal.warranty_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
 
                 </div>
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Type: <%= @deal.warranty_type ? @deal.warranty_type : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Price Charged Customer: <%= @deal.warranty_price ? "$#{number_with_precision(@deal.warranty_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Type: <%= @deal.warranty_type.length > 0 ? @deal.warranty_type : "Not Entered" %></p>
 
                 </div>
                 <div class="col-md-4">
