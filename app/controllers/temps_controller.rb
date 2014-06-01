@@ -32,8 +32,9 @@ class TempsController < ApplicationController
 
   def new
     @dealership = Dealership.find(params[:dealership_id])
+    @dealership.sales_tax ? sales_tax_percent = @dealership.sales_tax : sales_tax_percent = 0
 
-    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: @dealership.sales_tax)
+    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: sales_tax_percent)
     temp.save
     redirect_to dealership_temp_path(@dealership, temp)
 
