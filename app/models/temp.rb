@@ -1,5 +1,5 @@
 class Temp < ActiveRecord::Base
-  attr_accessible :employee_id, :car_id, :customer_id, :dealership_id, :warranty_id, :gap_id, :lender_id, :amount, :sales_tax_percent, :sales_tax_amount, :date, :down_payment, :apr, :term, :trade_in_value, :trade_in_paid, :days_to_first_payment, :deffered_down_1_payment, :deffered_down_1_date, :deffered_down_2_payment, :deffered_down_2_date, :deffered_down_3_payment, :deffered_down_3_date, :smog_fee, :doc_fee, :reg_fee, :warranty_term, :warranty_price, :warranty_type, :gap_term, :gap_price, :discount_fee, :other_fee
+  attr_accessible :employee_id, :car_id, :customer_id, :dealership_id, :warranty_id, :gap_id, :lender_id, :amount, :sales_tax_percent, :sales_tax_amount, :date, :down_payment, :apr, :term, :trade_in_value, :less_payoff, :days_to_first_payment, :deffered_down_1_payment, :deffered_down_1_date, :deffered_down_2_payment, :deffered_down_2_date, :deffered_down_3_payment, :deffered_down_3_date, :smog_fee, :doc_fee, :reg_fee, :warranty_term, :warranty_price, :warranty_type, :gap_term, :gap_price, :discount_fee, :other_fee
 
 
   belongs_to :dealership
@@ -26,8 +26,8 @@ class Temp < ActiveRecord::Base
   def trade_in_value=(num)
     self[:trade_in_value] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
-  def trade_in_paid=(num)
-    self[:trade_in_paid] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  def less_payoff=(num)
+    self[:less_payoff] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
   def deffered_down_1_payment=(num)
     self[:deffered_down_1_payment] = num.to_s.scan(/\b-?[\d.]+/).join.to_f

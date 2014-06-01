@@ -130,7 +130,7 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Trade Allowance</label>
+      <label class="col-sm-3 control-label">Trade In Value</label>
       <div class="col-sm-5">
         <% if @fields %>
           <div class="input-group">
@@ -153,13 +153,13 @@
         <% if @fields %>
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :trade_in_paid, value: @fields["trade_in_paid"], class: "form-control" %>
+            <%= f.text_field :less_payoff, value: @fields["less_payoff"], class: "form-control" %>
 
           </div>
         <% else %>
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :trade_in_paid, class: "form-control" %>
+            <%= f.text_field :less_payoff, class: "form-control" %>
 
           </div>
         <% end %>

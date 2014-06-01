@@ -20,6 +20,7 @@ Cars::Application.routes.draw do
     resources :revenues
     resources :forms
     resources :temps
+    resources :commissions
     resources :auctions
     resources :floorers
     resources :cards

@@ -169,7 +169,7 @@
                   <p><i class="entypo-forward"></i>Purchase Price: <%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></p>
                   <p><i class="entypo-forward"></i>Term: <%= @deal.term > 0 ? "#{@deal.term} months" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Defered Down Payment Date: <%= @deal.deffered_down_1_date ? @deal.deffered_down_1_date.strftime("%m/%d/%Y") : "N/A"  %></p>
-                  <p><i class="entypo-forward"></i>Trade Allowance: <%= @deal.trade_in_value > 0 ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Trade In Value: <%= @deal.trade_in_value > 0 ? "$#{number_with_precision(@deal.trade_in_value, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Registration Fee: <%= @deal.reg_fee > 0 ? "$#{number_with_precision(@deal.reg_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 
 
@@ -188,7 +188,7 @@
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>APR: <%= @deal.apr > 0 ? "#{@deal.apr}%" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Defered Down Payment: <%= @deal.deffered_down_1_payment > 0 ? "$#{number_with_precision(@deal.deffered_down_1_payment, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
-                  <p><i class="entypo-forward"></i>Less Payoff: <%= @deal.trade_in_paid > 0 ? "$#{number_with_precision(@deal.trade_in_paid, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>Less Payoff: <%= @deal.less_payoff > 0 ? "$#{number_with_precision(@deal.less_payoff, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Document Fee: <%= @deal.doc_fee > 0 ? "$#{number_with_precision(@deal.doc_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 
 

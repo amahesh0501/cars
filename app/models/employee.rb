@@ -6,6 +6,7 @@ class Employee < ActiveRecord::Base
   has_many :paychecks
   has_many :conversations
   has_many :temps
+  has_many :commissions
 
   validates_presence_of :dealership_id
 

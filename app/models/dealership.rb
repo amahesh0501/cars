@@ -23,6 +23,8 @@ class Dealership < ActiveRecord::Base
   has_many :warranties
   has_many :lenders
   has_many :partners
+  has_many :commissions
+
 
   validates_presence_of :dealership_name
 

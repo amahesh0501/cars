@@ -11,7 +11,9 @@ class EmployeesController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @employee = Employee.find(params[:id])
     @paychecks = Paycheck.where(employee_id: @employee.id).order(:date).reverse
+    @commissions = Commission.where(employee_id: @employee.id).order(:date).reverse
     @deals = Deal.where(employee_id: @employee.id)
+    @cc
     @cars = []
     @deals.each {|deal| @cars << Car.find(deal.car_id)}
     @temps = @employee.temps

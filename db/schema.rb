@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140520035908) do
+ActiveRecord::Schema.define(version: 20140530170712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,14 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.datetime "updated_at"
   end
 
+  create_table "commissions", force: true do |t|
+    t.integer "car_id"
+    t.integer "employee_id"
+    t.integer "dealership_id"
+    t.date    "date"
+    t.float   "amount"
+  end
+
   create_table "conversations", force: true do |t|
     t.integer  "dealership_id"
     t.integer  "employee_id"
@@ -177,8 +185,8 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.integer  "term",                    default: 1
     t.integer  "apr",                     default: 0
     t.float    "commission",              default: 0.0
-    t.float    "trade_in_value"
-    t.float    "trade_in_paid"
+    t.float    "trade_in_value",          default: 0.0
+    t.float    "less_payoff",             default: 0.0
     t.float    "days_to_first_payment"
     t.float    "deffered_down_1_payment", default: 0.0
     t.date     "deffered_down_1_date"
@@ -425,7 +433,7 @@ ActiveRecord::Schema.define(version: 20140520035908) do
     t.integer  "term",                    default: 1
     t.integer  "apr",                     default: 0
     t.float    "trade_in_value",          default: 0.0
-    t.float    "trade_in_paid",           default: 0.0
+    t.float    "less_payoff",             default: 0.0
     t.float    "days_to_first_payment"
     t.float    "deffered_down_1_payment", default: 0.0
     t.date     "deffered_down_1_date"

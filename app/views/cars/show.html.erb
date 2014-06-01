@@ -522,6 +522,18 @@
                     </tr>
 
                     <tr>
+                      <% if @commission %>
+                        <td class="normal-table-vehicle">Commission (<%= link_to "Edit", edit_dealership_commission_path(@dealership, @commission)%> | <%= link_to "Delete", dealership_commission_path(@dealership, @commission), method: "delete", confirm: "Are you sure" %>)</td>
+                        <td class="normal-table-vehicle"></td>
+                        <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@commission_amount, :delimiter => ',', :precision => 2)}" %></td>
+                      <% else %>
+                      <td class="normal-table-vehicle">Commission (<%= link_to "Add", new_dealership_commission_path(@dealership, :car_id => @car.id)%>)</td>
+                      <td class="normal-table-vehicle"></td>
+                      <td class="text-right normal-table-vehicle">$0.00</td>
+                      <% end %>
+                    </tr>
+
+                    <tr>
                       <td class="normal-table-vehicle">Frontend PAC</td>
                       <td class="normal-table-vehicle"></td>
                       <td class="text-right normal-table-vehicle"><%= @car.frontend_pac ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>

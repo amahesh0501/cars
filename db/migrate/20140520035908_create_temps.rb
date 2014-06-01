@@ -18,8 +18,8 @@ class CreateTemps < ActiveRecord::Migration
       t.integer :apr, default: 0
 
 
-      t.float :trade_in_value, default: 0 #payoff
-      t.float :trade_in_paid, default: 0
+      t.float :trade_in_value, default: 0
+      t.float :less_payoff, default: 0
 
       t.float :days_to_first_payment
       t.float :deffered_down_1_payment, default: 0

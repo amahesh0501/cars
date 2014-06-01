@@ -26,7 +26,7 @@ class DealsController < ApplicationController
 
 
 
-   @amount_financed = @deal.amount + (@deal.amount * @deal.sales_tax_percent/100) + @deal.smog_fee + @deal.doc_fee + @deal.reg_fee+ @deal.other_fee + @deal.gap_price + @deal.warranty_price + @deal.trade_in_paid - @deal.down_payment - @deal.trade_in_value
+   @amount_financed = @deal.amount + (@deal.amount * @deal.sales_tax_percent/100) + @deal.smog_fee + @deal.doc_fee + @deal.reg_fee+ @deal.other_fee + @deal.gap_price + @deal.warranty_price + @deal.trade_in_value - @deal.down_payment - @deal.less_payoff
 
    interest = @deal.apr  * 0.01 if @deal.apr
    interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0

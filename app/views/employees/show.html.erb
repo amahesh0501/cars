@@ -70,7 +70,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#details" data-toggle="tab">Employee Details</a></li>
               <li><a href="#deal" data-toggle="tab">Deals</a></li>
-              <li><a href="#paycheck" data-toggle="tab">Paychecks</a></li>
+              <li><a href="#paycheck" data-toggle="tab">Payments</a></li>
 
             </ul>
 
@@ -206,7 +206,7 @@
                 </div>
 
                 <% if @deals.length ==0 %>
-                <br/><p><%= @employee.name %> does not have any finalized deals yet %></p>
+                <br/><p><%= @employee.name %> does not have any finalized deals yet</p>
                 <%end%>
 
               </section>
@@ -283,34 +283,83 @@
 
         </div>
         <div class="tab-pane" id="paycheck">
-          <%= link_to "<i class='entypo-plus'></i> Add Paycheck".html_safe, new_dealership_paycheck_path(@dealership, :employee_id => @employee.id),  class: "btn btn-success", role: "button" %><br/><br/>
 
-          <% if @paychecks.length > 0 %>
-          <table class="table table-bordered datatable" id="table-1">
-            <thead>
-              <tr>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Manage</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @paychecks.each do |paycheck|  %>
-              <tr class="gradeU">
-                <td><%= link_to "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, paycheck) %></td>
-                <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
-                <td><%= paycheck.description.length > 0 ? paycheck.description : "No description entered"  %></td>
-                <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck, employee_id: paycheck.employee_id)%> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure" %></td>
-              </tr>
+          <%= link_to "<i class='entypo-plus'></i> Add Paycheck".html_safe, new_dealership_paycheck_path(@dealership, :employee_id => @employee.id),  class: "btn btn-success", role: "button" %>
+          <%= link_to "<i class='entypo-plus'></i> Add Commission".html_safe, new_dealership_commission_path(@dealership, :employee_id => @employee.id),  class: "btn btn-success", role: "button" %>
+
+          <br/><br/>
+
+
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#home" data-toggle="tab">Paychecks</a></li>
+            <li><a href="#profile" data-toggle="tab">Commissions</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">
+
+              <% if @paychecks.length > 0 %>
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @paychecks.each do |paycheck|  %>
+                  <tr class="gradeU">
+                    <td><%= link_to "$#{number_with_precision(paycheck.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, paycheck) %></td>
+                    <td><%= paycheck.date.strftime("%m/%d/%Y")  %></td>
+                    <td><%= paycheck.description.length > 0 ? paycheck.description : "No description entered"  %></td>
+                    <td><%= link_to "Edit", edit_dealership_paycheck_path(@dealership, paycheck, employee_id: paycheck.employee_id)%> | <%= link_to "Delete", dealership_paycheck_path(@dealership, paycheck), method: "delete", confirm: "Are you sure" %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
               <% end %>
-            </tbody>
-          </table>
-          <% end %>
 
 
 
-          <%= "<br/><br/>No paychecks have been added".html_safe if @paychecks.length == 0 %>
+              <%= "<br/><br/>No paychecks have been added".html_safe if @paychecks.length == 0 %>
+            </div>
+            <div class="tab-pane" id="profile">
+              <% if @commissions.length > 0 %>
+              <table class="table table-bordered datatable" id="table-1">
+                <thead>
+                  <tr>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Vehicle</th>
+                    <th>Manage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @commissions.each do |commission|  %>
+                  <% car = Car.find(commission.car_id) %>
+                  <tr class="gradeU">
+                    <td><%= "$#{number_with_precision(commission.amount, :delimiter => ',', precision: 2)}" %></td>
+                    <td><%= commission.date ? commission.date.strftime("%m/%d/%Y") : "N/A"  %></td>
+                    <td><%= link_to "#{car.make_model_year}", dealership_car_path(@dealership, car)  %></td>
+                    <td><%= link_to "Edit", edit_dealership_commission_path(@dealership, commission, employee_id: commission.employee_id)%> | <%= link_to "Delete", dealership_commission_path(@dealership, commission, next_page: "employee"), method: "delete", confirm: "Are you sure" %></td>
+                  </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <% end %>
+
+
+
+              <%= "<br/><br/>No commissions have been added".html_safe if @commissions.length == 0 %>
+
+            </div>
+
+          </div>
+
+
 
 
 

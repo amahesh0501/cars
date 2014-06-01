@@ -38,7 +38,7 @@
         <div class="col-sm-3">
 
           <div class="profile-buttons">
-            <%= link_to "<i class='entypo-cross'></i> Finalize Deal".html_safe, new_dealership_deal_path(@dealership, car_id: @temp.car_id, customer_id: @temp.customer_id, employee_id: @temp.employee_id, amount: @temp.amount, sales_tax_percent: @temp.sales_tax_percent, down_payment: @temp.down_payment, term: @temp.term, apr: @temp.apr, trade_in_value: @temp.trade_in_value, trade_in_paid: @temp.trade_in_paid, warranty_price: @temp.warranty_price, gap_price: @temp.gap_price, doc_fee: @temp.doc_fee, reg_fee: @temp.reg_fee, smog_fee: @temp.smog_fee, other_fee: @temp.other_fee), class: "btn btn-success", role: "button" %>
+            <%= link_to "<i class='entypo-cross'></i> Finalize Deal".html_safe, new_dealership_deal_path(@dealership, car_id: @temp.car_id, customer_id: @temp.customer_id, employee_id: @temp.employee_id, amount: @temp.amount, sales_tax_percent: @temp.sales_tax_percent, down_payment: @temp.down_payment, term: @temp.term, apr: @temp.apr, trade_in_value: @temp.trade_in_value, less_payoff: @temp.less_payoff, warranty_price: @temp.warranty_price, gap_price: @temp.gap_price, doc_fee: @temp.doc_fee, reg_fee: @temp.reg_fee, smog_fee: @temp.smog_fee, other_fee: @temp.other_fee), class: "btn btn-success", role: "button" %>
 
 
 
@@ -244,7 +244,7 @@
               <label class="control-label">Less Payoff</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :trade_in_paid, class: "form-control" %>
+                  <%= f.text_field :less_payoff, class: "form-control" %>
                 </div>
 
             </div>

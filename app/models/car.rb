@@ -9,6 +9,7 @@ class Car < ActiveRecord::Base
   has_many :temps
   has_many :repairs, dependent: :destroy
   has_one :purchase, dependent: :destroy
+  has_one :commission
 
   validates_presence_of :make, :model, :year, :acquire_price, :acquire_date, :dealership_id, :status
   validates_numericality_of :acquire_price, :smog_price, :retail_price, :wholesale_price

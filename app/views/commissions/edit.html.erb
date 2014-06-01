@@ -1,0 +1,76 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Update Commission</h2>
+
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-md-8"></div>
+        <%= link_to " Delete Commission".html_safe, dealership_commission_path(@dealership, @commission, next_page: "employee"), method: "delete", confirm: "Are you sure",  class: "btn btn-danger", role: "button" %>
+
+      </div>
+
+    <%= form_for [@dealership, @commission], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Frontline Vehicle</label>
+      <div class="col-sm-5">
+        <% car = Car.find(@commission.car_id) %>
+        <%= car.make_model_year %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Employee</label>
+      <div class="col-sm-5">
+        <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, class: "form-control" %>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Amount</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Date</label>
+      <div class="col-sm-5">
+        <%= f.date_field :date, class: "form-control" %>
+      </div>
+    </div>
+
+    <% if params[:employee_id] %>
+    <%= f.hidden_field :next_page, :value => "employee" %>
+    <% end %>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Update Commission", :class => 'btn btn-success'  %>
+
+
+      </div>
+    </div>
+    <% end %>
+
+
+
+
+
+
+  </div>
+</div>
