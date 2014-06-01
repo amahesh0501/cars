@@ -22,7 +22,7 @@ class TempsController < ApplicationController
     @customers = @dealership.customers.order('name ASC')
 
 
-    @amount_financed = @temp.amount + (@temp.amount * @temp.sales_tax_percent/100) + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.other_fee + @temp.gap_price + @temp.warranty_price + @temp.trade_in_value - @temp.down_payment - @temp.less_payoff
+    @amount_financed = @temp.amount + (@temp.amount * @temp.sales_tax_percent/100) + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.gap_price + @temp.warranty_price + @temp.trade_in_value - @temp.down_payment - @temp.less_payoff
     interest = @temp.apr  * 0.01 if @temp.apr
     interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
     @monthly_payment = (@amount_financed + @interest_charge) / @temp.term
@@ -34,7 +34,7 @@ class TempsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @dealership.sales_tax ? sales_tax_percent = @dealership.sales_tax : sales_tax_percent = 0
 
-    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: sales_tax_percent, smog_fee: 0, doc_fee: 50, reg_fee: 50, other_fee: 0, gap_price: 0, warranty_price: 0, trade_in_value: 0, down_payment: 0, less_payoff: 0, apr: 0)
+    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: sales_tax_percent, smog_fee: 0, doc_fee: 50, reg_fee: 50, gap_price: 0, warranty_price: 0, trade_in_value: 0, down_payment: 0, less_payoff: 0, apr: 0)
     temp.save
     redirect_to dealership_temp_path(@dealership, temp)
 

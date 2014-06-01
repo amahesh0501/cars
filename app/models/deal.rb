@@ -48,6 +48,9 @@ class Deal < ActiveRecord::Base
   def reg_fee=(num)
     self[:reg_fee] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
+  def other_fee=(num)
+    self[:other_fee] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  end
   def warranty_price=(num)
     self[:warranty_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
