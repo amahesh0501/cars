@@ -58,7 +58,7 @@ class Car < ActiveRecord::Base
   def vin_lookup(vin)
     require 'nokogiri'
     require 'open-uri'
-    doc = Nokogiri::HTML(open("http://www.decodethis.com/VIN-Decoded/vin/#{vin}"))
+    (doc = Nokogiri::HTML(open("http://www.decodethis.com/VIN-Decoded/vin/#{vin}")))
     doc.css('td')[10] != nil ?  vin = doc.css('td')[10].text : vin = ""
     doc.css('td')[18] != nil ? make = doc.css('td')[18].text : make = ""
     doc.css('td')[22] != nil ? model = doc.css('td')[22].text  : model = ""
@@ -70,6 +70,12 @@ class Car < ActiveRecord::Base
     doc.css('td')[384] != nil ? exterior_color = doc.css('td')[384].text : exterior_color = ""
     doc.css('td')[16] != nil ? engine = doc.css('td')[16].text : engine = ""
     doc.css('td')[52] != nil && doc.css('td')[52].text.length > 3 ? wheel_base = doc.css('td')[52].text  : wheel_base = ""
+
+    if make == ""
+      year = doc.css('#dnn_ctr500_VehicleIdPrime_lblName').text.split(" ")[0]
+      make = doc.css('#dnn_ctr500_VehicleIdPrime_lblName').text.split(" ")[1]
+      model = doc.css('#dnn_ctr500_VehicleIdPrime_lblName').text.split(" ")[2]
+    end
 
     [vin, make, model, year, trim, transmission, body_style, interior_color, exterior_color, engine, wheel_base, engine]
   end

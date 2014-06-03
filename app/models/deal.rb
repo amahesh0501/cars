@@ -10,7 +10,7 @@ class Deal < ActiveRecord::Base
   belongs_to :gap
   belongs_to :lender
 
-  validates_presence_of :dealership_id, :car_id, :customer_id, :date, :amount
+  validates_presence_of :dealership_id, :car_id, :customer_id, :date, :amount, :sales_tax_percent, :term
   validates_uniqueness_of :car_id, message: "already has a deal associated with it. Please delete that deal to create a new one"
   validates_numericality_of :amount, :sales_tax_amount, :sales_tax_percent, :term, :down_payment, :apr, :trade_in_value
 

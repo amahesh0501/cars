@@ -73,7 +73,7 @@
     <div class="form-group">
       <label class="col-sm-3 control-label">Vendor</label>
       <div class="col-sm-5">
-            <%= f.collection_select :partner_id, @partners.all, :id, :name, prompt: true %>
+            <%= f.collection_select :partner_id, @partners.all, :id, :name, prompt: true, :include_blank => "No Vendor" %>
             &nbsp; <%= link_to "(Add New Vendor)", new_dealership_partner_path(@dealership), target: "_blank" %>
       </div>
     </div>
