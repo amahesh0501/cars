@@ -25,8 +25,10 @@ class ApplicationController < ActionController::Base
 
   def is_dealership_admin?
     membership = Membership.find_by_user_id(current_user.id)
+    if membership
     dealership = Dealership.find(membership.dealership_id)
     redirect_to no_access_path(params[:dealership_id]) unless dealership.id = params[:dealership_id] && membership.is_dealership_admin == true
+    end
   end
 
   def is_dealership_admin_view?
@@ -41,11 +43,13 @@ class ApplicationController < ActionController::Base
 
   def is_dealership_admin_view_for_dashboard?
     membership = Membership.find_by_user_id(current_user.id)
-    dealership = Dealership.find(membership.dealership_id)
-    if dealership.id = params[:id] && membership.is_dealership_admin == true
-      true
-    else
-      false
+    if membership
+      dealership = Dealership.find(membership.dealership_id)
+      if dealership.id = params[:id] && membership.is_dealership_admin == true
+        true
+      else
+        false
+      end
     end
   end
 

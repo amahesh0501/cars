@@ -26,9 +26,6 @@ class Temp < ActiveRecord::Base
   def trade_in_value=(num)
     self[:trade_in_value] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end
-  def less_payoff=(num)
-    self[:less_payoff] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
   def deffered_down_1_payment=(num)
     self[:deffered_down_1_payment] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
   end

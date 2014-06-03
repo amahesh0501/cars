@@ -112,7 +112,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-8">
-                  <%= @floorer.description ? @floorer.description : "No description has been entered" %>
+                  <%= @floorer.description.length > 0 ? @floorer.description : "No description has been entered" %>
                 </div>
               </div>
             </div>

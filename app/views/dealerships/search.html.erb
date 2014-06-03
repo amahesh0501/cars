@@ -54,7 +54,7 @@
                       <%if @membership.is_dealership_admin %>
                       <li><a href="#employees" data-toggle="tab">Employees</a></li>
                       <% end %>
-                      <li><a href="#vendors" data-toggle="tab">Vendors</a></li>
+                      <li><a href="#vendors" data-toggle="tab">Partners</a></li>
                       <li><a href="#conversations" data-toggle="tab">Conversations</a></li>
                       <li><a href="#transactions" data-toggle="tab">Transactions</a></li>
                     </ul>
@@ -148,7 +148,7 @@
                                  <i class="entypo-forward"></i>
                                </a>
                                <div class="member-details">
-                                 <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vendor</font></h4>
+                                 <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vehicle Maintenance Vendor</font></h4>
                                  <div class="row info-list">
                                    <div class="col-sm-4">
                                     <p><i class="entypo-forward"></i>Contact Name: <%= vendor.contact_name.length > 0 ? "#{vendor.contact_name}" : "Not Entered" %></p>
@@ -164,6 +164,183 @@
                             </div>
                           <% end %>
                         <% end %>
+
+                          <% if @auctions %>
+                            <% @auctions.each do |auction| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= auction.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{auction.name}", dealership_auction_path(@dealership, auction) %>&nbsp; <font size="2" class="result_type">Auction</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= auction.contact_name.length > 0 ? "#{auction.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= auction.email.length > 0 ? "#{auction.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= auction.phone.length > 0  ? "#{auction.phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @vendors %>
+                            <% @vendors.each do |vendor| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= vendor.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vehicle Maintenance Vendor</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= vendor.contact_name.length > 0 ? "#{vendor.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= vendor.contact_email.length > 0 ? "#{vendor.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= vendor.contact_phone.length > 0  ? "#{vendor.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @floorers %>
+                            <% @floorers.each do |floorer| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= floorer.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{floorer.name}", dealership_floorer_path(@dealership, floorer) %>&nbsp; <font size="2" class="result_type">Flooring Company</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= floorer.contact_name.length > 0 ? "#{floorer.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= floorer.email.length > 0 ? "#{floorer.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= floorer.phone.length > 0  ? "#{floorer.phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @gaps %>
+                            <% @gaps.each do |gap| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= gap.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{gap.name}", dealership_gap_path(@dealership, gap) %>&nbsp; <font size="2" class="result_type">GAP Insurance Company</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= gap.contact_name.length > 0 ? "#{gap.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= gap.contact_email.length > 0 ? "#{gap.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= gap.contact_phone.length > 0  ? "#{gap.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @lenders %>
+                            <% @lenders.each do |lender| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= lender.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{lender.name}", dealership_lender_path(@dealership, lender) %>&nbsp; <font size="2" class="result_type">Lender</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= lender.contact_name.length > 0 ? "#{lender.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= lender.contact_email.length > 0 ? "#{lender.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= lender.contact_phone.length > 0  ? "#{lender.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @warranties %>
+                            <% @warranties.each do |warranty| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= warranty.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{warranty.name}", dealership_warranty_path(@dealership, warranty) %>&nbsp; <font size="2" class="result_type">Warranty Company</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= warranty.contact_name.length > 0 ? "#{warranty.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= warranty.contact_email.length > 0 ? "#{warranty.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= warranty.contact_phone.length > 0  ? "#{warranty.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @partners %>
+                            <% @partners.each do |partner| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= partner.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{partner.name}", dealership_partner_path(@dealership, partner) %>&nbsp; <font size="2" class="result_type">Other Partners</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= partner.contact_name.length > 0 ? "#{partner.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= partner.contact_email.length > 0 ? "#{partner.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= partner.contact_phone.length > 0  ? "#{partner.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+
 
                           <% if @conversations %>
                             <% @conversations.each do |conversation| %>
@@ -395,7 +572,8 @@
                       </div>
                       <% end %>
                       <div class="tab-pane" id="vendors">
-                          <% if @vendors.length > 0 %>
+
+                          <% if @vendors %>
                             <% @vendors.each do |vendor| %>
                               <div class="member-entry">
                                <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
@@ -403,7 +581,7 @@
                                  <i class="entypo-forward"></i>
                                </a>
                                <div class="member-details">
-                                <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vendor</font></h4>
+                                 <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vehicle Maintenance Vendor</font></h4>
                                  <div class="row info-list">
                                    <div class="col-sm-4">
                                     <p><i class="entypo-forward"></i>Contact Name: <%= vendor.contact_name.length > 0 ? "#{vendor.contact_name}" : "Not Entered" %></p>
@@ -418,7 +596,186 @@
                               </div>
                             </div>
                           <% end %>
-                        <% else %>
+                        <% end %>
+
+                          <% if @auctions %>
+                            <% @auctions.each do |auction| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= auction.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{auction.name}", dealership_auction_path(@dealership, auction) %>&nbsp; <font size="2" class="result_type">Auction</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= auction.contact_name.length > 0 ? "#{auction.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= auction.email.length > 0 ? "#{auction.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= auction.phone.length > 0  ? "#{auction.phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @vendors %>
+                            <% @vendors.each do |vendor| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= vendor.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{vendor.name}", dealership_vendor_path(@dealership, vendor) %>&nbsp; <font size="2" class="result_type">Vehicle Maintenance Vendor</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= vendor.contact_name.length > 0 ? "#{vendor.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= vendor.contact_email.length > 0 ? "#{vendor.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= vendor.contact_phone.length > 0  ? "#{vendor.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @floorers %>
+                            <% @floorers.each do |floorer| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= floorer.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{floorer.name}", dealership_floorer_path(@dealership, floorer) %>&nbsp; <font size="2" class="result_type">Flooring Company</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= floorer.contact_name.length > 0 ? "#{floorer.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= floorer.email.length > 0 ? "#{floorer.email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= floorer.phone.length > 0  ? "#{floorer.phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @gaps %>
+                            <% @gaps.each do |gap| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= gap.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{gap.name}", dealership_gap_path(@dealership, gap) %>&nbsp; <font size="2" class="result_type">GAP Insurance Company</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= gap.contact_name.length > 0 ? "#{gap.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= gap.contact_email.length > 0 ? "#{gap.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= gap.contact_phone.length > 0  ? "#{gap.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @lenders %>
+                            <% @lenders.each do |lender| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= lender.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{lender.name}", dealership_lender_path(@dealership, lender) %>&nbsp; <font size="2" class="result_type">Lender</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= lender.contact_name.length > 0 ? "#{lender.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= lender.contact_email.length > 0 ? "#{lender.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= lender.contact_phone.length > 0  ? "#{lender.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @warranties %>
+                            <% @warranties.each do |warranty| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= warranty.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{warranty.name}", dealership_warranty_path(@dealership, warranty) %>&nbsp; <font size="2" class="result_type">Warranty Company</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= warranty.contact_name.length > 0 ? "#{warranty.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= warranty.contact_email.length > 0 ? "#{warranty.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= warranty.contact_phone.length > 0  ? "#{warranty.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+                          <% if @partners %>
+                            <% @partners.each do |partner| %>
+                              <div class="member-entry">
+                               <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+                                 <img src="<%= partner.image%>" class="img-rounded" />
+                                 <i class="entypo-forward"></i>
+                               </a>
+                               <div class="member-details">
+                                 <h4><%= link_to "#{partner.name}", dealership_partner_path(@dealership, partner) %>&nbsp; <font size="2" class="result_type">Other Partners</font></h4>
+                                 <div class="row info-list">
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Name: <%= partner.contact_name.length > 0 ? "#{partner.contact_name}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                     <p><i class="entypo-forward"></i>Contact E-Mail: <%= partner.contact_email.length > 0 ? "#{partner.contact_email}" : "Not Entered" %></p>
+                                   </div>
+                                   <div class="col-sm-4">
+                                    <p><i class="entypo-forward"></i>Contact Phone: <%= partner.contact_phone.length > 0  ? "#{partner.contact_phone}" : "Not Entered" %></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% end %>
+                        <% end %>
+
+
+
+                        <% if @third_parties.length == 0 %>
                           <li class="search-result">
                             <div class="sr-inner">
                               <br/>

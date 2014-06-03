@@ -170,6 +170,12 @@ class DealershipsController < ApplicationController
     @customers = Customer.search(params[:search])
     @employees = Employee.search(params[:search])
     @vendors = Vendor.search(params[:search])
+    @auctions = Auction.search(params[:search])
+    @floorers = Floorer.search(params[:search])
+    @gaps = Gap.search(params[:search])
+    @lenders = Lender.search(params[:search])
+    @partners = Partner.search(params[:search])
+    @warranties = Warranty.search(params[:search])
     @conversations = Conversation.search(params[:search])
     @expenses = Expense.search(params[:search])
     @paychecks = Paycheck.search(params[:search])
@@ -177,8 +183,9 @@ class DealershipsController < ApplicationController
     @revenues = Revenue.search(params[:search])
 
 
-    @everything = @cars + @customers + @employees + @vendors + @conversations + @expenses + @paychecks + @repairs + @revenues
+    @everything = @cars + @customers + @employees + @vendors + @conversations + @expenses + @paychecks + @repairs + @revenues + @auctions + @floorers + @gaps + @lenders + @partners + @warranties
     @transactions = @expenses + @paychecks + @repairs + @revenues
+    @third_parties = @vendors + @auctions + @floorers + @gaps + @lenders + @partners + @warranties
 
   end
 

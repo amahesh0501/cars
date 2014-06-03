@@ -130,7 +130,7 @@
           <section class="profile-feed">
             <div class="profile-stories">
 
-              <%= link_to "<i class='entypo-plus'></i> Create Deal".html_safe, new_dealership_deal_path(@dealership), class: "btn btn-success", role: "button" %>&nbsp;<%= link_to "<i class='entypo-plus'></i> Add Misc Revenue".html_safe, new_dealership_revenue_path(@dealership), class: "btn btn-success", role: "button" %>
+              <%= link_to "<i class='entypo-plus'></i> Create Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>&nbsp;<%= link_to "<i class='entypo-plus'></i> Add Misc Revenue".html_safe, new_dealership_revenue_path(@dealership), class: "btn btn-success", role: "button" %>
               <br/>
 
               <ul class="nav nav-tabs">
@@ -201,7 +201,7 @@
           <section class="profile-feed">
             <div class="profile-stories">
               <% if @is_admin == true %>
-              <%= link_to "<i class='entypo-plus'></i> Add Vehilcle Purchase".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
+              <%= link_to "<i class='entypo-plus'></i> Add Vehicle Purchase".html_safe, new_dealership_car_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% end %>
               <%= link_to "<i class='entypo-plus'></i> Add Vehicle Expense".html_safe, new_dealership_repair_path(@dealership), class: "btn btn-success", role: "button" %> &nbsp;
               <% if @is_admin == true %>
