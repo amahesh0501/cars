@@ -148,12 +148,14 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Customer: <%= link_to @customer.name, dealership_customer_path(@dealership, @customer) %></p>
+                  <p><i class="entypo-forward"></i>Date: <%= @deal.date.strftime("%m/%d/%Y") %></p>
+
                 </div>
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Car: <%= link_to @car.make_model_year, dealership_car_path(@dealership, @car) %></p>
                 </div>
                 <div class="col-md-4">
-                  <p><i class="entypo-forward"></i>Date: <%= @deal.date.strftime("%m/%d/%Y") %></p>
+                  <p><i class="entypo-forward"></i>Lead Salesperson: <%= link_to "#{@employee.first} #{@employee.last}",  dealership_employee_path(@dealership, @employee) %></p>
                 </div>
               </div>
             </div>

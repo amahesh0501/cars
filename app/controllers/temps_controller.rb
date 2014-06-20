@@ -21,11 +21,28 @@ class TempsController < ApplicationController
     @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @customers = @dealership.customers.order('name ASC')
 
-
-    @amount_financed = @temp.amount + (@temp.amount * @temp.sales_tax_percent/100) + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.other_fee + @temp.gap_price + @temp.warranty_price + @temp.trade_in_value - @temp.down_payment - @temp.less_payoff
+    @amount_financed = @temp.amount + (@temp.amount * @temp.sales_tax_percent/100) + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.other_fee + @temp.gap_price + @temp.warranty_price - @temp.trade_in_value - @temp.down_payment + @temp.less_payoff
     interest = @temp.apr  * 0.01 if @temp.apr
     interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
     @monthly_payment = (@amount_financed + @interest_charge) / @temp.term
+
+    if @car
+      @repairs = Repair.where(car_id: @car.id)
+      @car_repair_expenses = 0
+      @repairs.each {|repair| @car_repair_expenses += repair.amount}
+      @car.other_costs ? @other_costs = @car.other_costs : @other_costs = 0
+      @car.advertising_cost ? @advertising_cost = @car.advertising_cost : @advertising_cost = 0
+      @car.frontend_pac ? @frontend_pac = @car.frontend_pac : @frontend_pac = 0
+      @car.backend_pac ? @backend_pac = @car.backend_pac : @backend_pac = 0
+      @commissions = Commission.find_all_by_car_id(@car.id) #if Commission.find_by_car_id(@car.id)
+      @commission = 0
+      @commissions.each {|commission| @commission = @commission + commission.amount}
+      @commission ? @commission_amount = @commission : @commission_amount = 0
+      @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @backend_pac + @commission_amount if @car.acquire_price
+      @amount_received = @amount_financed + @temp.down_payment
+      @profit = @amount_received - @total_price
+    end
+
 
     is_dealership_admin_view? ? @is_admin = true : @is_admin = false
   end
@@ -85,7 +102,7 @@ class TempsController < ApplicationController
   def convert
     temp = Temp.find(params[:id])
     @dealership = Dealership.find(1)
-    flash[:deal] = {employee_id: temp.employee_id, car_id: temp.car_id, customer_id: temp.customer_id, dealership_id: temp.dealership_id, warranty_id: temp.warranty_id, gap_id: temp.gap_id, lender_id: temp.lender_id, amount: temp.amount, sales_tax_percent: temp.sales_tax_percent, sales_tax_amount: temp.sales_tax_amount, date: temp.date, down_payment: temp.down_payment, apr: temp.apr, term: temp.term, trade_in_value: temp.trade_in_value, less_payoff: temp.less_payoff, days_to_first_payment: temp.days_to_first_payment, deffered_down_1_payment: temp.deffered_down_1_payment, deffered_down_1_date: temp.deffered_down_1_date, smog_fee: temp.smog_fee, doc_fee: temp.doc_fee, reg_fee: temp.reg_fee, warranty_term: temp.warranty_term, warranty_cost: temp.warranty_cost, warranty_price: temp.warranty_price, warranty_type: temp.warranty_type, gap_term: temp.gap_term, gap_cost: temp.gap_cost, gap_price: temp.gap_price, discount_fee: temp.discount_fee}
+    flash[:deal] = {employee_id: temp.employee_id, car_id: temp.car_id, customer_id: temp.customer_id, dealership_id: temp.dealership_id, warranty_id: temp.warranty_id, gap_id: temp.gap_id, lender_id: temp.lender_id, amount: number_with_precision(temp.amount, :precision => 2), sales_tax_percent: temp.sales_tax_percent, sales_tax_amount: temp.sales_tax_amount, date: temp.date, down_payment: number_with_precision(temp.down_payment, :precision => 2), apr: temp.apr, term: temp.term, trade_in_value: temp.trade_in_value, less_payoff: temp.less_payoff, days_to_first_payment: temp.days_to_first_payment, deffered_down_1_payment: temp.deffered_down_1_payment, deffered_down_1_date: temp.deffered_down_1_date, smog_fee: temp.smog_fee, doc_fee: temp.doc_fee, reg_fee: temp.reg_fee, warranty_term: temp.warranty_term, warranty_cost: temp.warranty_cost, warranty_price: temp.warranty_price, warranty_type: temp.warranty_type, gap_term: temp.gap_term, gap_cost: temp.gap_cost, gap_price: temp.gap_price, discount_fee: temp.discount_fee}
       p temp
         p "*"  * 100
         p flash[:deal]

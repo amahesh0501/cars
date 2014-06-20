@@ -9,7 +9,7 @@ class Car < ActiveRecord::Base
   has_many :temps
   has_many :repairs, dependent: :destroy
   has_one :purchase, dependent: :destroy
-  has_one :commission
+  has_many :commissions
 
   validates_presence_of :make, :model, :year, :acquire_price, :acquire_date, :dealership_id, :status
   validates_numericality_of :acquire_price, :smog_price, :retail_price, :wholesale_price
@@ -77,7 +77,9 @@ class Car < ActiveRecord::Base
       model = doc.css('#dnn_ctr500_VehicleIdPrime_lblName').text.split(" ")[2]
     end
 
-    [vin, make, model, year, trim, transmission, body_style, interior_color, exterior_color, engine, wheel_base, engine]
+    items = [vin, make, model, year, trim, transmission, body_style, interior_color, exterior_color, engine, wheel_base, engine]
+    items.each {|item| item = "" if item == "No data" || item == "No data in"}
+    items
   end
 
   def self.search(search)

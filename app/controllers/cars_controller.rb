@@ -28,8 +28,10 @@ class CarsController < ApplicationController
     @car.advertising_cost ? @advertising_cost = @car.advertising_cost : @advertising_cost = 0
     @car.frontend_pac ? @frontend_pac = @car.frontend_pac : @frontend_pac = 0
     @car.backend_pac ? @backend_pac = @car.backend_pac : @backend_pac = 0
-    @commission = Commission.find_by_car_id(@car.id) if Commission.find_by_car_id(@car.id)
-    @commission ? @commission_amount = @commission.amount : @commission_amount = 0
+    @commissions = Commission.find_all_by_car_id(@car.id) #if Commission.find_by_car_id(@car.id)
+    @commission = 0
+    @commissions.each {|commission| @commission = @commission + commission.amount}
+    @commission ? @commission_amount = @commission : @commission_amount = 0
     @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @backend_pac + @commission_amount if @car.acquire_price
 
     @purchase_price = 0

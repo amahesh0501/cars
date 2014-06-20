@@ -80,6 +80,7 @@
             <!-- tabs for the profile links -->
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Calculations</a></li>
+              <li><a href="#vehicle_details" data-toggle="tab">Vehicle Details</a></li>
             </ul>
 
 
@@ -133,12 +134,6 @@
           </div>
 
 
-
-
-
-
-
-
           <%= form_for [@dealership, @temp], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
           <br/>
           <%= render 'layouts/error_messages', object: f.object %>
@@ -161,7 +156,7 @@
 
             <div class="col-sm-4">
 
-              <label class="control-label">Employee</label><br/><br/>
+              <label class="control-label">Lead Salesperson</label><br/><br/>
               <%= f.collection_select :employee_id, @employees, :id, :name, prompt: true, class: "form-control" %>
 
             </div>
@@ -332,6 +327,173 @@
 
 
 
+        </div>
+
+        <div class="tab-pane" id="vehicle_details">
+          <% if @car %>
+              <section class="profile-feed">
+                <div class="profile-stories">
+                  <div class="invoice">
+
+
+                    <div class="margin"></div>
+
+                    <div class="row">
+
+                      <div class="col-sm-3 invoice-left">
+
+
+
+                      </div>
+
+                      <div class="col-sm-3 invoice-left">
+
+
+                      </div>
+
+                      <div class="col-md-6 invoice-right">
+
+                        <% if params[:start_date]  %>
+                        <h5><%= "Date Range: #{params[:start_date]} to #{params[:end_date]}" %></h5>
+                        <br/>
+                        <% end %>
+
+                      </div>
+
+                    </div>
+
+
+
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="30%"><b>Revenues</b></th>
+                          <th width="50%"></th>
+                          <th class="text-right"><b>Total</b></th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td>Amount Received</td>
+                          <td></td>
+                          <td class="text-right"><%= "$#{number_with_precision(@amount_received, :delimiter => ',', precision: 2)}" %></td>
+                        </tr>
+
+
+
+
+                        <tr>
+                          <td><b>Total</b></td>
+                          <td></td>
+                          <td class="text-right"><%= "$#{number_with_precision(@amount_received, :delimiter => ',', precision: 2)}" %></td>
+
+                        </tr>
+
+
+
+
+                      </tbody>
+                    </table>
+
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="30%"><b>Expenses</b> (<%= link_to "Update Vehicle Details", dealership_car_path(@dealership, @car) %>)</th>
+                          <th width="50%"></th>
+                          <th class="text-right"><b>Total</b></th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td class="normal-table-vehicle">Acquire Price</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" %></td>
+                        </tr>
+
+                        <tr>
+                          <td class="normal-table-vehicle">Vehicle Expenses</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car_repair_expenses, :delimiter => ',', precision: 2)}" %></td>
+                        </tr>
+
+                        <tr>
+                          <% if @commission %>
+                            <td class="normal-table-vehicle">Commission</td>
+                            <td class="normal-table-vehicle"></td>
+                            <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@commission_amount, :delimiter => ',', :precision => 2)}" %></td>
+                          <% else %>
+                          <td class="normal-table-vehicle">Commission</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle">$0.00</td>
+                          <% end %>
+                        </tr>
+
+                        <tr>
+                          <td class="normal-table-vehicle">Frontend PAC</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle"><%= @car.frontend_pac ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                        </tr>
+
+                        <tr>
+                          <td class="normal-table-vehicle">Backend PAC</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle"><%= @car.backend_pac ?  "$#{number_with_precision(@car.backend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                        </tr>
+
+                        <tr>
+                          <td class="normal-table-vehicle">Advertising Cost</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle"><%= @car.advertising_cost ? "$#{number_with_precision(@car.advertising_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                        </tr>
+
+                        <tr>
+                          <td class="normal-table-vehicle">Other Costs</td>
+                          <td class="normal-table-vehicle"></td>
+                          <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@car.other_costs, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                        </tr>
+
+                        <tr>
+                          <td><b>Total</b></td>
+                          <td></td>
+                          <td class="text-right"><b><%= "$#{number_with_precision(@total_price, :delimiter => ',', precision: 2)}" %></b></td>
+                        </tr>
+
+
+
+
+                      </tbody>
+                    </table>
+
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="30%"><b>Net Profit</b></th>
+                          <th width="50%"><b></b></th>
+                          <th class="text-right"><b>Total</b></th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr>
+                          <td><b>Net Profit</b></td>
+                          <td></td>
+                          <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></b></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+                  </div>
+
+                </div><!-- Footer -->
+
+              </div>
+            </section>
+          <% else %>
+            <p> This deal does not have a year associated with it yet</p>
+          <% end %>
         </div>
 
 

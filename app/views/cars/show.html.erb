@@ -72,11 +72,11 @@
               <div class="col-md-3">
                 <div class="profile-stat">
                   <% if @deal %>
-                    <h4><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', :precision => 2)}" %></h4>
-                    <span>Final Sale Price</span>
+                  <h4><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', :precision => 2)}" %></h4>
+                  <span>Final Sale Price</span>
                   <% else %>
-                    <h4><%= @car.customer_price ? "$#{number_with_precision(@car.customer_price, :delimiter => ',', :precision => 2)}" : "N/A" %></h4>
-                    <span>Customer Price</span>
+                  <h4><%= @car.customer_price ? "$#{number_with_precision(@car.customer_price, :delimiter => ',', :precision => 2)}" : "N/A" %></h4>
+                  <span>Customer Price</span>
                   <% end %>
                 </div>
               </div>
@@ -99,7 +99,10 @@
               <li class="active"><a href="#home" data-toggle="tab">Vehicle Details</a></li>
               <li><a href="#profile" data-toggle="tab">Vehicle Expenses</a></li>
               <li><a href="#deal" data-toggle="tab">Deals</a></li>
-              <% if @is_admin == true %><li><a href="#finances" data-toggle="tab">$</a></li><% end %>
+              <% if @is_admin == true %>
+              <li><a href="#finances" data-toggle="tab">$</a></li>
+              <li><a href="#commish" data-toggle="tab">Commissions</a></li>
+              <% end %>
             </ul>
 
 
@@ -115,122 +118,122 @@
         <div class="tab-pane active" id="home">
           <div class="panel panel-dark" data-collapsed="0">
 
-                      <!-- panel head -->
-                      <div class="panel-heading">
-                        <div class="panel-title">Basics</div>
-                      </div>
+            <!-- panel head -->
+            <div class="panel-heading">
+              <div class="panel-title">Basics</div>
+            </div>
 
-                      <!-- panel body -->
-                      <div class="panel-body">
+            <!-- panel body -->
+            <div class="panel-body">
 
-                        <div class="row">
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Vin: <%= @car.vin && @car.vin.length > 0 ? @car.vin : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Miles: <%= @car.miles && @car.miles.length > 0 ? number_with_delimiter(@car.miles, :delimiter => ',') : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Transmission: <%= @car.transmission && @car.transmission.length > 0 ? @car.transmission : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Wholesale Price: <%= @car.wholesale_price ? "$#{number_with_precision(@car.wholesale_price, :delimiter => ',', precision: 2)}" : "Not entered" %></p>
-                            <p><i class="entypo-forward"></i><%= @car.smog_status == true ? "This car has been smogged" : "This car has not been smogged" %></p>
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Vin: <%= @car.vin && @car.vin.length > 0 ? @car.vin : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Miles: <%= @car.miles && @car.miles.length > 0 ? number_with_delimiter(@car.miles, :delimiter => ',') : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Transmission: <%= @car.transmission && @car.transmission.length > 0 ? @car.transmission : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Wholesale Price: <%= @car.wholesale_price ? "$#{number_with_precision(@car.wholesale_price, :delimiter => ',', precision: 2)}" : "Not entered" %></p>
+                  <p><i class="entypo-forward"></i><%= @car.smog_status == true ? "This car has been smogged" : "This car has not been smogged" %></p>
 
-                          </div>
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine && @car.engine.length > 0 ? "#{@car.engine}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style && @car.body_style.length > 0 ? "#{@car.body_style}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Exterior Color: <%= @car.exterior_color && @car.exterior_color.length > 0 ? "#{@car.exterior_color}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Retail Price: <%= @car.retail_price ? "$#{number_with_precision(@car.retail_price, :delimiter => ',', precision: 2)}" : "Not entered" %></p>
-
-
-                          </div>
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Wheel Base: <%= @car.wheel_base && @car.wheel_base.length > 0 ? "#{@car.wheel_base}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>License Plate: <%= @car.license_plate && @car.license_plate.length > 0 ? "#{@car.license_plate}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color && @car.interior_color.length > 0 ? "#{@car.interior_color}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Stock Number: <%= @car.stock_number.length > 0 ? "#{@car.stock_number}" : "Not Entered" %></p>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="panel panel-dark" data-collapsed="0">
-                      <div class="panel-heading">
-                        <div class="panel-title">Description</div>
-                      </div>
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-8">
-                            <%= @car.description.length > 0 ? @car.description : "No description entered" %>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="panel panel-dark" data-collapsed="0">
-                      <div class="panel-heading">
-                        <div class="panel-title">Vehicle Acqusition</div>
-                      </div>
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
-                            <p><i class="entypo-forward"></i>Invoice Number: <%= @car.invoice_number.length > 0  ? @car.invoice_number : "Not Entered" %></p>
-                          </div>
-                          <div class="col-md-4">
-                            <% if @auction %>
-                              <p><i class="entypo-forward"></i>Auction: <%= link_to "#{@auction.name}", dealership_auction_path(@dealership, @auction) %> </p>
-                            <% else %>
-                              <p><i class="entypo-forward"></i>Auction: Not Entered </p>
-                            <% end %>
-                            <p><i class="entypo-forward"></i>Payment Method: <%= @car.payment_method.length > 0  ? @car.payment_method : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Engine Type: <%= @car.engine && @car.engine.length > 0 ? "#{@car.engine}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Body Style: <%= @car.body_style && @car.body_style.length > 0 ? "#{@car.body_style}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Exterior Color: <%= @car.exterior_color && @car.exterior_color.length > 0 ? "#{@car.exterior_color}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Retail Price: <%= @car.retail_price ? "$#{number_with_precision(@car.retail_price, :delimiter => ',', precision: 2)}" : "Not entered" %></p>
 
 
+                </div>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Wheel Base: <%= @car.wheel_base && @car.wheel_base.length > 0 ? "#{@car.wheel_base}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>License Plate: <%= @car.license_plate && @car.license_plate.length > 0 ? "#{@car.license_plate}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Interior Color: <%= @car.interior_color && @car.interior_color.length > 0 ? "#{@car.interior_color}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Stock Number: <%= @car.stock_number.length > 0 ? "#{@car.stock_number}" : "Not Entered" %></p>
 
-                          </div>
-                          <% if @is_admin == true %>
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
-                          </div>
-                          <% end %>
-                          <% if @car.payment_method == "Credit Card" && @car.card_id %>
-                            <% card = Card.find(@car.card_id) %>
-                            <p><i class="entypo-forward"></i>Credit Card: <%= link_to "#{card.name} (##{card.number})", dealership_card_path(@dealership, card)  %></p>
-                          <% elsif @car.payment_method == "Check" && @car.check_number %>
-                            <p><i class="entypo-forward"></i>Check Number: <%= @car.check_number.length > 0 ? @car.check_number : "Not entered"  %></p>
-                          <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                        </div>
-                      </div>
-                    </div>
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Description</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <%= @car.description.length > 0 ? @car.description : "No description entered" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Vehicle Acqusition</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Invoice Number: <%= @car.invoice_number.length > 0  ? @car.invoice_number : "Not Entered" %></p>
+                </div>
+                <div class="col-md-4">
+                  <% if @auction %>
+                  <p><i class="entypo-forward"></i>Auction: <%= link_to "#{@auction.name}", dealership_auction_path(@dealership, @auction) %> </p>
+                  <% else %>
+                  <p><i class="entypo-forward"></i>Auction: Not Entered </p>
+                  <% end %>
+                  <p><i class="entypo-forward"></i>Payment Method: <%= @car.payment_method.length > 0  ? @car.payment_method : "Not Entered" %></p>
 
 
 
-                    <div class="panel panel-dark" data-collapsed="0">
-                      <div class="panel-heading">
-                        <div class="panel-title">Flooring</div>
-                      </div>
-                      <div class="panel-body">
-                        <div class="row">
-                          <div class="col-md-4">
-                            <p><i class="entypo-forward"></i><%= @car.flooring == true ? "This car has been floored" : "This car has not been floored" %></p>
-                          </div>
-                          <div class="col-md-4">
-                            <% if @floorer %>
-                              <p><i class="entypo-forward"></i>Flooring Company: <%= link_to "#{@floorer.name}", dealership_floorer_path(@dealership, @floorer) %> </p>
-                            <% else %>
-                              <p><i class="entypo-forward"></i>Flooring Company: Not Entered </p>
-                            <% end %>
-                          </div>
-                          <div class="col-md-4">
-                            <% if @days_on_lot %>
-                            <p><i class="entypo-forward"></i>Days on Lot: <%= "#{@days_on_lot} days" %> </p>
-                            <% end %>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                </div>
+                <% if @is_admin == true %>
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i>Price: <%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                </div>
+                <% end %>
+                <% if @car.payment_method == "Credit Card" && @car.card_id %>
+                <% card = Card.find(@car.card_id) %>
+                <p><i class="entypo-forward"></i>Credit Card: <%= link_to "#{card.name} (##{card.number})", dealership_card_path(@dealership, card)  %></p>
+                <% elsif @car.payment_method == "Check" && @car.check_number %>
+                <p><i class="entypo-forward"></i>Check Number: <%= @car.check_number.length > 0 ? @car.check_number : "Not entered"  %></p>
+                <% end %>
 
-                      <% if @is_admin == true %>
-                      <%= link_to "<i class='entypo-cross'></i> Delete Car".html_safe, dealership_car_path(@dealership, @car), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
-                      <% end %>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="panel panel-dark" data-collapsed="0">
+            <div class="panel-heading">
+              <div class="panel-title">Flooring</div>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <p><i class="entypo-forward"></i><%= @car.flooring == true ? "This car has been floored" : "This car has not been floored" %></p>
+                </div>
+                <div class="col-md-4">
+                  <% if @floorer %>
+                  <p><i class="entypo-forward"></i>Flooring Company: <%= link_to "#{@floorer.name}", dealership_floorer_path(@dealership, @floorer) %> </p>
+                  <% else %>
+                  <p><i class="entypo-forward"></i>Flooring Company: Not Entered </p>
+                  <% end %>
+                </div>
+                <div class="col-md-4">
+                  <% if @days_on_lot %>
+                  <p><i class="entypo-forward"></i>Days on Lot: <%= "#{@days_on_lot} days" %> </p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% if @is_admin == true %>
+          <%= link_to "<i class='entypo-cross'></i> Delete Car".html_safe, dealership_car_path(@dealership, @car), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
+          <% end %>
 
 
 
@@ -275,23 +278,23 @@
         </div>
 
 
-      <div class="tab-pane" id="deal">
+        <div class="tab-pane" id="deal">
 
-        <%= link_to "<i class='entypo-plus'></i> Add Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
+          <%= link_to "<i class='entypo-plus'></i> Add Deal".html_safe, new_dealership_temp_path(@dealership), class: "btn btn-success", role: "button" %>
 
 
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#final" data-toggle="tab">Finalized Deal</a></li>
-          <li><a href="#pending" data-toggle="tab">Pending Deals</a></li>
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#final" data-toggle="tab">Finalized Deal</a></li>
+            <li><a href="#pending" data-toggle="tab">Pending Deals</a></li>
 
-        </ul>
+          </ul>
 
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <div class="tab-pane active" id="final">
-            <% if @deal %>
-            <% customer = Customer.find(@deal.customer_id) %>
-             <section class="profile-feed">
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div class="tab-pane active" id="final">
+              <% if @deal %>
+              <% customer = Customer.find(@deal.customer_id) %>
+              <section class="profile-feed">
                <div class="profile-stories">
                  <div class="member-entry">
 
@@ -303,7 +306,7 @@
                      <h4>
                        <%= link_to "Sold to #{customer.name} for $#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)} ", dealership_deal_path(@dealership, @deal) %>
                      </h4>
-                         <div class="row info-list">
+                     <div class="row info-list">
 
                        <div class="col-sm-4">
                          <i class="entypo-forward"></i>
@@ -347,8 +350,8 @@
              <br/>
              <%= "There is no finalized deal for this vehicle" %>
              <% end %>
-          </div>
-          <div class="tab-pane" id="pending">
+           </div>
+           <div class="tab-pane" id="pending">
             <section class="profile-feed">
               <div class="profile-stories">
                 <% @temps.each do |deal| %>
@@ -364,10 +367,10 @@
                       <% if customer %>
                       <%= link_to "Pending deal to #{customer.name} for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
                       <% else %>
-                        <%= link_to "Pending deal for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
+                      <%= link_to "Pending deal for $#{number_with_precision(deal.amount, :delimiter => ',', precision: 2)} ", dealership_temp_path(@dealership, deal) %>
                       <% end %>
                     </h4>
-                        <div class="row info-list">
+                    <div class="row info-list">
 
                       <div class="col-sm-4">
                         <i class="entypo-forward"></i>
@@ -426,194 +429,231 @@
 
 
       <% if @is_admin == true %>
-        <div class="tab-pane" id="finances">
-          <section class="profile-feed">
-            <div class="profile-stories">
-              <div class="invoice">
+      <div class="tab-pane" id="finances">
+        <section class="profile-feed">
+          <div class="profile-stories">
+            <div class="invoice">
 
 
-                <div class="margin"></div>
+              <div class="margin"></div>
 
-                <div class="row">
+              <div class="row">
 
-                  <div class="col-sm-3 invoice-left">
-
-
-
-                  </div>
-
-                  <div class="col-sm-3 invoice-left">
+                <div class="col-sm-3 invoice-left">
 
 
-                  </div>
-
-                  <div class="col-md-6 invoice-right">
-
-                    <% if params[:start_date]  %>
-                    <h5><%= "Date Range: #{params[:start_date]} to #{params[:end_date]}" %></h5>
-                    <br/>
-                    <% end %>
-
-                  </div>
 
                 </div>
 
+                <div class="col-sm-3 invoice-left">
 
 
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="30%"><b>Revenues</b></th>
-                      <th width="50%"></th>
-                      <th class="text-right"><b>Total</b></th>
-                    </tr>
-                  </thead>
+                </div>
 
-                  <tbody>
-                    <tr>
-                      <td>Amount Received</td>
-                      <td></td>
-                      <% if @deal %>
-                      <td class="text-right"><%= "$#{number_with_precision(@amount_financed, :delimiter => ',', precision: 2)}" %></td>
-                      <% else %>
-                        <td class="text-right">$0.00</td>
-                      <% end %>
-                    </tr>
+                <div class="col-md-6 invoice-right">
 
+                  <% if params[:start_date]  %>
+                  <h5><%= "Date Range: #{params[:start_date]} to #{params[:end_date]}" %></h5>
+                  <br/>
+                  <% end %>
 
-
-
-                    <tr>
-                      <td><b>Total</b></td>
-                      <td></td>
-                      <% if @deal %>
-                      <b><td class="text-right"><b><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></b></td></n>
-                      <% else %>
-                        <td class="text-right"><b>$0.00</b></td>
-                      <% end %>
-                    </tr>
-
-
-
-
-                  </tbody>
-                </table>
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="30%"><b>Expenses</b></th>
-                      <th width="50%"></th>
-                      <th class="text-right"><b>Total</b></th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td class="normal-table-vehicle">Acquire Price</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <td class="normal-table-vehicle">Vehicle Expenses</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car_repair_expenses, :delimiter => ',', precision: 2)}" %></td>
-                    </tr>
-
-                    <tr>
-                      <% if @commission %>
-                        <td class="normal-table-vehicle">Commission (<%= link_to "Edit", edit_dealership_commission_path(@dealership, @commission)%> | <%= link_to "Delete", dealership_commission_path(@dealership, @commission), method: "delete", confirm: "Are you sure" %>)</td>
-                        <td class="normal-table-vehicle"></td>
-                        <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@commission_amount, :delimiter => ',', :precision => 2)}" %></td>
-                      <% else %>
-                      <td class="normal-table-vehicle">Commission (<%= link_to "Add", new_dealership_commission_path(@dealership, :car_id => @car.id)%>)</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle">$0.00</td>
-                      <% end %>
-                    </tr>
-
-                    <tr>
-                      <td class="normal-table-vehicle">Frontend PAC</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle"><%= @car.frontend_pac ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
-                    </tr>
-
-                    <tr>
-                      <td class="normal-table-vehicle">Backend PAC</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle"><%= @car.backend_pac ?  "$#{number_with_precision(@car.backend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
-                    </tr>
-
-                    <tr>
-                      <td class="normal-table-vehicle">Advertising Cost</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle"><%= @car.advertising_cost ? "$#{number_with_precision(@car.advertising_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
-                    </tr>
-
-                    <tr>
-                      <td class="normal-table-vehicle">Other Costs</td>
-                      <td class="normal-table-vehicle"></td>
-                      <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@car.other_costs, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
-                    </tr>
-
-                    <tr>
-                      <td><b>Total</b></td>
-                      <td></td>
-                      <td class="text-right"><b><%= "$#{number_with_precision(@total_price, :delimiter => ',', precision: 2)}" %></b></td>
-                    </tr>
-
-
-
-
-                  </tbody>
-                </table>
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th width="30%"><b>Net Profit</b></th>
-                      <th width="50%"><b></b></th>
-                      <th class="text-right"><b>Total</b></th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td><b>Net Profit</b></td>
-                      <td></td>
-                      <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></b></td>
-                    </tr>
-                  </tbody>
-                </table>
-
+                </div>
 
               </div>
 
-            </div><!-- Footer -->
 
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="30%"><b>Revenues</b></th>
+                    <th width="50%"></th>
+                    <th class="text-right"><b>Total</b></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Amount Received</td>
+                    <td></td>
+                    <% if @deal %>
+                    <td class="text-right"><%= "$#{number_with_precision(@amount_financed, :delimiter => ',', precision: 2)}" %></td>
+                    <% else %>
+                    <td class="text-right">$0.00</td>
+                    <% end %>
+                  </tr>
+
+
+
+
+                  <tr>
+                    <td><b>Total</b></td>
+                    <td></td>
+                    <% if @deal %>
+                    <b><td class="text-right"><b><%= "$#{number_with_precision(@deal.amount, :delimiter => ',', precision: 2)}" %></b></td></n>
+                    <% else %>
+                    <td class="text-right"><b>$0.00</b></td>
+                    <% end %>
+                  </tr>
+
+
+
+
+                </tbody>
+              </table>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="30%"><b>Expenses</b></th>
+                    <th width="50%"></th>
+                    <th class="text-right"><b>Total</b></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td class="normal-table-vehicle">Acquire Price</td>
+                    <td class="normal-table-vehicle"></td>
+                    <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" %></td>
+                  </tr>
+
+                  <tr>
+                    <td class="normal-table-vehicle">Vehicle Expenses</td>
+                    <td class="normal-table-vehicle"></td>
+                    <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car_repair_expenses, :delimiter => ',', precision: 2)}" %></td>
+                  </tr>
+
+                  <tr>
+                    <% if @commission %>
+                      <td class="normal-table-vehicle">Commission (<%= link_to "Add", new_dealership_commission_path(@dealership, :car_id => @car.id)%>)</td>
+                      <td class="normal-table-vehicle"></td>
+                      <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@commission_amount, :delimiter => ',', :precision => 2)}" %></td>
+                    <% else %>
+                      <td class="normal-table-vehicle">Commission (<%= link_to "Add", new_dealership_commission_path(@dealership, :car_id => @car.id)%>)</td>
+                      <td class="normal-table-vehicle"></td>
+                      <td class="text-right normal-table-vehicle">$0.00</td>
+                    <% end %>
+
+             
+ 
+                  </tr>
+
+                  <tr>
+                    <td class="normal-table-vehicle">Frontend PAC</td>
+                    <td class="normal-table-vehicle"></td>
+                    <td class="text-right normal-table-vehicle"><%= @car.frontend_pac ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                  </tr>
+
+                  <tr>
+                    <td class="normal-table-vehicle">Backend PAC</td>
+                    <td class="normal-table-vehicle"></td>
+                    <td class="text-right normal-table-vehicle"><%= @car.backend_pac ?  "$#{number_with_precision(@car.backend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                  </tr>
+
+                  <tr>
+                    <td class="normal-table-vehicle">Advertising Cost</td>
+                    <td class="normal-table-vehicle"></td>
+                    <td class="text-right normal-table-vehicle"><%= @car.advertising_cost ? "$#{number_with_precision(@car.advertising_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                  </tr>
+
+                  <tr>
+                    <td class="normal-table-vehicle">Other Costs</td>
+                    <td class="normal-table-vehicle"></td>
+                    <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@car.other_costs, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                  </tr>
+
+                  <tr>
+                    <td><b>Total</b></td>
+                    <td></td>
+                    <td class="text-right"><b><%= "$#{number_with_precision(@total_price, :delimiter => ',', precision: 2)}" %></b></td>
+                  </tr>
+
+
+
+
+                </tbody>
+              </table>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="30%"><b>Net Profit</b></th>
+                    <th width="50%"><b></b></th>
+                    <th class="text-right"><b>Total</b></th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td><b>Net Profit</b></td>
+                    <td></td>
+                    <td class="text-right"><b><%= "$#{number_with_precision(@profit, :delimiter => ',', precision: 2)}" %></b></td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+            </div>
+
+          </div><!-- Footer -->
+
+        </div>
+        <div class="tab-pane" id="commish">
+          <%= link_to "<i class='entypo-plus'></i> Add Commission".html_safe, new_dealership_commission_path(@dealership, :car_id => @car.id), class: "btn btn-success", role: "button" %>
+          <br/>
+          <% @commissions.each do |commission| %>
+          <%employee = Employee.find(commission.employee_id) %>
+
+          <div class="member-entry">
+
+            <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+              <img src="<%= employee.image%>" class="img-rounded" />
+              <i class="entypo-forward"></i>
+            </a>
+            <div class="member-details">
+
+
+              <h4><%= link_to employee.name, dealership_employee_path(@dealership, employee) %></h4>
+
+              <div class="row info-list">
+
+                <div class="col-sm-4">
+                  <i class="entypo-forward"></i>
+                  Commission Amount: <%= "$#{number_with_precision(commission.amount, :delimiter => ',', precision: 2)}" %> (<%= link_to "Edit / Delete", edit_dealership_commission_path(@dealership, commission) %>)
+                </div>
+
+     
+
+
+              </div>
+            </div>
           </div>
-        </section>
-      </div>
-      <% end %>
+          <% end %>
+        </div>
 
-
-      </div>
-
-
-
-
+      </section>
     </div>
 
-
-
-
-
-
-
+    <% end %>
 
 
   </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+</div>
 </div>
 
 

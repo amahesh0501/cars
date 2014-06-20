@@ -5,7 +5,7 @@ class Commission < ActiveRecord::Base
   belongs_to :car
   belongs_to :employee
 
-  validates_presence_of :dealership_id, :employee_id, :amount, :car_id
+  validates_presence_of :dealership_id, :amount, :car_id
   validates_numericality_of :amount
 
 
