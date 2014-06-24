@@ -21,10 +21,16 @@ class TempsController < ApplicationController
     @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @customers = @dealership.customers.order('name ASC')
 
-    @amount_financed = @temp.amount + (@temp.amount * @temp.sales_tax_percent/100) + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee + @temp.other_fee + @temp.gap_price + @temp.warranty_price - @temp.trade_in_value - @temp.down_payment + @temp.less_payoff
-    interest = @temp.apr  * 0.01 if @temp.apr
-    interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
-    @monthly_payment = (@amount_financed + @interest_charge) / @temp.term
+    @taxable_amount = @temp.amount + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee+ @temp.other_fee + @temp.gap_price + @temp.warranty_price - @temp.trade_in_value + @temp.less_payoff
+    @amount_financed = @taxable_amount + (@taxable_amount * (@temp.sales_tax_percent/100))
+    if @temp.apr
+     @amount_with_interest = @amount_financed + (@amount_financed * (@temp.apr/100) )
+     @final_amount = @amount_with_interest - @temp.down_payment
+    else
+     @final_amount = @amount_financed - @temp.down_payment
+    end
+    @monthly_payment = @final_amount / @temp.term
+
 
     if @car
       @repairs = Repair.where(car_id: @car.id)
@@ -33,12 +39,11 @@ class TempsController < ApplicationController
       @car.other_costs ? @other_costs = @car.other_costs : @other_costs = 0
       @car.advertising_cost ? @advertising_cost = @car.advertising_cost : @advertising_cost = 0
       @car.frontend_pac ? @frontend_pac = @car.frontend_pac : @frontend_pac = 0
-      @car.backend_pac ? @backend_pac = @car.backend_pac : @backend_pac = 0
       @commissions = Commission.find_all_by_car_id(@car.id) #if Commission.find_by_car_id(@car.id)
       @commission = 0
       @commissions.each {|commission| @commission = @commission + commission.amount}
       @commission ? @commission_amount = @commission : @commission_amount = 0
-      @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @backend_pac + @commission_amount if @car.acquire_price
+      @total_price = @car.acquire_price + @car_repair_expenses + @other_costs + @advertising_cost + @frontend_pac + @commission_amount if @car.acquire_price
       @amount_received = @amount_financed + @temp.down_payment
       @profit = @amount_received - @total_price
     end

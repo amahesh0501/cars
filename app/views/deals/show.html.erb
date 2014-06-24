@@ -128,9 +128,22 @@
 
               <div class="tile-stats tile-green">
                 <div class="icon"><i class="entypo-flash"></i></div>
-                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@interest_charge, :delimiter => ',', precision: 2)}" %></h2></div>
+                <% if @car %>
+                <% wholesale_percent = (@deal.amount / @car.wholesale_price) * 100 if @car.wholesale_price > 0 %>
+                <% retail_percent = (@deal.amount / @car.retail_price) * 100 if @car.retail_price > 0 %>
 
-                <h3><%= "Interest Charged" %></h3>
+                  <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">
+                   <h2 style="color: white;">
+                    <%=  wholesale_percent ? "#{number_with_precision(wholesale_percent, :delimiter => ',', precision: 1)}%" : "N/A" %> 
+                    / 
+                    <%=  retail_percent ? "#{number_with_precision(retail_percent, :delimiter => ',', precision: 1)}%" : "N/A" %>  
+                  </h2>
+                  </div>
+                <h3><%= "Wholesale / Retail" %></h3>
+                <% else %>
+                  <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;">N/A</h2></div>
+                  <h3><%= "Add Vehicle for KBB Comparisons" %></h3>
+                <% end %>
               </div>
 
             </div>
@@ -180,8 +193,7 @@
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Sales Tax Amount: <%= @deal.sales_tax_amount ? "$#{number_with_precision(@deal.sales_tax_amount, :delimiter => ',', precision: 2)} (#{number_with_precision(@deal.sales_tax_percent, precision: 2)}%)" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Down Payment: <%= @deal.down_payment > 0 ? "$#{number_with_precision(@deal.down_payment, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
-                  <% first_payment_date = @deal.deffered_down_1_date + @deal.days_to_first_payment if @deal.days_to_first_payment %>
-                  <p><i class="entypo-forward"></i>First Payment Date: <%= first_payment_date ? first_payment_date("%m/%d/%Y") : "N/A"  %></p>
+                  <p><i class="entypo-forward"></i>First Payment Date: <%= @deal.first_payment_date ? @deal.first_payment_date.strftime("%m/%d/%Y") : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Smog Fee: <%= @deal.smog_fee > 0 ? "$#{number_with_precision(@deal.smog_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
                   <p><i class="entypo-forward"></i>Other Fees: <%= @deal.other_fee > 0 ? "$#{number_with_precision(@deal.other_fee, :delimiter => ',', precision: 2)}" : "N/A"  %></p>
 

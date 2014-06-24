@@ -1,5 +1,5 @@
 class Deal < ActiveRecord::Base
-  attr_accessible :employee_id, :car_id, :customer_id, :dealership_id, :warranty_id, :gap_id, :lender_id, :amount, :sales_tax_percent, :sales_tax_amount, :date, :down_payment, :apr, :term, :trade_in_value, :less_payoff, :days_to_first_payment, :deffered_down_1_payment, :deffered_down_1_date, :deffered_down_2_payment, :deffered_down_2_date, :deffered_down_3_payment, :deffered_down_3_date, :smog_fee, :doc_fee, :reg_fee, :warranty_term, :warranty_price, :warranty_type, :gap_term, :gap_price, :discount_fee, :other_fee, :commission
+  attr_accessible :employee_id, :car_id, :customer_id, :dealership_id, :warranty_id, :gap_id, :lender_id, :amount, :sales_tax_percent, :sales_tax_amount, :date, :down_payment, :apr, :term, :trade_in_value, :less_payoff, :first_payment_date, :deffered_down_1_payment, :deffered_down_1_date, :deffered_down_2_payment, :deffered_down_2_date, :deffered_down_3_payment, :deffered_down_3_date, :smog_fee, :doc_fee, :reg_fee, :warranty_term, :warranty_price, :warranty_type, :gap_term, :gap_price, :discount_fee, :other_fee, :commission
 
 
   belongs_to :dealership

@@ -175,6 +175,17 @@
         <%= f.text_field :invoice_number, class: "form-control" %>
       </div>
     </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Registration Fees</label>
+      <div class="col-sm-5">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :reg_fees, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <h3>Financial Information</h3>
     <div class="form-group">
@@ -205,20 +216,11 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-3 control-label">Frontend PAC</label>
+      <label class="col-sm-3 control-label">Pack</label>
       <div class="col-sm-5">
         <div class="input-group">
           <span class="input-group-addon">$</span>
           <%= f.text_field :frontend_pac, class: "form-control" %>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Backend PAC</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :backend_pac, class: "form-control" %>
         </div>
       </div>
     </div>

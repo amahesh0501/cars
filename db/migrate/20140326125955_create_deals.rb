@@ -23,7 +23,6 @@ class CreateDeals < ActiveRecord::Migration
       t.float :trade_in_value, default: 0
       t.float :less_payoff, default: 0
 
-      t.float :days_to_first_payment
       t.float :deffered_down_1_payment, default: 0
       t.date :deffered_down_1_date
       t.float :deffered_down_2_payment, default: 0
@@ -44,6 +43,8 @@ class CreateDeals < ActiveRecord::Migration
       t.float :gap_price, default: 0
 
       t.float :discount_fee, default: 0
+
+      t.date :first_payment_date
 
       t.timestamps
     end

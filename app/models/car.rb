@@ -1,5 +1,5 @@
 class Car < ActiveRecord::Base
-  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim, :wholesale_price, :retail_price, :smog_price, :auction_id, :floorer_id, :card_id, :stock_number, :frontend_pac, :backend_pac, :invoice_number, :advertising_cost, :payment_method, :check_number, :other_costs, :customer_price
+  attr_accessible :make, :model, :vin, :year, :miles, :description, :dealership_id, :transmission, :body_style, :exterior_color, :interior_color, :fuel, :engine, :doors, :wheel_base, :acquire_date, :acquire_price, :acquire_location, :smog_status, :smog_date, :smogged_by, :flooring, :flooring_company, :flooring_date, :license_plate, :image, :status, :trim, :wholesale_price, :retail_price, :smog_price, :auction_id, :floorer_id, :card_id, :stock_number, :frontend_pac, :backend_pac, :reg_fees, :invoice_number, :advertising_cost, :payment_method, :check_number, :other_costs, :customer_price
 
   belongs_to :dealership
   belongs_to :floorer

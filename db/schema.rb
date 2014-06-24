@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.boolean  "flooring",           default: false
     t.string   "flooring_company"
     t.date     "flooring_date"
+    t.float    "reg_fees"
     t.float    "wholesale_price"
     t.float    "retail_price"
     t.float    "customer_price"
@@ -99,8 +100,8 @@ ActiveRecord::Schema.define(version: 20140530170712) do
 
   create_table "commissions", force: true do |t|
     t.integer "car_id"
-    t.integer "employee_id"
     t.integer "dealership_id"
+    t.integer "employee_id"
     t.date    "date"
     t.float   "amount"
   end
@@ -187,7 +188,6 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.float    "commission",              default: 0.0
     t.float    "trade_in_value",          default: 0.0
     t.float    "less_payoff",             default: 0.0
-    t.float    "days_to_first_payment"
     t.float    "deffered_down_1_payment", default: 0.0
     t.date     "deffered_down_1_date"
     t.float    "deffered_down_2_payment", default: 0.0
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.float    "gap_term",                default: 0.0
     t.float    "gap_price",               default: 0.0
     t.float    "discount_fee",            default: 0.0
+    t.date     "first_payment_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

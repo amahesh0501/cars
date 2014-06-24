@@ -136,6 +136,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="col-sm-3 control-label">Date of First Payment</label>
+      <div class="col-sm-5">
+        <%= f.date_field :first_payment_date, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
       <label class="col-sm-3 control-label">Trade In Value</label>
       <div class="col-sm-5">
         <% if @fields %>

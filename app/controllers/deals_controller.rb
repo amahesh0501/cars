@@ -23,14 +23,18 @@ class DealsController < ApplicationController
 
 
 
+   @taxable_amount = @deal.amount + @deal.smog_fee + @deal.doc_fee + @deal.reg_fee+ @deal.other_fee + @deal.gap_price + @deal.warranty_price - @deal.trade_in_value + @deal.less_payoff
+   @amount_financed = @taxable_amount + (@taxable_amount * (@deal.sales_tax_percent/100))
+   if @deal.apr
+    @amount_with_interest = @amount_financed + (@amount_financed * (@deal.apr/100) )
+    @final_amount = @amount_with_interest - @deal.down_payment
+   else
+    @final_amount = @amount_financed - @deal.down_payment
+   end
+   @monthly_payment = @final_amount / @deal.term
 
 
 
-   @amount_financed = @deal.amount + (@deal.amount * @deal.sales_tax_percent/100) + @deal.smog_fee + @deal.doc_fee + @deal.reg_fee+ @deal.other_fee + @deal.gap_price + @deal.warranty_price - @deal.trade_in_value - @deal.down_payment + @deal.less_payoff
-
-   interest = @deal.apr  * 0.01 if @deal.apr
-   interest ? @interest_charge = @amount_financed * interest : @interest_charge = 0
-   @monthly_payment = (@amount_financed + @interest_charge) / @deal.term
   end
 
   def new

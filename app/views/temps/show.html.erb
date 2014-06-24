@@ -112,9 +112,9 @@
 
               <div class="tile-stats tile-red">
                 <div class="icon"><i class="entypo-clipboard"></i></div>
-                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@amount_financed, :delimiter => ',', precision: 2)}" %></h2></div>
+                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@final_amount, :delimiter => ',', precision: 2)}" %></h2></div>
 
-                <h3><%= "Amount Financed" %></h3>
+                <h3><%= "Total Cost" %></h3>
               </div>
 
             </div>
@@ -123,9 +123,22 @@
 
               <div class="tile-stats tile-green">
                 <div class="icon"><i class="entypo-flash"></i></div>
-                <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;"><%=  "$#{number_with_precision(@interest_charge, :delimiter => ',', precision: 2)}" %></h2></div>
+                <% if @car %>
+                <% wholesale_percent = (@temp.amount / @car.wholesale_price) * 100 if @car.wholesale_price > 0 %>
+                <% retail_percent = (@temp.amount / @car.retail_price) * 100 if @car.retail_price > 0 %>
 
-                <h3><%= "Interest Charged" %></h3>
+                  <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">
+                   <h2 style="color: white;">
+                    <%=  wholesale_percent ? "#{number_with_precision(wholesale_percent, :delimiter => ',', precision: 1)}%" : "N/A" %> 
+                    / 
+                    <%=  retail_percent ? "#{number_with_precision(retail_percent, :delimiter => ',', precision: 1)}%" : "N/A" %>  
+                  </h2>
+                  </div>
+                <h3><%= "Wholesale / Retail" %></h3>
+                <% else %>
+                  <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200"><h2 style="color: white;">N/A</h2></div>
+                  <h3><%= "Add Vehicle for KBB Comparisons" %></h3>
+                <% end %>
               </div>
 
             </div>
@@ -273,7 +286,8 @@
 
             <div class="col-sm-4">
 
-              <label class="control-label">Registration Fee</label><br/><br/>
+              <label class="control-label">Registration Fees <i><%= "(Previously entered $#{number_with_precision(@car.reg_fees, :delimiter => ',', :precision => 2)})" if @car && @car.reg_fees > 0 && @temp.reg_fee == nil || @temp.reg_fee == 0%></i>
+</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
                   <%= f.text_field :reg_fee, class: "form-control" %>
@@ -431,15 +445,9 @@
                         </tr>
 
                         <tr>
-                          <td class="normal-table-vehicle">Frontend PAC</td>
+                          <td class="normal-table-vehicle">Pack</td>
                           <td class="normal-table-vehicle"></td>
                           <td class="text-right normal-table-vehicle"><%= @car.frontend_pac ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
-                        </tr>
-
-                        <tr>
-                          <td class="normal-table-vehicle">Backend PAC</td>
-                          <td class="normal-table-vehicle"></td>
-                          <td class="text-right normal-table-vehicle"><%= @car.backend_pac ?  "$#{number_with_precision(@car.backend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                         </tr>
 
                         <tr>
