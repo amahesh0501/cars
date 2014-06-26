@@ -175,7 +175,7 @@
               <div class="row">
                 <div class="col-md-4">
                   <p><i class="entypo-forward"></i>Date: <%= @car.acquire_date ? "#{@car.acquire_date.strftime("%m/%d/%Y")}" : "Not Entered" %></p>
-                  <p><i class="entypo-forward"></i>Registration Fees: <%= @car.reg_fees > 0  ? "$#{number_with_precision(@car.reg_fees, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
+                  <p><i class="entypo-forward"></i>Registration Fees: <%= @car.reg_fees  ? "$#{number_with_precision(@car.reg_fees, :delimiter => ',', precision: 2)}" : "Not Entered" %></p>
                   <% if @car.payment_method == "Credit Card" && @car.card_id %>
                   <% card = Card.find(@car.card_id) %>
                   <p><i class="entypo-forward"></i>Credit Card: <%= link_to "#{card.name} (##{card.number})", dealership_card_path(@dealership, card)  %></p>

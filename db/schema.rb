@@ -200,9 +200,13 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.float    "reg_fee",                 default: 0.0
     t.float    "warranty_term",           default: 0.0
     t.float    "warranty_price",          default: 0.0
+    t.float    "warranty_cost",           default: 0.0
     t.string   "warranty_type"
     t.float    "gap_term",                default: 0.0
     t.float    "gap_price",               default: 0.0
+    t.float    "gap_cost",                default: 0.0
+    t.float    "accessory_price",         default: 0.0
+    t.float    "accessory_cost",          default: 0.0
     t.float    "discount_fee",            default: 0.0
     t.date     "first_payment_date"
     t.datetime "created_at"
@@ -448,10 +452,15 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.float    "reg_fee",                 default: 50.0
     t.float    "warranty_term",           default: 0.0
     t.float    "warranty_price",          default: 0.0
+    t.float    "warranty_cost",           default: 0.0
     t.string   "warranty_type"
     t.float    "gap_term",                default: 0.0
     t.float    "gap_price",               default: 0.0
+    t.float    "gap_cost",                default: 0.0
+    t.float    "accessory_price",         default: 0.0
+    t.float    "accessory_cost",          default: 0.0
     t.float    "discount_fee",            default: 0.0
+    t.float    "estimated_commission",    default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

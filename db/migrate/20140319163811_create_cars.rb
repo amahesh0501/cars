@@ -42,7 +42,7 @@ class CreateCars < ActiveRecord::Migration
       t.boolean :flooring, default: false
       t.string :flooring_company
       t.date :flooring_date
-      t.float :reg_fees
+      t.float :reg_fees, default: 0
 
       #more_information
       t.float :wholesale_price
