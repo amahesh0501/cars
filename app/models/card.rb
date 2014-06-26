@@ -8,5 +8,7 @@ class Card < ActiveRecord::Base
   has_many :purchases
   has_many :payments
 
+  "xx"
+
 
 end
