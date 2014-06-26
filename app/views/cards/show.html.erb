@@ -26,7 +26,7 @@
             <li>
               <div class="profile-name">
                 <strong><%= @card.name %></strong>
-                <span><%= @card.number.length > 0 ? "Last 4 Digita: #{@card.number}" : "No number entered" %></span>
+                <span><%= @card.number.length > 0 ? "Last 4 Digits: #{@card.number}" : "No number entered" %></span>
               </div>
             </li>
 
@@ -61,6 +61,12 @@
             <div class="row">
               <div class="col-md-3">
                 <div class="profile-stat">
+                  <h4><%= "$#{number_with_precision(@outstanding_balance, :delimiter => ',', precision: 2)}" %></h4>
+                  <span>Outstanding Balance</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="profile-stat">
                   <h4><%= "$#{number_with_precision(@total, :delimiter => ',', precision: 2)}" %></h4>
                   <span>Total Spent</span>
                 </div>
@@ -81,6 +87,7 @@
             <!-- tabs for the profile links -->
             <ul class="nav nav-tabs">
               <li class="active"><a href="#home" data-toggle="tab">Transactions</a></li>
+              <li><a href="#payment" data-toggle="tab">Payments</a></li>
             </ul>
 
 
@@ -108,26 +115,26 @@
               <% if transaction.class.table_name == "repairs" %>
               <tr class="gradeU">
                 <td><%= link_to transaction.name, dealership_repair_path(@dealership, transaction)  %></td>
-                <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_repair_path(@dealership, transaction) %></td>
-                <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_repair_path(@dealership, transaction)  %></td>
+                <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_repair_path(@dealership, transaction) %> (<%= link_to "Edit", edit_dealership_repair_path(@dealership, transaction) %>)</td>
+                <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_repair_path(@dealership, transaction)  %> </td>
                 </tr>
                 <% elsif transaction.class.table_name == "expenses" %>
                 <tr class="gradeU">
                   <td><%= link_to transaction.name, dealership_expense_path(@dealership, transaction)  %></td>
-                  <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_expense_path(@dealership, transaction) %></td>
+                  <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_expense_path(@dealership, transaction) %> (<%= link_to "Edit", edit_dealership_expense_path(@dealership, transaction) %>)</td>
                   <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_expense_path(@dealership, transaction)  %></td>
                   </tr>
                   <% elsif transaction.class.table_name == "paychecks" %>
                   <tr class="gradeU">
                     <td><%= link_to transaction.name, dealership_paycheck_path(@dealership, transaction)  %></td>
-                    <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, transaction) %></td>
+                    <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_paycheck_path(@dealership, transaction) %>(<%= link_to "Edit", edit_dealership_paycheck_path(@dealership, transaction) %>)</td>
                     <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_paycheck_path(@dealership, transaction)  %></td>
                     </tr>
                     <% elsif transaction.class.table_name == "purchases" %>
                     <% car = Car.find(transaction.car_id) %>
                     <tr class="gradeU">
                       <td><%= link_to transaction.name, dealership_car_path(@dealership, car)  %></td>
-                      <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car) %></td>
+                      <td><%= link_to "$#{number_with_precision(transaction.amount, :delimiter => ',', precision: 2)}", dealership_car_path(@dealership, car)%> (<%= link_to "Edit", edit_dealership_car_path(@dealership, car) %>)</td>
                       <td><%= link_to "#{transaction.date.strftime("%m/%d/%Y")}", dealership_car_path(@dealership, car)  %></td>
                       </tr>
                       <% end %>
@@ -142,7 +149,35 @@
           <%= link_to "<i class='entypo-cross'></i> Delete Card".html_safe, dealership_card_path(@dealership, @card), class: "btn btn-danger", role: "button", method: "delete", confirm: "Are you sure?" %>
           <% end %>
         </div>
+
+        <div class="tab-pane" id="payment">
+          <%= link_to "<i class='entypo-plus'></i> Add Payment".html_safe, new_dealership_card_payment_path(@dealership, @card), class: "btn btn-success", role: "button" %>
+          <br/><br/>
+          <table class="table table-bordered datatable" id="table-1">
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @payments.each do |payment| %>
+                <tr class="gradeU">
+                  <td><%= "$#{number_with_precision(payment.amount, :delimiter => ',', precision: 2)}" %> (<%= link_to "Edit", edit_dealership_card_payment_path(@dealership, @card, payment) %>)</td>
+                  <td><%= "#{payment.date.strftime("%m/%d/%Y")}"%></td>
+                  </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <p><%= "There are no payments" if @payments.length ==0 %></p>
+        </div>
+
+
       </div>
+
+
+
     </div>
   </div>
 </div>

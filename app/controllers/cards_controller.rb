@@ -18,8 +18,14 @@ class CardsController < ApplicationController
     @transactions = @expenses + @repairs + @paychecks + @purchases
     @transactions = @transactions.sort_by &:date
     @transactions = @transactions.reverse
+    @payments = @card.payments.sort_by &:date
+    @payments = @payments.reverse
     @total = 0
     @transactions.each {|transaction| @total += transaction.amount if transaction.amount}
+    @payments_total = 0
+    @payments.each {|payment| @payments_total += payment.amount if payment.amount}
+    @outstanding_balance = @total - @payments_total
+
   end
 
   def new

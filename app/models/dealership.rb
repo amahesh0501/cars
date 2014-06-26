@@ -1,6 +1,6 @@
 class Dealership < ActiveRecord::Base
 
-  attr_accessible :dealership_name, :dealership_address, :active, :sales_tax
+  attr_accessible :dealership_name, :dealership_address, :active, :sales_tax, :start_balance
 
   has_many :customers
   has_many :cars
@@ -24,6 +24,7 @@ class Dealership < ActiveRecord::Base
   has_many :lenders
   has_many :partners
   has_many :commissions
+  has_many :payments
 
 
   validates_presence_of :dealership_name

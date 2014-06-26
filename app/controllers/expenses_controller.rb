@@ -90,7 +90,9 @@ class ExpensesController < ApplicationController
       @gains.each {|gain| @revenue_total += gain.amount if gain.amount}
 
       @profit = @revenue_total - @expense_total
-
+      if @dealership.start_balance
+        @bank_balance = @profit + @dealership.start_balance if @dealership.start_balance > 0
+      end
 
       @cash_total = 0
       @cash_transactions = @transactions.select { |transaction| transaction.payment_method == 'Cash' }

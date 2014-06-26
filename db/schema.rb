@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530170712) do
+ActiveRecord::Schema.define(version: 20140626194925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.boolean  "flooring",           default: false
     t.string   "flooring_company"
     t.date     "flooring_date"
-    t.float    "reg_fees"
+    t.float    "reg_fees",           default: 0.0
     t.float    "wholesale_price"
     t.float    "retail_price"
     t.float    "customer_price"
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.string   "access_code",        default: "12345"
     t.float    "sales_tax",          default: 6.0
     t.boolean  "active",             default: true
+    t.float    "start_balance",      default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -376,6 +377,15 @@ ActiveRecord::Schema.define(version: 20140530170712) do
     t.date     "date"
     t.string   "payment_method"
     t.string   "check_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "payments", force: true do |t|
+    t.integer  "dealership_id"
+    t.integer  "card_id"
+    t.date     "date"
+    t.float    "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

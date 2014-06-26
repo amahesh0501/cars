@@ -23,7 +23,9 @@ Cars::Application.routes.draw do
     resources :commissions
     resources :auctions
     resources :floorers
-    resources :cards
+    resources :cards do
+      resources :payments
+    end
     resources :partners
     resources :lenders
     resources :gaps

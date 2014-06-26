@@ -7,6 +7,8 @@ class CreateDealerships < ActiveRecord::Migration
       t.float :sales_tax, default: 6
       t.boolean :active, default: true
 
+      t.float :start_balance, default: 0
+
       t.timestamps
     end
   end

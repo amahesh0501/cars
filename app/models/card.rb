@@ -6,6 +6,7 @@ class Card < ActiveRecord::Base
   has_many :paychecks
   has_many :repairs
   has_many :purchases
+  has_many :payments
 
 
 end

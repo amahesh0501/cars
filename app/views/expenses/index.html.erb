@@ -100,6 +100,14 @@
                   <span><a href="#">Expenses</a></span>
                 </div>
               </div>
+              <% if @bank_balance %>
+              <div class="col-md-3">
+                <div class="profile-stat">
+                  <h4><%= "$#{number_with_precision(@bank_balance, :delimiter => ',', precision: 2)}" %></h4>
+                  <span><a href="#">True Bank Balance</a></span>
+                </div>
+              </div>
+              <% end %>
 
 
             </div>
