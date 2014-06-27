@@ -28,6 +28,7 @@ Cars::Application.routes.draw do
     end
     resources :partners
     resources :lenders
+    resources :menus
     resources :gaps
     resources :warranties
     resources :customers do

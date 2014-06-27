@@ -3,6 +3,7 @@ class ConversationsController < ApplicationController
   before_filter :authenticate_user!, :dealership_active?, :is_member?
 
   def index
+    @dealership = Dealership.find(params[:dealership_id])
     redirect_to dealership_customer_path(Dealership.find(params[:dealership_id]), Customer.find(params[:customer_id]))
   end
 

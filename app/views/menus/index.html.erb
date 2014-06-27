@@ -1,0 +1,66 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <%= link_to "<i class='entypo-plus'></i> Add Menu".html_safe, new_dealership_menu_path(@dealership), class: "btn btn-success", role: "button" %>
+
+    <br/>
+
+    <% @menus.each do |menu| %>
+
+    <div class="member-entry">
+
+      <a href="http://demo.neontheme.com/extra/timeline/" class="member-img">
+        <img src="/menu.jpg" class="img-rounded" />
+        <i class="entypo-forward"></i>
+      </a>
+      <div class="member-details">
+
+
+        <h4><%= link_to "#{menu.name}", dealership_menu_path(@dealership, menu) %></h4>
+
+        <div class="row info-list">
+
+          <div class="col-sm-4">
+          </div>
+
+          <div class="col-sm-4">
+
+          </div>
+
+          <div class="col-sm-4">
+
+          </div>
+
+          <div class="clear"></div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <% end %>
+    <% if @menus.length ==0 %>
+    <br/><br/>
+    <p>There are no menus </p>
+    <% end %>
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+
+

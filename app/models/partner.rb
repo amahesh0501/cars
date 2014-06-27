@@ -5,7 +5,7 @@ class Partner < ActiveRecord::Base
   belongs_to :dealership
 
   validates_presence_of :dealership_id, :name
-  has_attached_file :image, styles: { medium: "320x240"}, default_url: "/vendor.jpg"
+  has_attached_file :image, styles: { medium: "320x240"}, default_url: "/biz.jpg"
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
 
   def self.search(search)

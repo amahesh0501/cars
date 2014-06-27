@@ -6,7 +6,7 @@ class Auction < ActiveRecord::Base
 
   validates_presence_of :dealership_id
 
-  has_attached_file :image, styles: { small: "115x115", medium: "320x240"}, default_url: "/car.png"
+  has_attached_file :image, styles: { small: "115x115", medium: "320x240"}, default_url: "/biz.jpg"
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
 
   def self.search(search)

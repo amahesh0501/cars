@@ -25,6 +25,7 @@ class Dealership < ActiveRecord::Base
   has_many :partners
   has_many :commissions
   has_many :payments
+  has_many :menus
 
 
   validates_presence_of :dealership_name

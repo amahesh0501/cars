@@ -1,0 +1,518 @@
+<div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
+
+  <%= render 'layouts/sidebar' %>
+
+
+
+  <div class="main-content">
+    <%= render 'layouts/dealer_admin_nav' %>
+
+    <h2>Edit Menu </h2>
+
+    <div class="panel-body">
+
+    <%= form_for [@dealership, @menu], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
+
+    
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Name of Menu</label>
+      <div class="col-sm-5">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+
+    <h3>Basic</h3>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :basic_one_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :basic_one_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :basic_one_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :basic_two_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :basic_two_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :basic_two_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :basic_three_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :basic_three_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :basic_three_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :basic_four_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :basic_four_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :basic_four_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :basic_five_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :basic_five_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :basic_five_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+
+
+    <h3>Standard</h3>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :standard_one_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :standard_one_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :standard_one_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :standard_two_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :standard_two_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :standard_two_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :standard_three_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :standard_three_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :standard_three_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :standard_four_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :standard_four_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :standard_four_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :standard_five_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :standard_five_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :standard_five_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+
+    <h3>Good</h3>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :good_one_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :good_one_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :good_one_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :good_two_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :good_two_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :good_two_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :good_three_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :good_three_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :good_three_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :good_four_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :good_four_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :good_four_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :good_five_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :good_five_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :good_five_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+
+    <h3>Best</h3>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :best_one_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :best_one_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 1 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :best_one_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :best_two_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :best_two_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 2 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :best_two_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :best_three_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :best_three_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 3 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :best_three_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :best_four_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :best_four_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 4 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :best_four_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Title</label>
+      <div class="col-sm-5">
+        <%= f.text_field :best_five_title, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Description</label>
+      <div class="col-sm-5">
+          <%= f.text_area :best_five_description, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Feature 5 Price</label>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <%= f.text_field :best_five_amount, class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div class="form-group">
+      <label class="col-sm-3 control-label"></label>
+      <div class="col-sm-5">
+            <%= f.submit "Update Menu", :class => 'btn btn-success'  %>
+      </div>
+    </div>
+    <% end %>
+
+
+
+
+  </div>
+</div>
