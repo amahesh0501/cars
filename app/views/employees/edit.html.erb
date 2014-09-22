@@ -9,199 +9,175 @@
 
     <div class="panel-body">
       <h2>Edit <%= @employee.name %></h2>
+      <br/>
     <%= form_for [@dealership, @employee], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Number</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :number, value: @fields["number"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :number, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">First Name</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :first, value: @fields["first"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :first, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Last Name</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :last, value: @fields["last"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :last, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Title</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :title, value: @fields["title"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :title, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Drivers Licence Number</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :driver_license_number, value: @fields["driver_license_number"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :driver_license_number, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Sales License Number</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :sales_license, value: @fields["sales_license"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :sales_license, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Social Security Number (Last 4)</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :ssn, value: @fields["ssn"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :ssn, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Birthday</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.date_field :birthday, value: @fields["birthday"], class: "form-control" %>
-        <% else %>
-          <%= f.date_field :birthday, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Hire Date</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.date_field :hire_date, value: @fields["hire_date"], class: "form-control" %>
-        <% else %>
-          <%= f.date_field :hire_date, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Termination Date</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.date_field :terminate_date, value: @fields["terminate_date"], class: "form-control" %>
-        <% else %>
-          <%= f.date_field :terminate_date, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
 
-    <h3> Contact Information </h3>
+    <div class="row">
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :number, value: @fields["number"], class: "form-control", placeholder: "Number" %>
+          <% else %>
+            <%= f.text_field :number, class: "form-control", placeholder: "Number" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+        <% if @fields %>
+          <%= f.text_field :first, value: @fields["first"], class: "form-control", placeholder: "First Name" %>
+        <% else %>
+          <%= f.text_field :first, class: "form-control", placeholder: "First Name" %>
+        <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :last, value: @fields["last"], class: "form-control", placeholder: "Last Name" %>
+          <% else %>
+            <%= f.text_field :last, class: "form-control", placeholder: "Last Name" %>
+          <% end %>
+      </div>
+    </div>
+    <br/>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Line 1</label>
-      <div class="col-sm-5">
+    <div class="row">
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :title, value: @fields["title"], class: "form-control", placeholder: "Title" %>
+          <% else %>
+            <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :driver_license_number, value: @fields["driver_license_number"], class: "form-control", placeholder: "Drivers License Number" %>
+          <% else %>
+            <%= f.text_field :driver_license_number, class: "form-control", placeholder: "Drivers License Number" %>
+          <% end %>
+
+      </div>
+      <div class="col-md-4">
         <% if @fields %>
-          <%= f.text_field :address_line_1, value: @fields["address_line_1"], class: "form-control" %>
+          <%= f.text_field :sales_license, value: @fields["sales_license"], class: "form-control", placeholder: "Sales License Number" %>
         <% else %>
-          <%= f.text_field :address_line_1, class: "form-control" %>
+          <%= f.text_field :sales_license, class: "form-control", placeholder: "Sales License Number" %>
         <% end %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Line 2</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :address_line_2, value: @fields["address_line_2"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :address_line_2, class: "form-control" %>
-        <% end %>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :ssn, value: @fields["ssn"], class: "form-control", placeholder: "Social Security Number (Last 4)" %>
+          <% else %>
+            <%= f.text_field :ssn, class: "form-control", placeholder: "Social Security Number (Last 4)" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.date_field :birthday, value: @fields["birthday"], class: "form-control" %>
+          <% else %>
+            <%= f.date_field :birthday, class: "form-control" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.date_field :hire_date, value: @fields["hire_date"], class: "form-control" %>
+          <% else %>
+            <%= f.date_field :hire_date, class: "form-control" %>
+          <% end %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">City</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :address_city, value: @fields["address_city"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :address_city, class: "form-control" %>
-        <% end %>
+    <br/>
+    <div class="row">
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.date_field :terminate_date, value: @fields["terminate_date"], class: "form-control" %>
+          <% else %>
+            <%= f.date_field :terminate_date, class: "form-control" %>
+          <% end %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">State</label>
-      <div class="col-sm-5">
-        <%= f.select :address_state, @us_states, include_blank: "Please select a state"%>
+    <br/>
+
+
+    <h4>Contact Information</h4>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :address_line_1, value: @fields["address_line_1"], class: "form-control", placeholder: "Address Line 1" %>
+          <% else %>
+            <%= f.text_field :address_line_1, class: "form-control", placeholder: "Address Line 1" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :address_line_2, value: @fields["address_line_2"], class: "form-control", placeholder: "Address Line 2" %>
+          <% else %>
+            <%= f.text_field :address_line_2, class: "form-control", placeholder: "Address Line 2" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :address_city, value: @fields["address_city"], class: "form-control", placeholder: "City" %>
+          <% else %>
+            <%= f.text_field :address_city, class: "form-control", placeholder: "City" %>
+          <% end %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Zip</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :address_zip, value: @fields["address_zip"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :address_zip, class: "form-control" %>
-        <% end %>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.select :address_state, @us_states, include_blank: "Please select a state"%>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :address_zip, value: @fields["address_zip"], class: "form-control", placeholder: "Zip" %>
+          <% else %>
+            <%= f.text_field :address_zip, class: "form-control", placeholder: "Zip" %>
+          <% end %>
+      </div>
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :email, value: @fields["email"],class: "form-control", placeholder: "E-Mail" %>
+          <% else %>
+            <%= f.text_field :email, class: "form-control", placeholder: "E-Mail" %>
+          <% end %>
       </div>
     </div>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <% if @fields %>
+            <%= f.text_field :phone, value: @fields["phone"], class: "form-control", placeholder: "Phone"  %>
+          <% else %>
+            <%= f.text_field :phone, class: "form-control", placeholder: "Phone"  %>
+          <% end %>
+      </div>
+    </div>
+    <br/>
 
 
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">E-Mail</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :email, value: @fields["email"],class: "form-control" %>
-        <% else %>
-          <%= f.text_field :email, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Phone</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :phone, value: @fields["phone"], class: "form-control" %>
-        <% else %>
-          <%= f.text_field :phone, class: "form-control" %>
-        <% end %>
-      </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <div class="form-group">
-      <label class="col-sm-3 control-label">Notes</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_area :description,  class: "form-control" , value: @fields["description"] %>
-        <% else %>
-          <%= f.text_area :description,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Upload an Image</label>
-      <div class="col-sm-5">
-        <%= f.file_field :image, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
             <%= f.submit "Update Employee", :class => 'btn btn-success'  %>
 

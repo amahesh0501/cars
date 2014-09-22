@@ -6,295 +6,244 @@
 
   <div class="main-content">
     <%= render 'layouts/dealer_admin_nav' %>
-
-    <h2>Add a Vehicle </h2>
-
     <div class="panel-body">
+  
 
       <% unless @no_vin_lookup %>
 
-      <h2>Vin Lookup</h2>
-
       <%= form_tag(controller: "cars", action: "new_with_vin", remote: true, class: "form-horizontal form-groups-bordered", via: "get") do %>
 
-      <div class="form-group">
-        <label class="col-sm-3 vin-label">VIN
-        </label>
-        <div class="col-sm-5">
-          <%= text_field_tag 'vin', nil, class: 'form-control' %>
-          <br/>
+      <div class="row">
+        <div class="col-sm-3">
+          <%= text_field_tag 'vin', nil, class: 'form-control', placeholder: "Enter VIN to decode" %>
+          <%= hidden_field_tag :dealership_id, @dealership.id %>
         </div>
-      </div>
-      <br/><br/><br/>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">
-         <%= hidden_field_tag :dealership_id, @dealership.id %>
-        </label>
         <div class="col-sm-5">
           <%= submit_tag("Lookup Vehicle Information", class: "btn btn-info") %>
-
-          <br/>
         </div>
       </div>
-
-
-      <br/><br/><br/><br/>
-
       <% end %>
+      <br/>
+
+
+
+
 
       <h2>Enter Information Manually</h2>
+      <br/>
       <% end %>
 
       <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
       <%= render 'layouts/error_messages', object: f.object %>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">VIN</label>
-        <div class="col-sm-5">
-          <%= f.text_field :vin, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Stock Number</label>
-        <div class="col-sm-5">
-          <%= f.text_field :stock_number, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Year</label>
-        <div class="col-sm-5">
-          <%= f.text_field :year, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Make</label>
-        <div class="col-sm-5">
-          <%= f.text_field :make, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Model</label>
-        <div class="col-sm-5">
-          <%= f.text_field :model, class: "form-control" %>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Trim</label>
-        <div class="col-sm-5">
-          <%= f.text_field :trim, class: "form-control" %>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :vin, class: "form-control", placeholder: "VIN" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :stock_number, class: "form-control", placeholder: "Stock Number" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :year, class: "form-control", placeholder: "Year" %>
         </div>
       </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :make, class: "form-control", placeholder: "Make" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :model, class: "form-control", placeholder: "Model" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :trim, class: "form-control", placeholder: "Trim" %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :miles, class: "form-control", placeholder: "Miles" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.file_field :image, class: "form-control", placeholder: "Image" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold'], class: "form-control", placeholder: "Status" %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_area :description, class: "form-control", placeholder: "Description" %>
+        </div>
+      </div>
+      <br/>
+
+
+      <h4>More Details</h4>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :transmission, class: "form-control", placeholder: "Transmission" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :body_style, class: "form-control", placeholder: "Body Style" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :exterior_color, class: "form-control", placeholder: "Exterior Color" %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :interior_color, class: "form-control", placeholder: "Interior Color" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :engine, class: "form-control", placeholder: "Engine Type" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :wheel_base, class: "form-control", placeholder: "Wheelbase" %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :license_plate, class: "form-control", placeholder: "License Plate" %>
+        </div>
+        <div class="col-md-4">
+            Has been smogged?&nbsp;
+            <%= f.radio_button :smog_status, "1" %>&nbsp;Yes&nbsp;
+            <%= f.radio_button :smog_status, "0" %>&nbsp; No&nbsp;
+        </div>
+      </div>
+      <br/>
 
 
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Miles</label>
-        <div class="col-sm-5">
-          <%= f.text_field :miles, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Upload an Image</label>
-        <div class="col-sm-5">
-          <%= f.file_field :image, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Description</label>
-        <div class="col-sm-5">
-          <%= f.text_area :description, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Status</label>
-        <div class="col-sm-5">
-          <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold']%>
-        </div>
-      </div>
-      <h3>More Details</h3>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Transmission</label>
-        <div class="col-sm-5">
-          <%= f.text_field :transmission, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Body Style</label>
-        <div class="col-sm-5">
-          <%= f.text_field :body_style, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Exterior Color</label>
-        <div class="col-sm-5">
-          <%= f.text_field :exterior_color, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Interior Color</label>
-        <div class="col-sm-5">
-          <%= f.text_field :interior_color, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Engine Type</label>
-        <div class="col-sm-5">
-          <%= f.text_field :engine, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Wheelbase</label>
-        <div class="col-sm-5">
-          <%= f.text_field :wheel_base, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">License Plate</label>
-        <div class="col-sm-5">
-          <%= f.text_field :license_plate, class: "form-control" %>
-        </div>
-      </div>
+      <h4>Acquistion Information</h4>
+      <br/>
 
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Has been smogged?</label>
-        <div class="col-sm-5">
-          <%= f.radio_button :smog_status, "1" %>&nbsp;Yes<br/>
-          <%= f.radio_button :smog_status, "0" %>&nbsp; No
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.date_field :acquire_date, class: "form-control" %>
         </div>
-      </div>
-
-      <h3>Acquistion Information</h3>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Acquire Date (required)</label>
-        <div class="col-sm-5">
-          <%= f.date_field :acquire_date, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Acquire Price (required)</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :acquire_price, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Payment Method</label>
-        <div class="col-sm-5">
-          <%= f.select :payment_method, ['Cash', 'Credit Card', 'Check', 'Other'], prompt: true%>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Credit Card (if applicable)</label>
-        <div class="col-sm-5">
-          <%= f.collection_select :card_id, @cards.all, :id, :name, prompt: true %>
-          &nbsp; <%= link_to "(Add New Card)", new_dealership_card_path(@dealership), target: "_blank" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Check Number (if applicable)</label>
-        <div class="col-sm-5">
-          <%= f.text_field :check_number, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Auction</label>
-        <div class="col-sm-5">
-          <%= f.collection_select :auction_id, @auctions.all, :id, :name, prompt: true %>
-          &nbsp; <%= link_to "(Add New Auction)", new_dealership_auction_path(@dealership), target: "_blank" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Invoice Number</label>
-        <div class="col-sm-5">
-          <%= f.text_field :invoice_number, class: "form-control" %>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Registration Fees</label>
-        <div class="col-sm-5">
+        <div class="col-md-4">
             <div class="input-group">
               <span class="input-group-addon">$</span>
-              <%= f.text_field :reg_fees, class: "form-control" %>
+              <%= f.text_field :acquire_price, class: "form-control", placeholder: "Acquire Price" %>
             </div>
-          </div>
+        </div>
+        <div class="col-md-4">
+            Payment Method &nbsp;
+            <%= f.select :payment_method, ['Cash', 'Credit Card', 'Check', 'Other'], prompt: true, class: "form-control", placeholder: "Payment Method" %>
         </div>
       </div>
+      <br/>
 
-      <h3>Financial Information</h3>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Customer Price</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :customer_price, class: "form-control" %>
-          </div>
+      <div class="row">
+        <div class="col-md-4">
+            Credit Card &nbsp;
+            <%= f.collection_select :card_id, @cards.all, :id, :name, prompt: true %>
+            &nbsp; <%= link_to "(Add New Card)", new_dealership_card_path(@dealership), target: "_blank" %>
+        </div>
+        <div class="col-md-4">
+            <%= f.text_field :check_number, class: "form-control", placeholder: "Check Number (if applicable)" %>
+        </div>
+        <div class="col-md-4">
+            Auction &nbsp;
+            <%= f.collection_select :auction_id, @auctions.all, :id, :name, prompt: true %>
+            &nbsp; <%= link_to "(Add New Auction)", new_dealership_auction_path(@dealership), target: "_blank" %>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Wholesale Price</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :wholesale_price, class: "form-control" %>
-          </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+            <%= f.text_field :invoice_number, class: "form-control", placeholder: "Invoice Number" %>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :reg_fees, class: "form-control", placeholder: "Registration Fees" %>
+            </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Retail Price</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :retail_price, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Pack</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :frontend_pac, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Advertising Costs</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :advertising_cost, class: "form-control" %>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Other Costs</label>
-        <div class="col-sm-5">
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :other_costs, class: "form-control" %>
-          </div>
-        </div>
-      </div>
+      <br/>
 
-      <h3>Flooring Information</h3>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Has been floored?</label>
-        <div class="col-sm-5">
-          <%= f.radio_button :flooring, "1" %>&nbsp;Yes<br/>
-          <%= f.radio_button :flooring, "0" %>&nbsp; No
+
+
+
+
+
+      <h4>Financial Information</h4>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :customer_price, class: "form-control", placeholder: "Customer Price" %>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :wholesale_price, class: "form-control", placeholder: "Wholesale Price" %>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :retail_price, class: "form-control", placeholder: "Retail Price" %>
+            </div>
         </div>
       </div>
-      <div class="form-group">
-        <label class="col-sm-3 control-label">Flooring Company</label>
-        <div class="col-sm-5">
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :frontend_pac, class: "form-control", placeholder: "Pack" %>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :advertising_cost, class: "form-control", placeholder: "Advertising Costs" %>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :other_costs, class: "form-control", placeholder: "Other Costs" %>
+            </div>
+        </div>
+      </div>
+      <br/>
+
+
+
+
+      <h4>Flooring Information</h4>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+            Has been floored?&nbsp;
+            <%= f.radio_button :flooring, "1" %>&nbsp;Yes&nbsp;
+            <%= f.radio_button :flooring, "0" %>&nbsp; No&nbsp;
+        </div>
+        <div class="col-md-6">
+          Flooring Company &nbsp;
           <%= f.collection_select :floorer_id, @floorers.all, :id, :name, prompt: true %>
           &nbsp; <%= link_to "(Add New Flooring Company)", new_dealership_floorer_path(@dealership), target: "_blank" %>
         </div>
+
       </div>
+      <br/>
+
+
       <div class="form-group">
-        <label class="col-sm-3 control-label"></label>
         <div class="col-sm-5">
           <%= f.submit "Create Vehicle", :class => 'btn btn-success'  %>
 

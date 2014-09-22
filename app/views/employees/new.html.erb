@@ -9,134 +9,101 @@
 
     <div class="panel-body">
       <h2>Add an Employee</h2>
+      <br/>
     <%= form_for [@dealership, @employee], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Number</label>
-      <div class="col-sm-5">
-        <%= f.text_field :number, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">First Name</label>
-      <div class="col-sm-5">
-        <%= f.text_field :first, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Last Name</label>
-      <div class="col-sm-5">
-        <%= f.text_field :last, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Title</label>
-      <div class="col-sm-5">
-        <%= f.text_field :title, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Drivers License Number</label>
-      <div class="col-sm-5">
-        <%= f.text_field :driver_license_number, class: "form-control" %>
-      </div>
-    </div>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Sales License Number</label>
-      <div class="col-sm-5">
-        <%= f.text_field :sales_license, class: "form-control" %>
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :number, class: "form-control", placeholder: "Number" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :first, class: "form-control", placeholder: "First Name" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :last, class: "form-control", placeholder: "Last Name" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Social Security Number (Last 4)</label>
-      <div class="col-sm-5">
-        <%= f.text_field :ssn, class: "form-control" %>
+    <br/>
+
+
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :driver_license_number, class: "form-control", placeholder: "Drivers License Number" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :sales_license, class: "form-control", placeholder: "Sales License Number" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Birthday</label>
-      <div class="col-sm-5">
-        <%= f.date_field :birthday, class: "form-control" %>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :ssn, class: "form-control", placeholder: "Social Security Number (Last 4)" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.date_field :birthday, class: "form-control", placeholder: "Birthday" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.date_field :hire_date, class: "form-control", placeholder: "Hire Date" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Hire Date</label>
-      <div class="col-sm-5">
-        <%= f.date_field :hire_date, class: "form-control" %>
+    <br/>
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.date_field :terminate_date, class: "form-control", placeholder: "Termination Date" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Termination Date</label>
-      <div class="col-sm-5">
-        <%= f.date_field :terminate_date, class: "form-control" %>
-      </div>
-    </div>
+    <br/>
 
 
 
-    <h3>Contact Information</h3>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Line 1</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_line_1, class: "form-control" %>
+    <h4>Contact Information</h4>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :address_line_1, class: "form-control", placeholder: "Address Line 1" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_line_2, class: "form-control", placeholder: "Address Line 2" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_city, class: "form-control", placeholder: "City" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Line 2</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_line_2, class: "form-control" %>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.select :address_state, @us_states, include_blank: "Please select a state"%>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_zip, class: "form-control", placeholder: "Zip" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :email, class: "form-control", placeholder: "E-Mail" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">City</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_city, class: "form-control" %>
+    <br/>
+
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :phone, class: "form-control", placeholder: "Phone" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">State</label>
-      <div class="col-sm-5">
-        <%= f.select :address_state, @us_states, prompt: true%>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Zip</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_zip, class: "form-control" %>
-      </div>
-    </div>
+    <br/>
 
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">E-Mail</label>
-      <div class="col-sm-5">
-        <%= f.text_field :email, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Phone</label>
-      <div class="col-sm-5">
-        <%= f.text_field :phone, class: "form-control" %>
-      </div>
-    </div>
+
+
 
 
     <div class="form-group">
-      <label class="col-sm-3 control-label">Notes</label>
-      <div class="col-sm-5">
-        <%= f.text_area :description, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Upload an Image</label>
-      <div class="col-sm-5">
-        <%= f.file_field :image, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
             <%= f.submit "Create Employee", :class => 'btn btn-success'  %>
 

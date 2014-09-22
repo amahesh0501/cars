@@ -1,5 +1,6 @@
 .sidebar-menu{
-    min-height:650px !important;
+    min-height: 800px !important;
+
 }
 
 .btn-login{
@@ -171,4 +172,8 @@ th, td, .col-md-8, .profile-name, .col-sm-4{
 }
 .bold_logo_sidebar{
   font-weight: bolder;
+}
+
+.date-form{
+  width: 45% !important;
 }

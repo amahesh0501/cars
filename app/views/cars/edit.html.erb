@@ -11,357 +11,318 @@
 
     <div class="panel-body">
 
-    <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
-    <%= render 'layouts/error_messages', object: f.object %>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">VIN</label>
-      <div class="col-sm-5">
-        <%= f.text_field :vin, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Stock Number</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :stock_number,  class: "form-control" , value: @fields["stock_number"] %>
-        <% else %>
-          <%= f.text_field :stock_number,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Year</label>
-      <div class="col-sm-5">
-        <%= f.text_field :year, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Make</label>
-      <div class="col-sm-5">
-        <%= f.text_field :make, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Model</label>
-      <div class="col-sm-5">
-        <%= f.text_field :model, class: "form-control" %>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Trim</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :trim,  class: "form-control" , value: @fields["trim"] %>
-        <% else %>
-          <%= f.text_field :trim,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
+      <%= form_for [@dealership, @car], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+      <%= render 'layouts/error_messages', object: f.object %>
 
 
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.text_field :vin, class: "form-control", placeholder: "VIN" %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :stock_number,  class: "form-control" , value: @fields["stock_number"], placeholder: "Stock Number" %>
+          <% else %>
+          <%= f.text_field :stock_number,  class: "form-control", placeholder: "Stock Number"  %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :year, class: "form-control", placeholder: "Year" %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.text_field :make, class: "form-control", placeholder: "Make" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.text_field :model, class: "form-control", placeholder: "Model" %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :trim,  class: "form-control" , value: @fields["trim"], placeholder: "Trim" %>
+          <% else %>
+          <%= f.text_field :trim,  class: "form-control", placeholder: "Trim"  %>
+          <% end %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :miles,  class: "form-control" , value: @fields["miles"], placeholder: "Miles" %>
+          <% else %>
+          <%= f.text_field :miles,  class: "form-control", placeholder: "Miles"  %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <%= f.file_field :image, class: "form-control", placeholder: "Image" %>
+        </div>
+        <div class="col-md-4">
+          <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold'], class: "form-control", placeholder: "Status" %>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_area :description,  class: "form-control" , value: @fields["description"], placeholder: "Description" %>
+          <% else %>
+          <%= f.text_area :description,  class: "form-control", placeholder: "Description"  %>
+          <% end %>
+        </div>
+      </div>
+      <br/>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Miles</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :miles,  class: "form-control" , value: @fields["miles"] %>
-        <% else %>
-          <%= f.text_field :miles,  class: "form-control"  %>
-        <% end %>
+      <h4>More Details</h4>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :transmission,  class: "form-control" , value: @fields["transmission"], placeholder: "Transmission" %>
+          <% else %>
+          <%= f.text_field :transmission,  class: "form-control", placeholder: "Transmission"  %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :body_style,  class: "form-control" , value: @fields["body_style"], placeholder: "Body Style" %>
+          <% else %>
+          <%= f.text_field :body_style,  class: "form-control", placeholder: "Body Style"  %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :exterior_color,  class: "form-control" , value: @fields["exterior_color"], placeholder: "Exterior Color" %>
+          <% else %>
+          <%= f.text_field :exterior_color,  class: "form-control", placeholder: "Exterior Color"  %>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Upload an Image</label>
-      <div class="col-sm-5">
-        <%= f.file_field :image, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Description</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_area :description,  class: "form-control" , value: @fields["description"] %>
-        <% else %>
-          <%= f.text_area :description,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Status</label>
-      <div class="col-sm-5">
-        <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold'], selected: @car.status%>
-      </div>
-    </div>
-    <h3>More Details</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Transmission</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :transmission,  class: "form-control" , value: @fields["transmission"] %>
-        <% else %>
-          <%= f.text_field :transmission,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Body Style</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :body_style,  class: "form-control" , value: @fields["body_style"] %>
-        <% else %>
-          <%= f.text_field :body_style,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Exterior Color</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :exterior_color,  class: "form-control" , value: @fields["exterior_color"] %>
-        <% else %>
-          <%= f.text_field :exterior_color,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Interior Color</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :interior_color,  class: "form-control" , value: @fields["interior_color"] %>
-        <% else %>
-          <%= f.text_field :interior_color,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Engine Type</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :engine,  class: "form-control" , value: @fields["engine"] %>
-        <% else %>
-          <%= f.text_field :engine,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Wheel Base</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :wheel_base,  class: "form-control" , value: @fields["wheel_base"] %>
-        <% else %>
-          <%= f.text_field :wheel_base,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">License Plate</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :license_plate,  class: "form-control" , value: @fields["license_plate"] %>
-        <% else %>
-          <%= f.text_field :license_plate,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :interior_color,  class: "form-control" , value: @fields["interior_color"], placeholder: "Interior Color" %>
+          <% else %>
+          <%= f.text_field :interior_color,  class: "form-control", placeholder: "Interior Color"  %>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :engine,  class: "form-control" , value: @fields["engine"], placeholder: "Engine Type"  %>
+          <% else %>
+          <%= f.text_field :engine,  class: "form-control", placeholder: "Engine Type"   %>
+          <% end %>
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Has been smogged?</label>
-      <div class="col-sm-5">
-        <%= f.radio_button :smog_status, "1" %>&nbsp;Yes<br/>
-        <%= f.radio_button :smog_status, "0" %>&nbsp; No
-      </div>
-    </div>
-    <h3>Acquistion Information</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Acquire Date</label>
-      <div class="col-sm-5">
-        <%= f.date_field :acquire_date, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Acquire Price</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :acquire_price, class: "form-control" %>
         </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Payment Method</label>
-      <div class="col-sm-5">
-        <%= f.select :payment_method, ['Cash', 'Credit Card', 'Check', 'Other'], :include_blank => " Select Payment Method"%>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Credit Card (if applicable)</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :card_id, @cards.all, :id, :name, :include_blank => " Select Credit Card" %>
-        &nbsp; <%= link_to "(Add New Card)", new_dealership_card_path(@dealership), target: "_blank" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Check Number (if applicable)</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :check_number,  class: "form-control" , value: @fields["check_number"] %>
-        <% else %>
-          <%= f.text_field :check_number,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Auction</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :auction_id, @auctions.all, :id, :name, include_blank: "Please select an option" %>
-        &nbsp; <%= link_to "(Add New Auction)", new_dealership_auction_path(@dealership), target: "_blank" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Invoice Number</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <%= f.text_field :invoice_number,  class: "form-control" , value: @fields["invoice_number"] %>
-        <% else %>
-          <%= f.text_field :invoice_number,  class: "form-control"  %>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Registration Fees</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :reg_fees, class: "form-control" %>
-        </div>
-      </div>
-    </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :wheel_base,  class: "form-control" , value: @fields["wheel_base"], placeholder: "Wheelbase" %>
+          <% else %>
+          <%= f.text_field :wheel_base,  class: "form-control", placeholder: "Wheelbase"  %>
+          <% end %>
 
-    <h3>Financial Information</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Customer Price</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :customer_price,  class: "form-control" , value: @fields["customer_price"] %>
         </div>
-        <% else %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :customer_price,  class: "form-control"  %>
-        </div>
-        <% end %>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Wholesale Price</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :wholesale_price,  class: "form-control" , value: @fields["wholesale_price"] %>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :license_plate,  class: "form-control" , value: @fields["license_plate"], placeholder: "License Plate"  %>
+          <% else %>
+          <%= f.text_field :license_plate,  class: "form-control", placeholder: "License Plate"   %>
+          <% end %>
         </div>
-        <% else %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :wholesale_price,  class: "form-control"  %>
+        <div class="col-md-4">
+          Has been smogged?&nbsp;
+          <%= f.radio_button :smog_status, "1" %>&nbsp;Yes&nbsp;
+          <%= f.radio_button :smog_status, "0" %>&nbsp; No&nbsp;
         </div>
-        <% end %>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Retail Price</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :retail_price,  class: "form-control" , value: @fields["retail_price"] %>
+      <br/>
+
+      <h4>Acquistion Information</h4>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+          <%= f.date_field :acquire_date, class: "form-control" %>
         </div>
-        <% else %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :retail_price,  class: "form-control"  %>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :acquire_price, class: "form-control", placeholder: "Acquire Price" %>
+          </div>
         </div>
-        <% end %>
+        <div class="col-md-4">
+          Payment Method &nbsp;
+          <%= f.select :payment_method, ['Cash', 'Credit Card', 'Check', 'Other'], prompt: true, class: "form-control", placeholder: "Payment Method" %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Pack</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :frontend_pac,  class: "form-control" , value: @fields["frontend_pac"] %>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+          Credit Card &nbsp;
+          <%= f.collection_select :card_id, @cards.all, :id, :name, prompt: true %>
+          &nbsp; <%= link_to "(Add New Card)", new_dealership_card_path(@dealership), target: "_blank" %>
         </div>
-        <% else %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :frontend_pac,  class: "form-control"  %>
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :check_number,  class: "form-control" , value: @fields["check_number"], placeholder: "Check Number (if applicable)" %>
+          <% else %>
+          <%= f.text_field :check_number,  class: "form-control", placeholder: "Check Number (if applicable)"  %>
+          <% end %>
         </div>
-        <% end %>
+        <div class="col-md-4">
+          Auction &nbsp;
+          <%= f.collection_select :auction_id, @auctions.all, :id, :name, prompt: true %>
+          &nbsp; <%= link_to "(Add New Auction)", new_dealership_auction_path(@dealership), target: "_blank" %>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Advertising Costs</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :advertising_cost,  class: "form-control" , value: @fields["advertising_cost"] %>
+      <br/>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <%= f.text_field :invoice_number,  class: "form-control" , value: @fields["invoice_number"], placeholder: "Invoice Number" %>
+          <% else %>
+          <%= f.text_field :invoice_number,  class: "form-control", placeholder: "Invoice Number"  %>
+          <% end %>
         </div>
-        <% else %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :advertising_cost,  class: "form-control"  %>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :reg_fees, class: "form-control", placeholder: "Registration Fees" %>
+          </div>
         </div>
-        <% end %>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Other Costs</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :other_costs,  class: "form-control" , value: @fields["other_costs"] %>
+      <br/>
+
+      <h4>Financial Information</h4>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :customer_price,  class: "form-control" , value: @fields["customer_price"], placeholder: "Customer Price"  %>
+          </div>
+          <% else %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :customer_price,  class: "form-control",  placeholder: "Customer Price"   %>
+          </div>
+          <% end %>
         </div>
-        <% else %>
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :other_costs,  class: "form-control"  %>
+
+        <div class="col-md-4">
+
+          <% if @fields %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :wholesale_price,  class: "form-control" , value: @fields["wholesale_price"], placeholder: "Wholesale Price" %>
+          </div>
+          <% else %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :wholesale_price,  class: "form-control", placeholder: "Wholesale Price"  %>
+          </div>
+          <% end %>
         </div>
-        <% end %>
-      </div>
-    </div>
+
+        <div class="col-md-4">
+          <% if @fields %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :retail_price,  class: "form-control" , value: @fields["retail_price"], placeholder: "Retail Price" %>
+          </div>
+          <% else %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :retail_price,  class: "form-control", placeholder: "Retail Price"  %>
+          </div>
+          <% end %>
 
 
-    <h3>Flooring Information</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Has been floored?</label>
-      <div class="col-sm-5">
-        <%= f.radio_button :flooring, "1" %>&nbsp;Yes<br/>
-        <%= f.radio_button :flooring, "0" %>&nbsp; No
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Flooring Company</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :floorer_id, @floorers.all, :id, :name, include_blank: "Please select an option" %>
-        &nbsp; <%= link_to "(Add New Flooring Company)", new_dealership_floorer_path(@dealership), target: "_blank" %>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label"></label>
-      <div class="col-sm-5">
-            <%= f.submit "Update Vehicle", :class => 'btn btn-success'  %>
+        </div>
 
       </div>
-    </div>
+      <br/>
 
-    <% end %>
+      <div class="row">
+        <div class="col-md-4">
+          <% if @fields %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :frontend_pac,  class: "form-control" , value: @fields["frontend_pac"], placeholder: "Pack"  %>
+          </div>
+          <% else %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :frontend_pac,  class: "form-control", placeholder: "Pack"   %>
+          </div>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :advertising_cost,  class: "form-control" , value: @fields["advertising_cost"], placeholder: "Advertising Costs" %>
+          </div>
+          <% else %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :advertising_cost,  class: "form-control", placeholder: "Advertising Costs"  %>
+          </div>
+          <% end %>
+        </div>
+        <div class="col-md-4">
+          <% if @fields %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :other_costs,  class: "form-control" , value: @fields["other_costs"], placeholder: "Other Costs" %>
+          </div>
+          <% else %>
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :other_costs,  class: "form-control", placeholder: "Other Costs"  %>
+          </div>
+          <% end %>
+
+
+        </div>
+      </div>
+      <br/>
+
+      <h4>Flooring Information</h4>
+      <br/>
+
+      <div class="row">
+        <div class="col-md-4">
+            Has been floored?&nbsp;
+            <%= f.radio_button :flooring, "1" %>&nbsp;Yes&nbsp;
+            <%= f.radio_button :flooring, "0" %>&nbsp; No&nbsp;
+        </div>
+        <div class="col-md-6">
+          Flooring Company &nbsp;
+          <%= f.collection_select :floorer_id, @floorers.all, :id, :name, prompt: true %>
+          &nbsp; <%= link_to "(Add New Flooring Company)", new_dealership_floorer_path(@dealership), target: "_blank" %>
+        </div>
+
+      </div>
+      <br/>
+
+
+      <div class="form-group">
+        <div class="col-sm-5">
+          <%= f.submit "Update Vehicle", :class => 'btn btn-success'  %>
+
+        </div>
+      </div>
+
+      <% end %>
     </div>
   </div>
 </div>

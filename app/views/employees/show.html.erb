@@ -123,7 +123,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-8">
-                  <%= @employee.description.length > 0  ? @employee.description : "No notes have been entered" %>
+                  <%= @employee.description && @employee.description.length > 0  ? @employee.description : "No notes have been entered" %>
                 </div>
               </div>
             </div>
