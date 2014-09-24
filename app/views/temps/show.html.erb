@@ -10,69 +10,12 @@
 
     <div class="profile-env">
 
-      <header class="row">
-
-        <div class="col-sm-2">
-
-          <a href="#" class="profile-picture">
-            <img src="/deal.png" height ="115" width="115" style="border-radius: 50%;" />
-          </a>
-
-        </div>
-
-        <div class="col-sm-7">
-
-          <ul class="profile-info-sections">
-            <li>
-              <div class="profile-name">
-                <strong>Create a Pending Deal</strong>
-                <span>Creating a deal for <%= "$#{number_with_precision(@temp.amount, :delimiter => ',', precision: 2)}" %></span>
-              </div>
-            </li>
-
-
-          </ul>
-
-        </div>
-
-        <div class="col-sm-3">
-
-          <div class="profile-buttons">
-            <%= link_to "<i class='entypo-cross'></i> Finalize Deal".html_safe, new_dealership_deal_path(@dealership, car_id: @temp.car_id, customer_id: @temp.customer_id, employee_id: @temp.employee_id, amount: @temp.amount, sales_tax_percent: @temp.sales_tax_percent, down_payment: @temp.down_payment, term: @temp.term, apr: @temp.apr, trade_in_value: @temp.trade_in_value, less_payoff: @temp.less_payoff, warranty_price: @temp.warranty_price, gap_price: @temp.gap_price, doc_fee: @temp.doc_fee, reg_fee: @temp.reg_fee, smog_fee: @temp.smog_fee, other_fee: @temp.other_fee), class: "btn btn-success", role: "button" %>
-
-
-
-          </div>
-        </div>
-
-      </header>
 
       <section class="profile-info-tabs">
 
         <div class="row">
           <div class="col-sm-offset-2 col-sm-10">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="profile-stat">
-                  <h4><%= "$#{number_with_precision(@temp.amount, :delimiter => ',', precision: 2)}" %></h4>
-                  <span><a href="#">Purchase Price</a></span>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="profile-stat">
-                  <h4><%= @temp.term ? "#{@temp.term} months" : "N/A" %></h4>
-                  <span><a href="#">Term</a></span>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="profile-stat">
-                  <h4><%= @temp.apr ? "#{@temp.apr}%" : "N/A"%></h4>
-                  <span><a href="#">APR</a></span>
-                </div>
-              </div>
-
-
-            </div>
+  
 
 
 
@@ -152,57 +95,28 @@
           <br/>
           <%= render 'layouts/error_messages', object: f.object %>
 
-          <div class="row">
-
-            <div class="col-sm-4">
-
-              <label class="control-label">Frontline Vehicle</label><br/><br/>
-                <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, class: "form-control" %>
-
-
-            </div>
-
-            <div class="col-sm-4">
-
-              <label class="control-label">Customer</label><br/><br/>
-              <%= f.collection_select :customer_id, @customers, :id, :name, prompt: true, class: "form-control" %>
-            </div>
-
-            <div class="col-sm-4">
-
-              <label class="control-label">Lead Salesperson</label><br/><br/>
-              <%= f.collection_select :employee_id, @employees, :id, :name, prompt: true, class: "form-control" %>
-
-            </div>
-          </div>
-          <br/>
+         
           <div class="row">
             <div class="col-sm-4">
-
-              <label class="control-label">Sales Price</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :amount, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :amount, class: "form-control", onchange: "this.form.submit()", placeholder: "Sales Price" %>
                 </div>
 
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Sales Tax Percent</label><br/><br/>
                 <div class="input-group">
-                  <%= f.text_field :sales_tax_percent, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :sales_tax_percent, class: "form-control", onchange: "this.form.submit()", placeholder: "Sales Tax Percent" %>
                   <span class="input-group-addon">%</span>
                 </div>
 
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Down Payment</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :down_payment, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :down_payment, class: "form-control", onchange: "this.form.submit()", placeholder: "Down Payment" %>
                 </div>
 
             </div>
@@ -213,10 +127,8 @@
           <br/>
           <div class="row">
             <div class="col-sm-4">
-
-              <label class="control-label">Term</label><br/><br/>
                 <div class="input-group">
-                  <%= f.text_field :term, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :term, class: "form-control", onchange: "this.form.submit()", placeholder: "Term" %>
                   <span class="input-group-addon">months</span>
 
                 </div>
@@ -224,21 +136,17 @@
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">APR</label><br/><br/>
                 <div class="input-group">
-                  <%= f.text_field :apr, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :apr, class: "form-control", onchange: "this.form.submit()", placeholder: "APR" %>
                   <span class="input-group-addon">%</span>
                 </div>
 
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Trade in Value</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :trade_in_value, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :trade_in_value, class: "form-control", onchange: "this.form.submit()", placeholder: "Trade in Value" %>
                 </div>
 
             </div>
@@ -249,31 +157,25 @@
           <div class="row">
 
             <div class="col-sm-4">
-
-              <label class="control-label">Less Payoff</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :less_payoff, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :less_payoff, class: "form-control", onchange: "this.form.submit()", placeholder: "Less Payoff" %>
                 </div>
 
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Smog Fee</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :smog_fee, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :smog_fee, class: "form-control", onchange: "this.form.submit()", placeholder: "Smog Fee" %>
                 </div>
 
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Document Fee</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :doc_fee, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :doc_fee, class: "form-control", onchange: "this.form.submit()", placeholder: "Document Fee" %>
                 </div>
 
             </div>
@@ -287,41 +189,30 @@
 
             <div class="col-sm-4">
 
-              <label class="control-label">Registration Fees 
-                  <% if @car && @car.reg_fees && @temp.reg_fee == nil || @temp.reg_fee == 0 %>
-                    <% unless @car.reg_fees == nil %>
-                    <i><%= "(Previously entered $#{number_with_precision(@car.reg_fees, :delimiter => ',', :precision => 2)})" %></i>
-                    <% end %>
-                  <% end %>
-
-              </label><br/><br/>
+     
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :reg_fee, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :reg_fee, class: "form-control", onchange: "this.form.submit()", placeholder: "Registration Fees" %>
                 </div>
                 <br/>
 
-                <label class="control-label">Warranty Price</label><br/><br/>
                   <div class="input-group">
                     <span class="input-group-addon">$</span>
-                    <%= f.text_field :warranty_price, class: "form-control", onchange: "this.form.submit()" %>
+                    <%= f.text_field :warranty_price, class: "form-control", onchange: "this.form.submit()", placeholder: "Warranty Price" %>
                   </div>
 
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Other Fees</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :other_fee, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :other_fee, class: "form-control", onchange: "this.form.submit()", placeholder: "Other Fees" %>
                 </div>
                 <br/>
 
-                <label class="control-label">Accessories Price</label><br/><br/>
                   <div class="input-group">
                     <span class="input-group-addon">$</span>
-                    <%= f.text_field :accessory_price, class: "form-control", onchange: "this.form.submit()" %>
+                    <%= f.text_field :accessory_price, class: "form-control", onchange: "this.form.submit()", placeholder: "Accessories Price" %>
                   </div>
 
 
@@ -329,11 +220,9 @@
             </div>
 
             <div class="col-sm-4">
-
-              <label class="control-label">Gap Price</label><br/><br/>
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
-                  <%= f.text_field :gap_price, class: "form-control", onchange: "this.form.submit()" %>
+                  <%= f.text_field :gap_price, class: "form-control", onchange: "this.form.submit()", placeholder: "Gap Price" %>
 
                 </div>
 
@@ -344,7 +233,7 @@
 
           <br/><br/>
 
-          <%= f.submit "Update Deal", :class => 'btn btn-success'  %>
+          <%= f.submit "Update Values", :class => 'btn btn-success'  %>
 
 
 
@@ -352,12 +241,28 @@
 
 
           <% end %>
+          <br/>
 
+          <%= link_to "<i class='entypo-cross'></i> Finalize Deal".html_safe, new_dealership_deal_path(@dealership, car_id: @temp.car_id, customer_id: @temp.customer_id, employee_id: @temp.employee_id, amount: @temp.amount, sales_tax_percent: @temp.sales_tax_percent, down_payment: @temp.down_payment, term: @temp.term, apr: @temp.apr, trade_in_value: @temp.trade_in_value, less_payoff: @temp.less_payoff, warranty_price: @temp.warranty_price, gap_price: @temp.gap_price, doc_fee: @temp.doc_fee, reg_fee: @temp.reg_fee, smog_fee: @temp.smog_fee, other_fee: @temp.other_fee), class: "btn btn-info", role: "button" %>
 
 
         </div>
 
         <div class="tab-pane" id="vehicle_details">
+
+          <%= form_for [@dealership, @temp], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
+          <br/>
+          <%= render 'layouts/error_messages', object: f.object %>
+
+          <div class="row">
+
+            <div class="col-sm-4">
+                <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, class: "form-control", onchange: "this.form.submit()" %>
+                <br/><br/>
+            </div>
+          </div>
+          <% end %>
+
           <% if @car %>
 
           <!-- Nav tabs -->
@@ -745,7 +650,7 @@
 
           <% end %>
           <% unless @car %>
-            <p> This deal does not have a year associated with it yet</p>
+            <p> This deal does not have a vehicle associated with it yet</p>
           <% end %>
         </div>
 

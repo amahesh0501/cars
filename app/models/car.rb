@@ -11,49 +11,48 @@ class Car < ActiveRecord::Base
   has_one :purchase, dependent: :destroy
   has_many :commissions
 
-  validates_presence_of :make, :model, :year, :acquire_price, :acquire_date, :dealership_id, :status
-  validates_numericality_of :acquire_price, :smog_price, :retail_price, :wholesale_price
+  validates_presence_of :make, :model, :year, :acquire_date, :dealership_id, :status
 
 
 
   has_attached_file :image, styles: { small: "115x115", medium: "320x240"}, default_url: "/car.png"
   validates_attachment :image, content_type: { content_type: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'] }, size: { less_than: 5.megabytes }
 
-  def acquire_price=(num)
-    self[:acquire_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def acquire_price=(num)
+  #   self[:acquire_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def frontend_pac=(num)
-    self[:frontend_pac] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def frontend_pac=(num)
+  #   self[:frontend_pac] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def backend_pac=(num)
-    self[:backend_pac] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def backend_pac=(num)
+  #   self[:backend_pac] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def advertising_cost=(num)
-    self[:advertising_cost] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def advertising_cost=(num)
+  #   self[:advertising_cost] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def other_costs=(num)
-    self[:other_costs] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def other_costs=(num)
+  #   self[:other_costs] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def wholesale_price=(num)
-    self[:wholesale_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def wholesale_price=(num)
+  #   self[:wholesale_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def retail_price=(num)
-    self[:retail_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def retail_price=(num)
+  #   self[:retail_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def smog_price=(num)
-    self[:smog_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def smog_price=(num)
+  #   self[:smog_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
-  def customer_price=(num)
-    self[:customer_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
-  end
+  # def customer_price=(num)
+  #   self[:customer_price] = num.to_s.scan(/\b-?[\d.]+/).join.to_f
+  # end
 
   def vin_lookup(vin)
     require 'nokogiri'

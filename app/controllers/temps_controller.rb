@@ -21,15 +21,24 @@ class TempsController < ApplicationController
     @cars = Car.where(dealership_id: @dealership.id, status: "Frontline")
     @customers = @dealership.customers.order('name ASC')
 
-    @taxable_amount = @temp.amount + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee+ @temp.other_fee + @temp.gap_price + @temp.warranty_price - @temp.trade_in_value + @temp.less_payoff
-    @amount_financed = @taxable_amount + (@taxable_amount * (@temp.sales_tax_percent/100))
+    @taxable_amount = @temp.taxable_amount
+    if @temp.sales_tax_percent
+      @amount_financed = @taxable_amount + (@taxable_amount * (@temp.sales_tax_percent/100)) 
+    else
+      @amount_financed = @taxable_amount
+    end
+
     if @temp.apr
      @amount_with_interest = @amount_financed + (@amount_financed * (@temp.apr/100) )
      @final_amount = @amount_with_interest - @temp.down_payment
     else
-     @final_amount = @amount_financed - @temp.down_payment
+      if @temp.down_payment
+        @final_amount = @amount_financed - @temp.down_payment 
+      else
+        @final_amount = @amount_financed
+      end
     end
-    @monthly_payment = @final_amount / @temp.term
+    @monthly_payment = @final_amount / @temp.term if @temp.term
 
 
     if @car
@@ -65,7 +74,7 @@ class TempsController < ApplicationController
     @dealership = Dealership.find(params[:dealership_id])
     @dealership.sales_tax ? sales_tax_percent = @dealership.sales_tax : sales_tax_percent = 0
 
-    temp = Temp.new(dealership_id: @dealership.id, date: Date.today, amount: 10000, term: 60, sales_tax_percent: sales_tax_percent, smog_fee: 0, doc_fee: 50, reg_fee: 50, gap_price: 0, warranty_price: 0, trade_in_value: 0, down_payment: 0, less_payoff: 0, apr: 0, other_fee: 0)
+    temp = Temp.new(dealership_id: @dealership.id, date: Date.today)
     temp.save
     redirect_to dealership_temp_path(@dealership, temp)
 
@@ -77,7 +86,6 @@ class TempsController < ApplicationController
     @temp = Temp.new(params[:temp])
     @dealership = Dealership.find(params[:dealership_id])
     @temp.dealership_id = @dealership.id
-    @temp.sales_tax_amount = @temp.amount * (@temp.sales_tax_percent / 100)
     if @temp.save
       redirect_to dealership_temp_path(@dealership, @temp)
     else
@@ -98,7 +106,7 @@ class TempsController < ApplicationController
   def update
     @temp = Temp.find(params[:id])
     @dealership = Dealership.find(params[:dealership_id])
-    @temp.sales_tax_amount = @temp.amount * (@temp.sales_tax_percent / 100)
+    @temp.sales_tax_amount = @temp.amount * (@temp.sales_tax_percent / 100) if @temp.sales_tax_percent && @temp.amount
     if @temp.update_attributes(params[:temp])
       redirect_to dealership_temp_path(@dealership, @temp)
     else

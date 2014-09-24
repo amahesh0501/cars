@@ -74,16 +74,20 @@
       </div>
       <div class="col-md-4">
           <% if @fields %>
-            <%= f.date_field :birthday, value: @fields["birthday"], class: "form-control" %>
+            Birthday &nbsp;
+            <%= f.date_field :birthday, value: @fields["birthday"], class: "form-control date_form" %>
           <% else %>
-            <%= f.date_field :birthday, class: "form-control" %>
+            Birthday &nbsp;
+            <%= f.date_field :birthday, class: "form-control date_form" %>
           <% end %>
       </div>
       <div class="col-md-4">
           <% if @fields %>
-            <%= f.date_field :hire_date, value: @fields["hire_date"], class: "form-control" %>
+            Hire Date &nbsp;
+            <%= f.date_field :hire_date, value: @fields["hire_date"], class: "form-control date_form" %>
           <% else %>
-            <%= f.date_field :hire_date, class: "form-control" %>
+            Hire Date &nbsp;
+            <%= f.date_field :hire_date, class: "form-control date_form" %>
           <% end %>
       </div>
     </div>
@@ -91,9 +95,11 @@
     <div class="row">
       <div class="col-md-4">
           <% if @fields %>
-            <%= f.date_field :terminate_date, value: @fields["terminate_date"], class: "form-control" %>
+            Termination Date &nbsp;
+            <%= f.date_field :terminate_date, value: @fields["terminate_date"], class: "form-control date_form" %>
           <% else %>
-            <%= f.date_field :terminate_date, class: "form-control" %>
+            Termination Date &nbsp;
+            <%= f.date_field :terminate_date, class: "form-control date_form" %>
           <% end %>
       </div>
     </div>

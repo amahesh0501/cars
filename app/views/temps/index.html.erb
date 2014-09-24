@@ -28,15 +28,10 @@
           </thead>
           <tbody>
             <% @temps.each do |temp| %>
-            <% car = Car.find(temp.car_id) %>
-            <% customer = Customer.find(temp.customer_id) if temp.customer_id %>
+            <% car = Car.find(temp.car_id) if temp.car_id %>
             <tr class="gradeU">
-              <td><%= link_to car.make_model_year, dealership_temp_path(@dealership, temp) %></td>
-              <% if customer %>
-              <td><%= link_to customer.name, dealership_customer_path(@dealership, customer)  %></td>
-              <% else %>
-              <td>N/A</td>
-              <% end %>
+              <td><%= link_to car.make_model_year, dealership_temp_path(@dealership, temp) if car %></td>
+ 
               <td><%= link_to "$#{number_with_precision(temp.amount, :delimiter => ',', precision: 2)}", dealership_temp_path(@dealership, temp) %></td>
               <td><%= link_to temp.date.strftime("%m/%d/%Y"), dealership_temp_path(@dealership, temp) %></td>
             </tr>

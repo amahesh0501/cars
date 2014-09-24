@@ -1,5 +1,5 @@
 class Auction < ActiveRecord::Base
-  attr_accessible :name, :address_line_1, :address_line_2, :address_city, :address_state, :address_zip, :address, :contact_name, :phone, :email, :dealership_id, :image
+  attr_accessible :name, :address_line_1, :address_line_2, :address_city, :address_state, :address_zip, :address, :contact_name, :phone, :email, :dealership_id, :image, :description
 
   belongs_to :dealership
   has_many :cars

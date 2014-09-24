@@ -8,6 +8,7 @@
     <%= render 'layouts/dealer_admin_nav' %>
 
     <h2>Create Vendor </h2>
+    <br/>
 
     <div class="panel-body">
 
@@ -16,75 +17,49 @@
 
 
 
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Name</label>
-      <div class="col-sm-5">
-        <%= f.text_field :name, class: "form-control" %>
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :name, class: "form-control", placeholder: "Name" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_line_1, class: "form-control", placeholder: "Address Line 1" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_line_2, class: "form-control", placeholder: "Address Line 2" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Line 1</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_line_1, class: "form-control" %>
+    <br/>
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :address_city, class: "form-control", placeholder: "City" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_state, class: "form-control", placeholder: "State" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :address_zip, class: "form-control", placeholder: "Zip" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Line 2</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_line_2, class: "form-control" %>
+    <br/>
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_field :contact_name, class: "form-control", placeholder: "Contact Name" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :contact_phone, class: "form-control", placeholder: "Contact Phone" %>
+      </div>
+      <div class="col-md-4">
+          <%= f.text_field :contact_email, class: "form-control", placeholder: "Contact E-Mail" %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">City</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_city, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">State</label>
-      <div class="col-sm-5">
-        <%= f.select :address_state, @us_states, prompt: true%>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Address Zip</label>
-      <div class="col-sm-5">
-        <%= f.text_field :address_zip, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Contact Name</label>
-      <div class="col-sm-5">
-        <%= f.text_field :contact_name, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Contact E-Mail</label>
-      <div class="col-sm-5">
-        <%= f.text_field :contact_email, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Contact Phone</label>
-      <div class="col-sm-5">
-        <%= f.text_field :contact_phone, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Description</label>
-      <div class="col-sm-5">
-        <%= f.text_area :description, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Upload an Image</label>
-      <div class="col-sm-5">
-        <%= f.file_field :image, class: "form-control" %>
+    <br/>
+    <div class="row">
+      <div class="col-md-4">
+          <%= f.text_area :description, class: "form-control", placeholder: "Description" %>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
             <%= f.submit "Create Vendor", :class => 'btn btn-success'  %>
       </div>

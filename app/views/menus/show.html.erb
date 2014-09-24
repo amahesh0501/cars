@@ -13,164 +13,164 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <% unless @menu.basic_one_title.length == 0 %><th>Basic</th><%end%>
-            <% unless @menu.standard_one_title.length == 0 %><th>Standard</th><%end%>
-            <% unless @menu.good_one_title.length == 0 %><th>Good</th><%end%>
-            <% unless @menu.best_one_title.length == 0 %><th>Best</th><%end%>
+            <th><% unless @menu.basic_one_title.length == 0 %>Basic<%end%></th>
+            <th><% unless @menu.standard_one_title.length == 0 %>Standard<%end%></th>
+            <th><% unless @menu.good_one_title.length == 0 %>Good<%end%></th>
+            <th><% unless @menu.best_one_title.length == 0 %>Best<%end%></th>
           </tr>
         </thead>
         
         <tbody>
           <tr>
-            <% unless @menu.basic_one_title.length == 0 %>
             <td>
+            <% unless @menu.basic_one_title.length == 0 %>
               <p><b><%= @menu.basic_one_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.basic_one_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.basic_one_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.standard_one_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.standard_one_title.length == 0 %>
               <p><b><%= @menu.standard_one_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.standard_one_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.standard_one_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.good_one_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.good_one_title.length == 0 %>
               <p><b><%= @menu.good_one_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.good_one_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.good_one_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.best_one_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.best_one_title.length == 0 %>
               <p><b><%= @menu.best_one_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.best_one_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.best_one_description %></p>
-            </td>
             <% end %>
+            </td>
           </tr>
 
           <tr>
-            <% unless @menu.basic_two_title.length == 0 %>
             <td>
+            <% unless @menu.basic_two_title.length == 0 %>
               <p><b><%= @menu.basic_two_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.basic_two_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.basic_two_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.standard_two_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.standard_two_title.length == 0 %>
               <p><b><%= @menu.standard_two_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.standard_two_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.standard_two_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.good_two_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.good_two_title.length == 0 %>
               <p><b><%= @menu.good_two_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.good_two_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.good_two_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.best_two_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.best_two_title.length == 0 %>
               <p><b><%= @menu.best_two_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.best_two_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.best_two_description %></p>
-            </td>
             <% end %>
+            </td>
           </tr>
           <tr>
-            <% unless @menu.basic_three_title.length == 0 %>
             <td>
+            <% unless @menu.basic_three_title.length == 0 %>
               <p><b><%= @menu.basic_three_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.basic_three_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.basic_three_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.standard_three_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.standard_three_title.length == 0 %>
               <p><b><%= @menu.standard_three_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.standard_three_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.standard_three_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.good_three_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.good_three_title.length == 0 %>
               <p><b><%= @menu.good_three_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.good_three_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.good_three_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.best_three_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.best_three_title.length == 0 %>
               <p><b><%= @menu.best_three_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.best_three_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.best_three_description %></p>
-            </td>
             <% end %>
+            </td>
           </tr>
           <tr>
-            <% unless @menu.basic_four_title.length == 0 %>
             <td>
+            <% unless @menu.basic_four_title.length == 0 %>
               <p><b><%= @menu.basic_four_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.basic_four_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.basic_four_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.standard_four_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.standard_four_title.length == 0 %>
               <p><b><%= @menu.standard_four_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.standard_four_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.standard_four_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.good_four_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.good_four_title.length == 0 %>
               <p><b><%= @menu.good_four_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.good_four_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.good_four_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.best_four_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.best_four_title.length == 0 %>
               <p><b><%= @menu.best_four_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.best_four_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.best_four_description %></p>
-            </td>
             <% end %>
+            </td>
           </tr>
           <tr>
-            <% unless @menu.basic_five_title.length == 0 %>
             <td>
+            <% unless @menu.basic_five_title.length == 0 %>
               <p><b><%= @menu.basic_five_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.basic_five_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.basic_five_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.standard_five_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.standard_five_title.length == 0 %>
               <p><b><%= @menu.standard_five_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.standard_five_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.standard_five_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.good_five_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.good_five_title.length == 0 %>
               <p><b><%= @menu.good_five_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.good_five_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.good_five_description %></p>
-            </td>
             <% end %>
-            <% unless @menu.best_five_title.length == 0 %>
+            </td>
             <td>
+            <% unless @menu.best_five_title.length == 0 %>
               <p><b><%= @menu.best_five_title %></b></p>
               <p><%= "$#{number_with_precision(@menu.best_five_amount, :delimiter => ',', precision: 2)}"%></p>
               <p><%= @menu.best_five_description %></p>
-            </td>
             <% end %>
+            </td>
           </tr>
           
 

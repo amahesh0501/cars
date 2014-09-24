@@ -72,13 +72,9 @@
       </div>
       <div class="col-md-4">
           <% if @fields %>
-          <div class="input-group">
             <%= f.text_field :time_at_residence, value: @fields["time_at_residence"], class: "form-control", placeholder: "Time at Residence (months)"  %>
-          </div>
           <% else %>
-            <div class="input-group">
               <%= f.text_field :time_at_residence, class: "form-control", placeholder: "Time at Residence (months)" %>
-            </div>
           <% end %>
       </div>
       <div class="col-md-4">
@@ -101,9 +97,11 @@
       </div>
       <div class="col-md-4">
           <% if @fields %>
-            <%= f.date_field :dob, value: @fields["dob"], class: "form-control"  %>
+            Birthday &nbsp;
+            <%= f.date_field :dob, value: @fields["dob"], class: "form-control date_form"  %>
           <% else %>
-            <%= f.date_field :dob,  class: "form-control" %>
+            Birthday &nbsp;
+            <%= f.date_field :dob,  class: "form-control date_form" %>
           <% end %>
       </div>
       <div class="col-md-4">
@@ -218,13 +216,9 @@
       </div>
       <div class="col-md-4">
         <% if @fields %>
-        <div class="input-group">
           <%= f.text_field :time_at_employer, value: @fields["time_at_employer"], class: "form-control", placeholder: "Time at Employer (months)"  %>
-        </div>
         <% else %>
-          <div class="input-group">
             <%= f.text_field :time_at_employer, class: "form-control", placeholder: "Time at Employer (months)" %>
-          </div>
         <% end %>
 
       </div>

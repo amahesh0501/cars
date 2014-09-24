@@ -35,7 +35,7 @@
 
 
 
-      <li><a href="/dealerships/<%= @dealership.id %>/edit">Dealership Information</a></li>
+      <% if @dealership %><li><a href="/dealerships/<%= @dealership.id %>/edit">Dealership Information</a></li><%end%>
       <li><a href="/users/edit">Account Settings</a></li>
 
       <li class="sep"></li>
