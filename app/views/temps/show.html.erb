@@ -68,8 +68,8 @@
               <div class="tile-stats tile-green">
                 <div class="icon"><i class="entypo-flash"></i></div>
                 <% if @car %>
-                <% wholesale_percent = (@temp.amount / @car.wholesale_price) * 100 if @car.wholesale_price > 0 %>
-                <% retail_percent = (@temp.amount / @car.retail_price) * 100 if @car.retail_price > 0 %>
+                <% wholesale_percent = (@temp.amount / @car.wholesale_price) * 100 if @car.wholesale_price %>
+                <% retail_percent = (@temp.amount / @car.retail_price) * 100 if @car.retail_price %>
 
                   <div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">
                    <h2 style="color: white;">
@@ -95,9 +95,11 @@
           <br/>
           <%= render 'layouts/error_messages', object: f.object %>
 
-         
+          <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, class: "form-control", onchange: "this.form.submit()" %><br/><br/>
+
           <div class="row">
             <div class="col-sm-4">
+
                 <div class="input-group">
                   <span class="input-group-addon">$</span>
                   <%= f.text_field :amount, class: "form-control", onchange: "this.form.submit()", placeholder: "Sales Price" %>
@@ -233,7 +235,9 @@
 
           <br/><br/>
 
-          <%= f.submit "Update Values", :class => 'btn btn-success'  %>
+          <%= f.submit "Update Values", :class => 'btn btn-success'  %> &nbsp; &nbsp;
+          <%= link_to "<i class='entypo-cross'></i> Finalize Deal".html_safe, new_dealership_deal_path(@dealership, car_id: @temp.car_id, customer_id: @temp.customer_id, employee_id: @temp.employee_id, amount: @temp.amount, sales_tax_percent: @temp.sales_tax_percent, down_payment: @temp.down_payment, term: @temp.term, apr: @temp.apr, trade_in_value: @temp.trade_in_value, less_payoff: @temp.less_payoff, warranty_price: @temp.warranty_price, gap_price: @temp.gap_price, doc_fee: @temp.doc_fee, reg_fee: @temp.reg_fee, smog_fee: @temp.smog_fee, other_fee: @temp.other_fee), class: "btn btn-info", role: "button" %>
+
 
 
 
@@ -241,29 +245,20 @@
 
 
           <% end %>
+
           <br/>
 
-          <%= link_to "<i class='entypo-cross'></i> Finalize Deal".html_safe, new_dealership_deal_path(@dealership, car_id: @temp.car_id, customer_id: @temp.customer_id, employee_id: @temp.employee_id, amount: @temp.amount, sales_tax_percent: @temp.sales_tax_percent, down_payment: @temp.down_payment, term: @temp.term, apr: @temp.apr, trade_in_value: @temp.trade_in_value, less_payoff: @temp.less_payoff, warranty_price: @temp.warranty_price, gap_price: @temp.gap_price, doc_fee: @temp.doc_fee, reg_fee: @temp.reg_fee, smog_fee: @temp.smog_fee, other_fee: @temp.other_fee), class: "btn btn-info", role: "button" %>
 
 
         </div>
 
         <div class="tab-pane" id="vehicle_details">
 
-          <%= form_for [@dealership, @temp], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
-          <br/>
-          <%= render 'layouts/error_messages', object: f.object %>
-
-          <div class="row">
-
-            <div class="col-sm-4">
-                <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, class: "form-control", onchange: "this.form.submit()" %>
-                <br/><br/>
-            </div>
-          </div>
-          <% end %>
 
           <% if @car %>
+
+          <%= link_to "<i class='entypo-cross'></i> Edit Internal Data".html_safe, edit_dealership_temp_path(@dealership, @temp), class: "btn btn-warning", role: "button" %>
+
 
           <!-- Nav tabs -->
           <ul class="nav nav-tabs">
@@ -278,16 +273,6 @@
                 <section class="profile-feed">
                   <div class="profile-stories">
                     <div class="invoice">
-                      <div class="margin"></div>
-                      <div class="row">
-                        <div class="col-sm-3 invoice-left">
-                        </div>
-                        <div class="col-sm-3 invoice-left">
-                        </div>
-                        <div class="col-md-6 invoice-right">
-
-                        </div>
-                      </div>
                       <table class="table">
                         <thead>
                           <tr>
@@ -298,49 +283,50 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Sales Price (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Sales Price </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.amount, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.amount ? "$#{number_with_precision(@temp.amount, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+
                           </tr>
                           <tr>
-                            <td>Smog Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Smog Fee </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.smog_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.smog_fee ? "$#{number_with_precision(@temp.smog_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Doc Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Doc Fee </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.doc_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.doc_fee ? "$#{number_with_precision(@temp.doc_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Registration Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Registration Fee </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.reg_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.reg_fee ? "$#{number_with_precision(@temp.reg_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Other Fees (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Other Fees </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.other_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.other_fee ? "$#{number_with_precision(@temp.other_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Less Payoff (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Less Payoff </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.less_payoff, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.less_payoff ? "$#{number_with_precision(@temp.less_payoff, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>GAP Price (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>GAP Price </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.gap_price, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.gap_price ? "$#{number_with_precision(@temp.gap_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Warranty Price (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Warranty Price </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.warranty_price, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.warranty_price ? "$#{number_with_precision(@temp.warranty_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Accessories Price (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Accessories Price </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.accessory_price, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.accessory_price ? "$#{number_with_precision(@temp.accessory_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
 
                           <tr>
@@ -353,66 +339,69 @@
                       <table class="table">
                         <thead>
                           <tr>
-                            <th width="30%"><b>Expenses</b></th>
+                            <th width="30%"><b>Expenses</b> (<%= link_to "Update Vehicle Details", dealership_car_path(@dealership, @car), :target => "_blank" %>)</th>
                             <th width="50%"></th>
                             <th class="text-right"><b>Total</b></th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="normal-table-vehicle">Acquire Price (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Acquire Price </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Vehicle Expenses (<%= link_to "Update", dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Vehicle Expenses</td>
                             <td class="normal-table-vehicle"></td>
                             <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car_repair_expenses, :delimiter => ',', precision: 2)}" %></td>
                           </tr>
                           <tr>
-                              <td class="normal-table-vehicle">Estimated Commission (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                              <td class="normal-table-vehicle">Estimated Commission </td>
                               <td class="normal-table-vehicle"></td>
-                              <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@temp.estimated_commission, :delimiter => ',', :precision => 2)}" %></td>
+                              <td class="text-right"><%= @temp.estimated_commission ? "$#{number_with_precision(@temp.estimated_commission, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Advertising Cost (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Advertising Cost </td>
                             <td class="normal-table-vehicle"></td>
                             <td class="text-right normal-table-vehicle"><%= @car.advertising_cost ? "$#{number_with_precision(@car.advertising_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Other Costs (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Other Costs </td>
                             <td class="normal-table-vehicle"></td>
                             <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@car.other_costs, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Pack (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Pack </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td class="text-right normal-table-vehicle"><%= @car.frontend_pac ? "$#{number_with_precision(@car.frontend_pac, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Trade-In Value (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Trade-In Value </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@temp.trade_in_value, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td class="text-right normal-table-vehicle"><%= @temp.trade_in_value ? "$#{number_with_precision(@temp.trade_in_value, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Discount Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Discount Fee </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@temp.discount_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td class="text-right normal-table-vehicle"><%= @temp.discount_fee ? "$#{number_with_precision(@temp.discount_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>GAP Cost (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>GAP Cost </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.gap_cost, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.gap_cost ? "$#{number_with_precision(@temp.gap_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Warranty Cost (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Warranty Cost </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.warranty_cost, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.warranty_cost ? "$#{number_with_precision(@temp.warranty_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+
                           </tr>
                           <tr>
-                            <td>Accessories Cost (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Accessories Cost </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.accessory_cost, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.accessory_cost ? "$#{number_with_precision(@temp.accessory_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+
                           </tr>
                           <tr>
                             <td><b>Total</b></td>
@@ -449,16 +438,6 @@
                 <section class="profile-feed">
                   <div class="profile-stories">
                     <div class="invoice">
-                      <div class="margin"></div>
-                      <div class="row">
-                        <div class="col-sm-3 invoice-left">
-                        </div>
-                        <div class="col-sm-3 invoice-left">
-                        </div>
-                        <div class="col-md-6 invoice-right">
-     
-                        </div>
-                      </div>
                       <table class="table">
                         <thead>
                           <tr>
@@ -469,34 +448,35 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td>Sales Price (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Sales Price </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.amount, :delimiter => ',', precision: 2)}" %></td>
+                           <td class="text-right"><%= @temp.amount ? "$#{number_with_precision(@temp.amount, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+
                           </tr>
                           <tr>
-                            <td>Smog Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Smog Fee </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.smog_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.smog_fee ? "$#{number_with_precision(@temp.smog_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Doc Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Doc Fee </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.doc_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.doc_fee ? "$#{number_with_precision(@temp.doc_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Registration Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Registration Fee </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.reg_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.reg_fee ? "$#{number_with_precision(@temp.reg_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Other Fees (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Other Fees </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.other_fee, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.other_fee ? "$#{number_with_precision(@temp.other_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td>Less Payoff (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td>Less Payoff </td>
                             <td></td>
-                            <td class="text-right"><%= "$#{number_with_precision(@temp.less_payoff, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @temp.less_payoff ? "$#{number_with_precision(@temp.less_payoff, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
                             <td><b>Total</b></td>
@@ -515,39 +495,39 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td class="normal-table-vehicle">Acquire Price (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Acquire Price </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" %></td>
+                            <td class="text-right"><%= @car.acquire_price ? "$#{number_with_precision(@car.acquire_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Vehicle Expenses (<%= link_to "Update", dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Vehicle Expenses</td>
                             <td class="normal-table-vehicle"></td>
                             <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@car_repair_expenses, :delimiter => ',', precision: 2)}" %></td>
                           </tr>
                           <tr>
-                              <td class="normal-table-vehicle">Estimated Commission (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                              <td class="normal-table-vehicle">Estimated Commission </td>
                               <td class="normal-table-vehicle"></td>
-                              <td class="text-right normal-table-vehicle"><%= "$#{number_with_precision(@temp.estimated_commission, :delimiter => ',', :precision => 2)}" %></td>
+                              <td class="text-right"><%= @temp.estimated_commission ? "$#{number_with_precision(@temp.estimated_commission, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Advertising Cost (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Advertising Cost </td>
                             <td class="normal-table-vehicle"></td>
                             <td class="text-right normal-table-vehicle"><%= @car.advertising_cost ? "$#{number_with_precision(@car.advertising_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Other Costs (<%= link_to "Update", edit_dealership_car_path(@dealership, @car), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Other Costs </td>
                             <td class="normal-table-vehicle"></td>
                             <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@car.other_costs, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Trade-In Value (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Trade-In Value </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@temp.trade_in_value, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td class="text-right normal-table-vehicle"><%= @temp.trade_in_value ? "$#{number_with_precision(@temp.trade_in_value, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
-                            <td class="normal-table-vehicle">Discount Fee (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
+                            <td class="normal-table-vehicle">Discount Fee </td>
                             <td class="normal-table-vehicle"></td>
-                            <td class="text-right normal-table-vehicle"><%= @car.other_costs ? "$#{number_with_precision(@temp.discount_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td class="text-right normal-table-vehicle"><%= @temp.discount_fee ? "$#{number_with_precision(@temp.discount_fee, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                           </tr>
                           <tr>
                             <td><b>Total</b></td>
@@ -584,15 +564,7 @@
                 <section class="profile-feed">
                   <div class="profile-stories">
                     <div class="invoice">
-                      <div class="margin"></div>
-                      <div class="row">
-                        <div class="col-sm-3 invoice-left">
-                        </div>
-                        <div class="col-sm-3 invoice-left">
-                        </div>
-                        <div class="col-md-6 invoice-right">
-                        </div>
-                      </div>
+                    
                       <table class="table">
                         <thead>
                           <tr>
@@ -604,21 +576,21 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td>GAP (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
-                            <td ><%= "$#{number_with_precision(@temp.gap_price, :delimiter => ',', precision: 2)}" %></td>
-                            <td ><%= "$#{number_with_precision(@temp.gap_cost, :delimiter => ',', precision: 2)}" %></td>
+                            <td>GAP </td>
+                            <td ><%= @temp.gap_price ? "$#{number_with_precision(@temp.gap_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td ><%= @temp.gap_cost ? "$#{number_with_precision(@temp.gap_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                             <td class="text-right"><%= "$#{number_with_precision(@gap_profit, :delimiter => ',', precision: 2)}" %></td>
                           </tr>
                           <tr>
-                            <td>Warranty (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
-                            <td ><%= "$#{number_with_precision(@temp.warranty_price, :delimiter => ',', precision: 2)}" %></td>
-                            <td ><%= "$#{number_with_precision(@temp.warranty_cost, :delimiter => ',', precision: 2)}" %></td>
+                            <td>Warranty </td>
+                            <td ><%= @temp.warranty_price ? "$#{number_with_precision(@temp.warranty_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td ><%= @temp.warranty_cost ? "$#{number_with_precision(@temp.warranty_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                             <td class="text-right"><%= "$#{number_with_precision(@warranty_profit, :delimiter => ',', precision: 2)}" %></td>
                           </tr>
                           <tr>
-                            <td>Accessories (<%= link_to "Update", edit_dealership_temp_path(@dealership, @temp), :target => "_blank" %>)</td>
-                            <td ><%= "$#{number_with_precision(@temp.accessory_price, :delimiter => ',', precision: 2)}" %></td>
-                            <td ><%= "$#{number_with_precision(@temp.accessory_cost, :delimiter => ',', precision: 2)}" %></td>
+                            <td>Accessories </td>
+                            <td ><%= @temp.accessory_price ? "$#{number_with_precision(@temp.accessory_price, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
+                            <td ><%= @temp.accessory_cost ? "$#{number_with_precision(@temp.accessory_cost, :delimiter => ',', precision: 2)}" : "$0.00" %></td>
                             <td class="text-right"><%= "$#{number_with_precision(@accessory_profit, :delimiter => ',', precision: 2)}" %></td>
                           </tr>
                           

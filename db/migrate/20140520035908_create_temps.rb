@@ -15,7 +15,7 @@ class CreateTemps < ActiveRecord::Migration
       t.float :sales_tax_percent
       t.float :down_payment
       t.integer :term
-      t.integer :apr
+      t.float :apr
 
 
       t.float :trade_in_value

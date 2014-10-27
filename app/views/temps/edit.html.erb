@@ -9,372 +9,156 @@
 
     <h2>Edit Pending Deal </h2>
 
+    <br/>
+    <h3>Customer Facing Data</h3>
+    <br/>
     <%= form_for [@dealership, @temp], :html => {:class => "form-horizontal form-groups-bordered"} do |f| %>
     <%= render 'layouts/error_messages', object: f.object %>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Vehicle</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Customer</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :customer_id, @customers.all, :id, :name, prompt: true, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Employee</label>
-      <div class="col-sm-5">
-        <%= f.collection_select :employee_id, @employees.all, :id, :name, prompt: true, class: "form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Date</label>
-      <div class="col-sm-5">
-        <%= f.date_field :date, class: "form-control" %>
-      </div>
-    </div>
 
-    <br/>
-    <h3>Financials</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Sales Price</label>
-      <div class="col-sm-5">
-        <div class="input-group">
-          <span class="input-group-addon">$</span>
-          <%= f.text_field :amount, class: "form-control" %>
-        </div>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Sales Tax Percent</label>
-      <div class="col-sm-5">
+    <%= f.collection_select :car_id, @cars.all, :id, :make_model_year, prompt: true, class: "form-control" %><br/><br/>
+
+    <div class="row">
+      <div class="col-sm-4">
           <div class="input-group">
-              <%= f.text_field :sales_tax_percent, value: @dealership.sales_tax, class: "form-control" %>
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :amount, class: "form-control", placeholder: "Sales Price" %>
+          </div>
+
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <%= f.text_field :sales_tax_percent, class: "form-control", placeholder: "Sales Tax Percent" %>
             <span class="input-group-addon">%</span>
           </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Down Payment</label>
-      <div class="col-sm-5">
-        <% if @fields %>
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :down_payment, value: @fields["down_payment"], class: "form-control" %>
+            <%= f.text_field :down_payment, class: "form-control", placeholder: "Down Payment" %>
           </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :down_payment, class: "form-control" %>
-          </div>
-        <% end %>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Term</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-        <%= f.text_field :term, value: @fields["term"], class: "form-control" %>
-        <span class="input-group-addon">months</span>
-        </div>
-        <% else %>
-        <div class="input-group">
-        <%= f.text_field :term, class: "form-control" %>
-        <span class="input-group-addon">months</span>
-        </div>
-        <% end %>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4">
+          <div class="input-group">
+            <%= f.text_field :term, class: "form-control", placeholder: "Term" %>
+            <span class="input-group-addon">months</span>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <%= f.text_field :apr, class: "form-control", placeholder: "APR" %>
+            <span class="input-group-addon">%</span>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :trade_in_value, class: "form-control", placeholder: "Trade in Value" %>
+          </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">APR</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-        <div class="input-group">
-        <%= f.text_field :apr, value: @fields["apr"], class: "form-control" %>
-        <span class="input-group-addon">%</span>
-        </div>
-        <% else %>
-        <div class="input-group">
-        <%= f.text_field :apr, class: "form-control" %>
-        <span class="input-group-addon">%</span>
-        </div>
-        <% end %>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :less_payoff, class: "form-control", placeholder: "Less Payoff" %>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :smog_fee, class: "form-control", placeholder: "Smog Fee" %>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :doc_fee, class: "form-control", placeholder: "Document Fee" %>
+          </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Trade In Vaulue</label>
-      <div class="col-sm-5">
-        <% if @fields %>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :trade_in_value, value: @fields["trade_in_value"], class: "form-control" %>
-
+            <%= f.text_field :reg_fee, class: "form-control", placeholder: "Registration Fees" %>
           </div>
-        <% else %>
+          <br/>
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :warranty_price, class: "form-control", placeholder: "Warranty Price" %>
+            </div>
+      </div>
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :trade_in_value, class: "form-control" %>
-
+            <%= f.text_field :other_fee, class: "form-control", placeholder: "Other Fees" %>
           </div>
-        <% end %>
+          <br/>
+            <div class="input-group">
+              <span class="input-group-addon">$</span>
+              <%= f.text_field :accessory_price, class: "form-control", placeholder: "Accessories Price" %>
+            </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :gap_price, class: "form-control", placeholder: "Gap Price" %>
+          </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Less Payoff</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :less_payoff, value: @fields["less_payoff"], class: "form-control" %>
 
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :less_payoff, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Smog Fee</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :smog_fee, value: @fields["smog_fee"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :smog_fee, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Document Fee</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :doc_fee, value: @fields["doc_fee"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :doc_fee, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Registration Fee</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :reg_fee, value: @fields["reg_fee"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :reg_fee, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Other Fees</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :other_fee, value: @fields["other_fee"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :other_fee, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
 
     <br/>
-    <h3>GAP Insurance</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Price Charged Customer</label>
-      <div class="col-sm-5">
-        <% if @fields %>
+    <h3>Internal Data</h3>
+    <br/>
+
+    <div class="row">
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :gap_price, value: @fields["gap_price"], class: "form-control" %>
-
+            <%= f.text_field :gap_cost, class: "form-control", placeholder: "GAP Cost" %>
           </div>
-        <% else %>
+      </div>
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :gap_price, class: "form-control" %>
-
+            <%= f.text_field :warranty_cost, class: "form-control", placeholder: "Warranty Cost" %>
           </div>
-        <% end %>
+      </div>
+      <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <%= f.text_field :accessory_cost, class: "form-control", placeholder: "Accessory Cost" %>
+          </div>
       </div>
     </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Cost to You</label>
-      <div class="col-sm-5">
-        <% if @fields %>
+    <br/>
+
+   
+  
+
+    <div class="row">
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :gap_cost, value: @fields["gap_cost"], class: "form-control" %>
-
+            <%= f.text_field :discount_fee, class: "form-control", placeholder: "Discount Fee" %>
           </div>
-        <% else %>
+      </div>
+      <div class="col-sm-4">
           <div class="input-group">
             <span class="input-group-addon">$</span>
-            <%= f.text_field :gap_cost, class: "form-control" %>
-
+            <%= f.text_field :estimated_commission, class: "form-control", placeholder: "Estimated Commission" %>
           </div>
-        <% end %>
       </div>
     </div>
-
-
-    <h3>Warranty</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Price Charged Customer</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :warranty_price, value: @fields["warranty_price"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :warranty_price, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Cost to You</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :warranty_cost, value: @fields["warranty_cost"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :warranty_cost, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <h3>Accessories</h3>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Price Charged Customer</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :accessory_price, value: @fields["accessory_price"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :accessory_price, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Cost to You</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :accessory_cost, value: @fields["accessory_cost"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :accessory_cost, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-
-    <h3>Lenders</h3>
+    <br/>
 
     <div class="form-group">
-      <label class="col-sm-3 control-label">Discount Fee</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :discount_fee, value: @fields["discount_fee"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :discount_fee, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-    <h3>Commission</h3>
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Estimated Commission</label>
-      <div class="col-sm-5">
-        <% if @fields %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :estimated_commission, value: @fields["estimated_commission"], class: "form-control" %>
-
-          </div>
-        <% else %>
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <%= f.text_field :estimated_commission, class: "form-control" %>
-
-          </div>
-        <% end %>
-      </div>
-    </div>
-
-
-    <div class="form-group">
-      <label class="col-sm-3 control-label"></label>
       <div class="col-sm-5">
         <%= f.submit "Update Pending Deal", :class => 'btn btn-success'  %>
 

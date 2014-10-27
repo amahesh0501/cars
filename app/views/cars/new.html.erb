@@ -65,14 +65,8 @@
             <%= f.text_field :miles, class: "form-control", placeholder: "Miles" %>
         </div>
         <div class="col-md-4">
-            <%= f.file_field :image, class: "form-control", placeholder: "Image" %>
-        </div>
-        <div class="col-md-4">
             <%= f.select :status, ['Frontline', 'Needs Repairs', 'Sold'], class: "form-control", placeholder: "Status" %>
         </div>
-      </div>
-      <br/>
-      <div class="row">
         <div class="col-md-4">
             <%= f.text_area :description, class: "form-control", placeholder: "Description" %>
         </div>

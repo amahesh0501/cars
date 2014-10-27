@@ -49,19 +49,41 @@ class TempsController < ApplicationController
       @car.advertising_cost ? @advertising_cost = @car.advertising_cost : @advertising_cost = 0
       @car.frontend_pac ? @frontend_pac = @car.frontend_pac : @frontend_pac = 0
       
-      @frontend_recieved = @temp.amount + @temp.smog_fee + @temp.doc_fee + @temp.reg_fee+ @temp.other_fee + @temp.less_payoff
-      @frontend_cost = @car.acquire_price + @car_repair_expenses + @car.other_costs + @car.advertising_cost + @temp.estimated_commission + @temp.discount_fee + @temp.trade_in_value
+      @temp.amount ? temp_amount = @temp.amount : temp_amount = 0 
+      @temp.smog_fee ? smog_fee = @temp.smog_fee : smog_fee = 0 
+      @temp.doc_fee ? doc_fee = @temp.doc_fee : doc_fee = 0       
+      @temp.reg_fee ? reg_fee = @temp.reg_fee : reg_fee = 0       
+      @temp.other_fee ? other_fee = @temp.other_fee : other_fee = 0       
+      @temp.less_payoff ? less_payoff = @temp.less_payoff : less_payoff = 0       
+      @temp.estimated_commission ? estimated_commission = @temp.estimated_commission : estimated_commission = 0       
+      @temp.discount_fee ? discount_fee = @temp.discount_fee : discount_fee = 0       
+      @temp.trade_in_value ? trade_in_value = @temp.trade_in_value : trade_in_value = 0       
+      @temp.gap_price ? gap_price = @temp.gap_price : gap_price = 0       
+      @temp.gap_cost ? gap_cost = @temp.gap_cost : gap_cost = 0       
+      @temp.warranty_price ? warranty_price = @temp.warranty_price : warranty_price = 0       
+      @temp.warranty_cost ? warranty_cost = @temp.warranty_cost : warranty_cost = 0       
+      @temp.accessory_price ? accessory_price = @temp.accessory_price : accessory_price = 0       
+      @temp.accessory_cost ? accessory_cost = @temp.accessory_cost : accessory_cost = 0       
+      
+
+      @car.acquire_price ? acquire_price = @car.acquire_price : acquire_price = 0       
+      @car.other_costs ? other_costs = @car.other_costs : other_costs = 0       
+      @car.advertising_cost ? advertising_cost = @car.advertising_cost : advertising_cost = 0       
+      @car.frontend_pac ? frontend_pac = @car.frontend_pac : frontend_pac = 0       
+
+      @frontend_recieved = temp_amount + smog_fee + doc_fee + reg_fee + other_fee + less_payoff
+      @frontend_cost = acquire_price + @car_repair_expenses + other_costs + advertising_cost + estimated_commission + discount_fee + trade_in_value
       @frontend_profit = @frontend_recieved - @frontend_cost 
 
-      @backend_recieved = @temp.gap_price + @temp.warranty_price + @temp.accessory_price 
-      @backend_cost = @temp.gap_cost + @temp.warranty_cost + @temp.accessory_cost 
-      @gap_profit = @temp.gap_price - @temp.gap_cost
-      @warranty_profit = @temp.warranty_price - @temp.warranty_cost
-      @accessory_profit = @temp.accessory_price - @temp.accessory_cost
+      @backend_recieved = gap_price + warranty_price + accessory_price 
+      @backend_cost = gap_cost + warranty_cost + accessory_cost 
+      @gap_profit = gap_price - gap_cost
+      @warranty_profit = warranty_price - warranty_cost
+      @accessory_profit = accessory_price - accessory_cost
       @backend_profit = @backend_recieved - @backend_cost 
 
       @total_received = @frontend_recieved + @backend_recieved
-      @total_cost = @frontend_cost + @backend_cost + @car.frontend_pac
+      @total_cost = @frontend_cost + @backend_cost + frontend_pac
       @total_profit = @total_received - @total_cost
 
     end
